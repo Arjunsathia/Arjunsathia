@@ -1,14 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {motion, MotionConfig, useReducedMotion} from 'motion/react';
 import {Reveal, Entrance, motionEase, useCompactMotion, useCenteredScroll} from './motion.jsx';
 import { siJavascript, siTypescript, siPython, siReact, siNextdotjs, siTailwindcss, siNodedotjs, siDjango, siGraphql, siMongodb, siPostgresql, siDocker, siGit, siGithub } from 'simple-icons';
 import portrait from '../assets/portrait-warm-lighting.webp';
 import aboutPortrait from '../assets/arjun-about.jpeg';
+import {PremiumCursor} from './cursor.jsx';
 import '../fonts.css';
 import '../styles.css';
 
-const profile = { name: 'Arjun Sathia', email: '', github: '', linkedin: '', available: true };
+const previewImages = import.meta.glob('../assets/project-previews/*.svg', {eager:true, query:'?url', import:'default'});
+const projectPreviewList = project => [['overview','Workspace overview'],['detail','A closer look'],['mobile','Mobile layout']].map(([view,title])=>({title,src:previewImages[`../assets/project-previews/${project.name.toLowerCase()}-${view}.svg`]}));
+
+const profile = { name: 'Arjun Sathia', email: 'hello.arjun@example.com', phone: '+1 (202) 555-0147', phoneHref: '+12025550147', github: '', linkedin: '', available: true };
 const projects = [
   { name: 'Orbit', accent: '#d4e62d', summary: 'A clear view of traffic, trends, and engagement.', type: 'dashboard', title: 'Analytics dashboard', description: 'An analytics dashboard concept with reusable charts, useful filters, and a focused, responsive interface.', tags: ['React', 'TypeScript', 'Data visualization'], note: 'ANALYTICS WORKSPACE', direction: 'A component-driven dashboard concept that makes dense information easier to explore. The interface separates the overview, trends, and individual records.', details: 'Proposed implementation: typed data models, accessible filtering controls, reusable chart components, and explicit loading, empty, and error states.' },
   { name: 'DevNotes', accent: '#a8ed7d', summary: 'A focused home for code snippets and ideas.', type: 'editor', title: 'Developer notebook', description: 'A developer notebook concept for collecting code snippets, organizing ideas, and finding the useful bits later.', tags: ['React', 'Markdown', 'Local storage'], note: 'A HOME FOR YOUR IDEAS', direction: 'A distraction-free workspace concept with a clear split between navigation, editing, and preview. Search and tags keep a growing collection approachable.', details: 'Proposed implementation: a Markdown editor, local persistence, keyboard-accessible navigation, and an export workflow. This is an illustrative portfolio case study, not a live product.' },
@@ -32,7 +36,7 @@ function useModalDialog(onClose) {
   const close=()=>{if(closing)return;setClosing(true);timer.current=setTimeout(onClose,reduce?0:180);};
   const onKeyDown=event=>{
     if(event.key!=='Tab')return;
-    const elements=Array.from(ref.current.querySelectorAll('button,[tabindex="0"],a[href]')).filter(element=>element.tabIndex>=0&&!element.disabled);
+    const elements=Array.from(ref.current.querySelectorAll('button,input,select,textarea,[tabindex="0"],a[href]')).filter(element=>element.tabIndex>=0&&!element.disabled&&element.getClientRects().length);
     const first=elements[0],last=elements[elements.length-1];
     if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
     else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
@@ -41,6 +45,41 @@ function useModalDialog(onClose) {
     if(event.target===ref.current){const r=ref.current.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)close();}
   };
   return {ref,closing,close,reduce,dialogProps:{ref,onClose,onCancel:event=>{event.preventDefault();close();},onKeyDown,onClick}};
+}
+const EnquiryContext = createContext(null);
+function EnquiryButton({topic='General enquiry', children, ...props}) {
+  const open = useContext(EnquiryContext);
+  return <button type="button" {...props} aria-haspopup="dialog" onClick={event=>open({topic}, event.currentTarget)}>{children}</button>;
+}
+function EnquiryDialog({request, onClose}) {
+  const {ref,closing,close,dialogProps} = useModalDialog(onClose);
+  const [submitted,setSubmitted] = useState(false);
+  const [topic,setTopic] = useState(request.topic);
+  const confirmation = useRef(null);
+  useEffect(()=>{ref.current.scrollTop=0;ref.current.querySelector('.enquiry-close')?.focus({preventScroll:true});},[]);
+  useEffect(()=>{if(submitted)confirmation.current?.focus();},[submitted]);
+  return <dialog {...dialogProps} className={`enquiry-dialog ${closing?'is-closing':''}`} aria-labelledby="enquiry-form-title" aria-describedby="enquiry-form-description">
+    <div className="enquiry-close-wrap"><span className="eyebrow">LET’S CONNECT</span><button className="enquiry-close" type="button" onClick={close} aria-label="Close enquiry" autoFocus>×</button></div>
+    <aside className="enquiry-aside">
+      <span className="eyebrow">LET’S CONNECT</span>
+      <h2 id="enquiry-title">Good things <br />start with <br /><span>a hello.</span></h2>
+      <p id="enquiry-description">A project, a role, or a quick question. Tell me a little about it.</p>
+      <address><strong>{profile.name}</strong><span>Software engineer &amp; freelance developer</span><span className="enquiry-contact-row"><svg className="enquiry-contact-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 6 9 7 9-7" /></svg><span>{profile.email}</span></span><span className="enquiry-contact-row"><svg className="enquiry-contact-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m7 3 3 5-3 3c2 3 3 4 6 6l3-3 5 3c-1 4-3 5-6 4C8 19 5 16 3 9 2 6 3 4 7 3Z" /></svg><span>{profile.phone}</span></span><span className="enquiry-contact-row"><svg className="enquiry-contact-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 10c0 6-7 11-7 11S5 16 5 10a7 7 0 0 1 14 0Z" /><circle cx="12" cy="10" r="2" /></svg><span>Remote · Worldwide</span></span></address>
+      <small>Contact details shown are samples.</small>
+      <svg className="enquiry-spark" viewBox="0 0 64 64" fill="none" aria-hidden="true"><path d="M32 4v56M4 32h56M12 12l40 40M12 52l40-40" /></svg>
+    </aside>
+    <div className="enquiry-main">
+      <div className="enquiry-heading"><span className="eyebrow">YOUR ENQUIRY</span><h3 id="enquiry-form-title">Let’s talk<span className="enquiry-title-period">.</span></h3><p id="enquiry-form-description">A few details to get the conversation started.</p></div>
+      <form onSubmit={event=>{event.preventDefault();setSubmitted(true);}} onChange={()=>setSubmitted(false)}>
+        <div className="enquiry-field-row"><label>Your name<input name="name" autoComplete="name" required maxLength={100} placeholder="Alex Morgan" /></label><label>Email address<input name="email" type="email" autoComplete="email" required maxLength={254} placeholder="alex@example.com" /></label></div>
+        <label>What’s on your mind?<select name="topic" value={topic} onChange={event=>setTopic(event.target.value)}><option>General enquiry</option><option>Project enquiry</option><option>Job opportunity</option><option>Freelance collaboration</option></select></label>
+        {request.service && <p className="enquiry-service">Interested in: {request.service}</p>}
+        <label>Your message<textarea name="message" required minLength={10} maxLength={4000} rows={4} placeholder="What are you working on, and how can I help?" /></label>
+        <p className="enquiry-demo">Demo mode · No message will be sent.</p>
+        {submitted ? <div className="enquiry-confirmation" role="status" tabIndex={-1} ref={confirmation}><strong>Demo enquiry complete.</strong><p>No message was sent. Edit the form to try again, or close this window.</p></div> : <button className="button primary-button enquiry-submit" type="submit">Send demo enquiry <Arrow direction="↗" /></button>}
+      </form>
+    </div>
+  </dialog>;
 }
 const Wordmark = () => <a className="wordmark" href="#home" aria-label={`${profile.name}, home`}>{profile.name}<span>.</span></a>;
 function SocialLinks() {
@@ -75,7 +114,7 @@ function Header() {
   return <header className="header" ref={header}>
     <div className="topline" aria-hidden="true"><div>{[0,1,2,3].map(i=><span key={i}>FRONTEND <b>✳</b> BACKEND <b>✳</b> WRITING CODE <b>✳</b> SOLVING PROBLEMS <b>✳</b> BUILDING FOR THE WEB <b>✳</b> OPEN TO OPPORTUNITIES <b>✳</b> </span>)}</div></div>
     <div className="header-inner"><Wordmark />
-      <nav className="desktop-nav" aria-label="Main navigation">{navItems.map(([id,label])=><a key={id} href={`#${id}`} aria-current={active===id?'location':undefined}>{label}</a>)} </nav><a className="button primary-button header-cta" href="#contact">Let’s talk <Arrow direction="↗" /></a>
+      <nav className="desktop-nav" aria-label="Main navigation">{navItems.map(([id,label])=><a key={id} href={`#${id}`} aria-current={active===id?'location':undefined}>{label}</a>)} </nav><EnquiryButton className="button primary-button header-cta">Let’s talk <Arrow direction="↗" /></EnquiryButton>
       <button ref={toggle} className="menu-toggle" aria-label={open ? 'Close navigation' : 'Open navigation'} aria-expanded={open} aria-controls="mobile-nav" onClick={() => setOpen(!open)}><span /><span /></button>
       <nav id="mobile-nav" className="mobile-nav" aria-label="Mobile navigation" hidden={!open}>{navItems.map(([id,label],i)=><a key={id} href={`#${id}`} onClick={()=>setOpen(false)}>{label}<span>0{i+1}</span></a>)}</nav>
     </div>
@@ -89,7 +128,7 @@ function Hero() {
       <Entrance className="dev-stamp label-stamp" delay={.43} aria-hidden="true"><span className="label-stamp-code">&lt;/&gt;</span><span className="label-stamp-copy"><small>FULL STACK</small><strong>DEV</strong></span></Entrance>
       <div className="hero-portrait"><motion.img className="portrait" src={portrait} alt="Seated portrait with warm studio lighting" fetchPriority="high" width="941" height="1672" initial={reduce?false:{opacity:0,scale:1.025}} animate={{opacity:1,scale:1}} transition={{duration:reduce?0:.55,delay:.22,ease:motionEase}}/><Entrance as="span" className="portrait-caption" delay={.5}>// Thoughtful code. Useful software.</Entrance></div>
     </div>
-    <div className="hero-bottom"><Entrance className="hero-actions" delay={.52}><a className="button primary-button" href="#contact">Discuss a project <Arrow direction="→" /></a><a className="button secondary-button" href="#work">View projects <Arrow /></a></Entrance></div>
+    <div className="hero-bottom"><Entrance className="hero-actions" delay={.52}><EnquiryButton className="button primary-button" topic="Project enquiry">Discuss a project <Arrow direction="→" /></EnquiryButton><a className="button secondary-button" href="#work">View projects <Arrow /></a></Entrance></div>
   </section>;
 }
 function Intro() {
@@ -99,45 +138,94 @@ function ProjectArt({ project, index, onClick, decorative = false }) {
   const contents = <><div className="mock-window"><div className="mock-toolbar"><span /><span /><span /><b>{project.name.toLowerCase()}.app</b></div><div className="mock-content"><aside className="mock-sidebar"><strong>{project.name}<span> /</span></strong><span className="mock-nav active">Overview</span><span className="mock-nav">{project.type === 'editor' ? 'My snippets' : 'Workspace'}</span><span className="mock-nav">Activity</span><span className="mock-nav">Settings</span><small>PERSONAL WORKSPACE</small></aside><div className="mock-main"><div className="mock-heading"><span>{project.type === 'editor' ? 'Your second brain.' : project.type === 'board' ? 'Make room for progress.' : 'A view of what matters.'}</span><small>Workspace / Overview</small></div>{project.type === 'dashboard' ? <><div className="mock-stats"><div><small>Total visitors</small><strong>12,846</strong><em>+18.6% this month</em></div><div><small>Engagement</small><strong>68.4<span>%</span></strong><em>+4.2% this month</em></div></div><div className="mock-chart"><small>Activity overview <span>Last 12 months</span></small><div className="chart-bars">{[30,46,38,58,51,72,62,83,74,91,81,98].map((height,i)=><span key={i} style={{height:`${height}%`}} />)}</div></div></> : project.type === 'editor' ? <div className="mock-editor"><div>getting-started.tsx <span>×</span></div><pre><span>// A little clarity goes a long way.</span>{'\n\n'}<i>export default function</i> Workspace() {'{'}{'\n'}  <i>return</i> ({'\n'}    &lt;Idea{'\n'}      title=<em>"Make something useful"</em>{'\n'}      status=<em>"in progress"</em>{'\n'}    /&gt;{'\n'}  );{'\n'}{'}'}</pre></div> : <div className="mock-board">{['To build', 'In progress', 'Shipped'].map((title,i)=><div key={title}><small>{title} <span>02</span></small>{[0,1].map((n)=><div className="task-card" key={n}><span className="task-label">{['Interface','Development','Release'][i]}</span><strong>{[['Explore the brief','Map the user flow'],['Build components','Connect the API'],['Set up the project','Define the system']][i][n]}</strong><div><span>ST–0{i*2+n+1}</span><b>YN</b></div></div>)}</div>)}</div>}</div></div></div><span className="art-index">0{index + 1} / CONCEPT</span><span className="art-open"><Arrow /></span></>;
   return decorative ? <div className={`project-image ${project.type}`} aria-hidden="true">{contents}</div> : <button className={`project-image ${project.type}`} onClick={onClick} aria-label={`Explore ${project.name} concept`}>{contents}</button>;
 }
+function ProjectPreviewDialog({project, previews, initialIndex, onClose}) {
+  const {closing,close,dialogProps} = useModalDialog(onClose);
+  const [current,setCurrent] = useState(initialIndex);
+  const move = direction => setCurrent(index=>(index + direction + previews.length) % previews.length);
+  return <dialog {...dialogProps} className={`project-preview-dialog ${closing?'is-closing':''}`} aria-labelledby="preview-title" aria-describedby="preview-caption" onKeyDown={event=>{
+    dialogProps.onKeyDown(event);
+    if(event.key==='ArrowRight' || event.key==='ArrowLeft'){event.preventDefault();move(event.key==='ArrowRight'?1:-1);}
+  }}>
+    <div className="preview-viewer-header"><div><span className="eyebrow">{project.name} / SCREEN PREVIEW</span><h2 id="preview-title">{previews[current].title}</h2></div><button type="button" className="preview-viewer-close" onClick={close} aria-label="Close preview" autoFocus>×</button></div>
+    <figure className="preview-viewer-image"><img src={previews[current].src} alt={`${project.name}: ${previews[current].title}, illustrative interface`} width="1200" height="800" /></figure>
+    <div className="preview-viewer-footer"><p id="preview-caption">Illustrative interface mockup</p><div className="preview-viewer-controls"><button type="button" onClick={()=>move(-1)} aria-label="Previous preview">←</button><span aria-live="polite" aria-atomic="true">{current+1} / {previews.length}</span><button type="button" onClick={()=>move(1)} aria-label="Next preview">→</button></div></div>
+  </dialog>;
+}
 function ProjectDialog({project,index,onClose}) {
   const {ref,closing,close,reduce,dialogProps}=useModalDialog(onClose);
   const [tab,setTab]=useState(0);
-  const tabs=['Overview','Approach','Development','Stack'];
+  const [lightbox,setLightbox]=useState(null);
+  const previews=projectPreviewList(project);
+  const openPreview=(previewIndex,event)=>setLightbox({index:previewIndex,trigger:event.currentTarget});
+  const closePreview=()=>{const trigger=lightbox?.trigger;setLightbox(null);requestAnimationFrame(()=>trigger?.focus({preventScroll:true}));};
+  const tabs=['Overview','Previews','Approach','Development','Stack'];
   const tabKey=event=>{
-    const next={ArrowLeft:(tab+3)%4,ArrowRight:(tab+1)%4,Home:0,End:3}[event.key];
+    const next={ArrowLeft:(tab+tabs.length-1)%tabs.length,ArrowRight:(tab+1)%tabs.length,Home:0,End:tabs.length-1}[event.key];
     if(next!==undefined){event.preventDefault();setTab(next);ref.current.querySelector(`#project-tab-${next}`).focus();}
   };
-  return <dialog {...dialogProps} className={`case-dialog project-modal ${closing?'is-closing':''}`} style={{'--project-accent':project.accent}} aria-labelledby="case-title" aria-describedby="case-summary">
-    <header className="project-modal-bar"><span className="eyebrow"><i aria-hidden="true"/>PROJECT / 0{index+1}<span>CONCEPT</span></span><button className="project-modal-close" aria-label="Close project" onClick={close} autoFocus>×</button></header>
-    <div className="project-modal-heading"><h2 id="case-title">{project.name}<span>.</span></h2><p>{project.title}</p><p id="case-summary" className="sr-only">{project.summary}</p></div>
-    <div className="project-modal-tabs" role="tablist" aria-label="Project details" onKeyDown={tabKey}>{tabs.map((label,i)=><button key={label} role="tab" id={`project-tab-${i}`} aria-selected={tab===i} aria-controls="project-detail-panel" tabIndex={tab===i?0:-1} onClick={()=>setTab(i)}>{label}</button>)}</div>
-    <motion.div key={tab} className={`project-modal-page ${tab===0?'is-overview':''}`} role="tabpanel" id="project-detail-panel" aria-labelledby={`project-tab-${tab}`} tabIndex={0} initial={reduce?false:{opacity:0,y:6}} animate={{opacity:1,y:0}} transition={{duration:reduce?0:.18,ease:motionEase}}>
-      {tab===0?<><div className="project-modal-visual"><ProjectArt project={project} index={index} decorative/></div><div className="project-modal-reading"><span className="eyebrow">01 / OVERVIEW</span><h3>{project.summary}</h3><p>{project.description}</p></div></>:<div className="project-modal-reading"><span className="eyebrow">0{tab+1} / {tabs[tab].toUpperCase()}</span><h3>{['','The approach.','How it’s built.','The toolset.'][tab]}</h3>{tab===3?<><p>Proposed tools for this project concept.</p><ul className="project-modal-stack">{project.tags.map(tag=><li key={tag}>{tag}</li>)}</ul></>:<p>{tab===1?project.direction:project.details}</p>}</div>}
-    </motion.div>
-    <footer className="project-modal-footer"><span>ILLUSTRATIVE PROJECT · PROPOSED IMPLEMENTATION</span><span>0{tab+1} / 04</span></footer>
-  </dialog>;
+  return <><dialog {...dialogProps} className={`project-modal ${closing?'is-closing':''}`} style={{'--project-accent':project.accent}} aria-labelledby="case-title" aria-describedby="case-summary">
+    <div className="project-detail-closebar"><button className="enquiry-close" type="button" aria-label="Close project" onClick={close} autoFocus>×</button></div>
+    <aside className="enquiry-aside project-detail-aside">
+      <span className="eyebrow">PROJECT / 0{index+1}</span>
+      <h2 id="case-title">{project.name}<span>.</span></h2>
+      <p className="project-detail-category">{project.title}</p>
+      <p id="case-summary">{project.summary}</p>
+      <div className="project-detail-toolset"><span className="eyebrow">PROPOSED STACK</span><ul>{project.tags.map(tag=><li key={tag}>{tag}</li>)}</ul></div>
+      <small>Illustrative project concept.</small>
+    </aside>
+    <div className="project-detail-main">
+      <div className="project-detail-heading"><span className="eyebrow">A CLOSER LOOK</span><h3>Project details.</h3></div>
+      <div className="project-modal-tabs" role="tablist" aria-label="Project details" onKeyDown={tabKey}>{tabs.map((label,i)=><button type="button" key={label} role="tab" id={`project-tab-${i}`} aria-selected={tab===i} aria-controls="project-detail-panel" tabIndex={tab===i?0:-1} onClick={()=>setTab(i)}>{label}</button>)}</div>
+      <motion.div key={tab} className="project-modal-page" role="tabpanel" id="project-detail-panel" aria-labelledby={`project-tab-${tab}`} tabIndex={0} initial={reduce?false:{opacity:0,y:6}} animate={{opacity:1,y:0}} transition={{duration:reduce?0:.18,ease:motionEase}}>
+        {tab===0?<><button type="button" className="project-modal-visual" onClick={event=>openPreview(0,event)} aria-label={`Open ${project.name} workspace preview`}><img src={previews[0].src} alt={`${project.name} workspace concept`} width="1200" height="800" /><span>View screen <Arrow /></span></button><div className="project-modal-reading"><h4>{project.summary}</h4><p>{project.description}</p><button type="button" className="project-browse-previews" onClick={()=>{setTab(1);ref.current.querySelector('#project-tab-1').focus();}}>Browse all 3 previews <Arrow direction="→" /></button></div></>:tab===1?<div className="project-preview-gallery"><div className="project-modal-reading"><h4>A look around the interface.</h4><p>Explore the desktop, detail, and mobile concepts. Select a screen to view it larger.</p></div>{previews.map((preview,i)=><button type="button" className="project-preview-thumb" key={preview.title} onClick={event=>openPreview(i,event)} aria-label={`Open ${project.name} ${preview.title.toLowerCase()} preview`}><img src={preview.src} alt={`${project.name} ${preview.title.toLowerCase()} concept`} width="1200" height="800" loading="lazy" /><span><strong>{preview.title}</strong><Arrow /></span></button>)}</div>:<div className="project-modal-reading"><h4>{['','','The approach.','How it’s built.','The toolset.'][tab]}</h4>{tab===4?<><p>Proposed tools for this project concept.</p><ul className="project-modal-stack">{project.tags.map(tag=><li key={tag}>{tag}</li>)}</ul></>:<p>{tab===2?project.direction:project.details}</p>}</div>}
+      </motion.div>
+      <div className="project-detail-note"><span>Concept &amp; proposed implementation</span><span>0{tab+1} / 0{tabs.length}</span></div>
+    </div>
+  </dialog>{lightbox && <ProjectPreviewDialog project={project} previews={previews} initialIndex={lightbox.index} onClose={closePreview} />}</>;
 }
-function ProjectEntry({project,index,onOpen}) {
-  return <article className={`work-entry work-entry-${project.name.toLowerCase()}`} style={{'--project-highlight':project.accent}} aria-labelledby={`work-entry-title-${index}`}>
-    <div className="work-entry-name"><span className="eyebrow">0{index+1} / {project.title}</span><h3 id={`work-entry-title-${index}`}><button onClick={event=>onOpen(index,event)} aria-haspopup="dialog" aria-label={`View ${project.name} project`}>{project.name}<span>.</span></button></h3></div>
-    <div className="work-entry-parallax"><div className="work-entry-art"><ProjectArt project={project} index={index} onClick={event=>onOpen(index,event)}/></div></div>
-    <div className="work-entry-info"><p>{project.summary}</p><span className="work-entry-tech">{project.tags.slice(0,2).join(' / ')}</span><button className="work-entry-link" onClick={event=>onOpen(index,event)} aria-haspopup="dialog" aria-label={`Read ${project.name} details`}>Project details <Arrow/></button></div>
+function ProjectEntry({project,index,onOpen,compact}) {
+  if(!compact) return <article className={`work-entry work-entry-${project.name.toLowerCase()}`} style={{'--project-highlight':project.accent}} aria-labelledby={`work-entry-title-${index}`}>
+    <div className="project-card-copy">
+      <div className="project-card-category"><strong>0{index+1}</strong><span aria-hidden="true"/><span className="eyebrow">{project.tags.includes('Node.js')?'Full stack':'Web application'} / {project.type==='dashboard'?'Dashboard':project.type==='editor'?'Workspace':'Productivity'}</span></div>
+      <div className="work-entry-name"><h3 id={`work-entry-title-${index}`}><button onClick={event=>onOpen(index,event)} aria-haspopup="dialog" aria-label={`View ${project.name} project`}>{project.name}</button></h3><p className="project-card-subtitle">{project.title}</p></div>
+      <p className="project-card-summary">{project.description}</p>
+      <ul className="project-card-tags" aria-label="Technologies">{project.tags.map(tag=><li key={tag}>{tag}</li>)}</ul>
+      <div className="project-card-footer"><button className="work-entry-link" onClick={event=>onOpen(index,event)} aria-haspopup="dialog" aria-label={`Read ${project.name} details`}>View project <Arrow/></button></div>
+    </div>
+    <div className="project-card-art"><span className="project-preview-paper" aria-hidden="true"/><button className="project-card-screen" onClick={event=>onOpen(index,event)} aria-haspopup="dialog" aria-label={`Explore ${project.name} project`}><img src={projectPreviewList(project)[0].src} alt={`${project.name} workspace concept`} width="1200" height="800" loading="lazy" /></button><ServiceDoodle type="burst" className="project-preview-burst"/></div>
   </article>;
+  return <article className={`work-entry work-entry-${project.name.toLowerCase()}`} style={{'--project-highlight':project.accent}} aria-labelledby={`work-entry-title-${index}`}>
+    <div className="project-card-copy">
+      <div className="project-card-category"><strong>0{index+1}</strong><span aria-hidden="true"/><span className="eyebrow">{project.tags.includes('Node.js')?'Full stack':'Web application'} / {project.type==='dashboard'?'Dashboard':project.type==='editor'?'Workspace':'Productivity'}</span></div>
+      <div className="work-entry-name"><h3 id={`work-entry-title-${index}`}><button onClick={event=>onOpen(index,event)} aria-haspopup="dialog" aria-label={`View ${project.name} project`}>{project.name}</button></h3><p className="project-card-subtitle">{project.title}</p></div>
+      <p className="project-card-summary">{project.description}</p>
+      <div className="project-card-footer"><button className="work-entry-link" onClick={event=>onOpen(index,event)} aria-haspopup="dialog" aria-label={`Read ${project.name} details`}>View project <Arrow/></button></div>
+    </div>
+    <div className="project-card-art project-card-demo-art"><button className="project-card-demo-image" onClick={event=>onOpen(index,event)} aria-haspopup="dialog" aria-label={`Explore ${project.name} project`}><img src={project.cover || projectPreviewList(project)[0].src} alt={`${project.name} project preview`} width="1200" height="800" loading="lazy" /></button></div>
+  </article>;
+}
+
+function ProjectBrowser({entries,onOpen,compact}) {
+  const projectList=useRef(null);
+  const {active,goTo,onKeyDown}=useCenteredScroll(projectList,'.work-entry',entries.length);
+  return <div className="project-browser"><div className="work-index project-wheel" ref={projectList} role="region" aria-label="Selected projects, scroll vertically to browse" tabIndex={0} onKeyDown={onKeyDown}>{entries.map(({project,index})=><ProjectEntry key={project.name} project={project} index={index} onOpen={onOpen} compact={compact}/>)}</div>{!compact&&<div className="project-wheel-controls"><button aria-label="Previous project" disabled={active===0} onClick={()=>goTo(active-1)}>←</button><span aria-live="polite" aria-atomic="true">0{active+1} / 0{entries.length}<span className="sr-only"> {entries[active]?.project.name}</span></span><button aria-label="Next project" disabled={active===entries.length-1} onClick={()=>goTo(active+1)}>→</button></div>}</div>;
 }
 function Work() {
   const [selected,setSelected]=useState(null);
-  const trigger=useRef(null), projectList=useRef(null);
-  const {active,goTo,onKeyDown}=useCenteredScroll(projectList,'.work-entry',projects.length);
+  const compact=useCompactMotion();
+  const trigger=useRef(null);
+  const entries=projects.map((project,index)=>({project,index}));
   const openProject=(index,event)=>{trigger.current=event.currentTarget;setSelected(index);};
   const closeProject=()=>{setSelected(null);requestAnimationFrame(()=>trigger.current?.focus({preventScroll:true}));};
   return <section className="work section-wrap" id="work" aria-labelledby="work-title">
-    <SectionHeading number="01" id="work-title" title="Selected work." note="INTERFACES / TOOLS / APPLICATIONS" />
-    <div className="project-stack-intro"><p>A few selected project concepts.</p><span className="eyebrow">05 / PROJECT CONCEPTS</span></div>
-    <Reveal className="project-browser"><div className="work-index project-wheel" ref={projectList} role="region" aria-label="Selected projects, scroll vertically to browse" tabIndex={0} onKeyDown={onKeyDown}>{projects.map((project,index)=><ProjectEntry key={project.name} project={project} index={index} onOpen={openProject}/>)}</div><div className="project-wheel-controls"><button aria-label="Previous project" disabled={active===0} onClick={()=>goTo(active-1)}>←</button><span aria-live="polite" aria-atomic="true">0{active+1} / 0{projects.length}<span className="sr-only"> {projects[active].name}</span></span><button aria-label="Next project" disabled={active===projects.length-1} onClick={()=>goTo(active+1)}>→</button></div></Reveal>
+    {compact?<><Reveal className="work-section-heading"><div><span className="eyebrow">(01)</span><h2 id="work-title">Selected<br/><mark>work.<ServiceDoodle type="burst"/></mark></h2></div><div className="work-section-description"><p>A collection of project concepts, turning ideas into useful interfaces, workspaces, and tools.</p></div></Reveal>
+</>:<><SectionHeading number="01" id="work-title" title="Selected work." note="INTERFACES / TOOLS / APPLICATIONS" /><div className="project-stack-intro"><p>A few selected project concepts.</p><span className="eyebrow">05 / PROJECT CONCEPTS</span></div></>}
+    <ProjectBrowser key={compact?'mobile':'desktop'} entries={entries} onOpen={openProject} compact={compact}/>
     <p className="sample-note project-stack-note">Illustrative project concepts · Full details inside each project.</p>
     {selected!==null && <ProjectDialog project={projects[selected]} index={selected} onClose={closeProject} />}
   </section>;
 }
+
 const stackGroups = [
   { name: 'Frontend', description: 'Responsive interfaces with clear structure, useful details, and a focus on the person using them.', tools: [['JavaScript',siJavascript],['TypeScript',siTypescript],['React',siReact],['Next.js',siNextdotjs],['Tailwind',siTailwindcss]] },
   { name: 'Backend', description: 'The APIs, application logic, and databases that keep everything connected behind the screen.', tools: [['Node.js',siNodedotjs],['Python',siPython],['Django',siDjango],['GraphQL',siGraphql],['MongoDB',siMongodb],['PostgreSQL',siPostgresql]] },
@@ -147,9 +235,26 @@ const stackGroups = [
 function SkillIcon({ icon }) {
   return icon === 'check' ? <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l4 4L19 6" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" /></svg> : icon ? <svg viewBox="0 0 24 24" aria-hidden="true"><path d={icon.path} fill="currentColor" /></svg> : <svg viewBox="0 0 32 32" aria-hidden="true"><text x="2" y="18" fill="currentColor" fontFamily="Arial, sans-serif" fontSize="15" fontWeight="600">aws</text><path d="M4 23q12 7 24-1m-4-1 5 .3-2 4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>;
 }
-function Skills() {
-  return <section id="skills" className="skills-section" aria-labelledby="skills-title"><div className="section-wrap"><SectionHeading number="03" id="skills-title" title="What I work with." note="FROM INTERFACE TO RELEASE"/><div className="skills-rows">{stackGroups.map((group,i)=><Reveal className="skill-row" key={group.name} distance={0} delay={i*.08}><span className="skill-row-number">0{i+1}</span><div className="skill-row-copy"><h3>{group.name}</h3><p>{group.description}</p></div><div className="skill-pills">{group.tools.map(([name,icon])=><div className="skill-pill" key={name}><SkillIcon icon={icon} /><span>{name}</span></div>)}</div></Reveal>)}</div></div></section>;
+function StackIllustration({index}) {
+  return <div className="stack-illustration" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none">
+    <defs><linearGradient id={`stack-depth-${index}`} x1="18" y1="12" x2="85" y2="92" gradientUnits="userSpaceOnUse"><stop stopColor="#fffdf4"/><stop offset="1" stopColor="#d4d4b7"/></linearGradient></defs>
+    <circle cx="55" cy="51" r="39" fill="#e6edb6" opacity=".45"/>
+    {index===0?<g transform="rotate(9 50 50)"><rect x="23" y="17" width="63" height="68" rx="11" fill="#cbdc69"/><rect x="16" y="22" width="63" height="68" rx="11" fill={`url(#stack-depth-${index})`}/><path d="M16 33q0-11 11-11h41q11 0 11 11v10H16Z" fill="#d4e62d"/>{[25,35,45].map(x=><ellipse key={x} cx={x} cy="33" rx="2.5" ry="3" fill="#fffdf1"/>)}<rect x="24" y="51" width="47" height="24" rx="5" fill="#fffdf4"/><path d="m49 62 22 15-10 2-4 10Z" fill="#172012"/><path d="m61 76 6 12" stroke="#172012" strokeWidth="5"/></g>:index===1?<g transform="rotate(7 50 50)">{[20,42,64].map((y,j)=><g key={y}><path d={`M18 ${y} 31 ${y-6} 81 ${y+2} 69 ${y+9}Z`} fill="#65734a"/><rect x="18" y={y} width="63" height="19" rx="5" fill={j===1?'#26311e':'#172012'}/><path d={`M22 ${y+19}H75`} stroke="#c6dc46" strokeWidth="2"/>{[25,32,39].map(x=><circle key={x} cx={x} cy={y+7} r="1.6" fill="#d4e62d"/>)}</g>)}<circle cx="78" cy="73" r="18" fill="#e9f697"/><path d="M68 78h17a5 5 0 0 0 0-10 7 7 0 0 0-13-1 6 6 0 0 0-4 11Z" stroke="#182410" strokeWidth="2"/></g>:index===2?<g transform="rotate(8 50 50)"><rect x="30" y="15" width="48" height="74" rx="9" fill="#d4df8b"/><rect x="22" y="17" width="48" height="74" rx="9" fill={`url(#stack-depth-${index})`}/>{[35,53,71].map(y=><g key={y}><circle cx="35" cy={y} r="6" fill="#e2ed9d"/><path d={`m32 ${y} 2 2 4-5`} stroke="#26311e" strokeWidth="2" strokeLinecap="round"/><path d={`M46 ${y}h13`} stroke="#7d846a" strokeWidth="3" strokeLinecap="round"/></g>)}</g>:<><circle cx="64" cy="35" r="24" fill="#d4e62d"/><path d="m55 37 8-9 5 10 8-4" stroke="#b2c72a" strokeWidth="4" strokeLinecap="round"/><path d="M23 83h50a15 15 0 0 0 0-30 23 23 0 0 0-43-4 18 18 0 0 0-7 34Z" fill={`url(#stack-depth-${index})`}/><path d="M47 74V54m-8 9 8-9 8 9" stroke="#25301f" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round"/></>}
+  </svg><ServiceDoodle type="burst"/></div>;
 }
+function Skills() {
+  return <section id="skills" className="skills-section" aria-labelledby="skills-title"><div className="section-wrap">
+    <SectionHeading number="03" id="skills-title" title={<><span className="stack-title-lead">What I work </span><span className="stack-title-mark">with.</span></>} note="FROM INTERFACE TO RELEASE"/>
+    <div className="stack-mobile-intro"><p>Tools, technologies, and practices I use to turn ideas into useful software.</p><span className="stack-heading-note" aria-hidden="true">From interface<br/>to release.<ServiceDoodle type="burst"/><ServiceDoodle/></span></div>
+    <div className="skills-rows">{stackGroups.map((group,i)=><Reveal className="skill-row" key={group.name} distance={0} delay={i*.08}>
+      <span className="skill-row-number">0{i+1}</span><span className="skill-row-dash" aria-hidden="true"/>
+      <div className="skill-row-copy"><h3>{group.name}</h3><p>{group.description}</p></div>
+      <span className="skill-row-arrow" aria-hidden="true">↗</span><StackIllustration index={i}/>
+      <div className="skill-pills">{group.tools.map(([name,icon])=><div className="skill-pill" key={name} data-tool={name} style={{'--skill-brand':icon && icon!=='check'?`#${icon.hex}`:undefined}}><SkillIcon icon={icon}/><span>{name}</span></div>)}{i===3&&<div className="skill-pill skill-mobile-only"><SkillIcon icon="check"/><span>CI/CD</span></div>}</div>
+    </Reveal>)}</div>
+  </div></section>;
+}
+
 function SectionHeading({ number, id, title, note }) {
   return <Reveal className="section-heading"><span className="eyebrow">({number})</span><h2 id={id}>{title}</h2>{note && <span className="heading-note">// {note}</span>}</Reveal>;
 }
@@ -158,10 +263,60 @@ const serviceItems = [
   {title:'Ideas into products',icon:'↔',description:'Turn an idea into a working application, or add the next feature to an existing product. A focused scope, regular updates, and a useful result.',outcome:'A product ready for real users.'},
   {title:'Care & improvements',icon:'✳',description:'Fix the frustrating parts, improve slow pages, and keep your application running well as your needs change.',outcome:'A better experience, over time.'},
 ];
+function ServiceDoodle({type='arrow',className=''}) {
+  return <svg className={`service-doodle ${className}`} viewBox={type==='burst'?'0 0 80 60':'0 0 100 65'} fill="none" aria-hidden="true">{type==='burst'?<path d="M15 42 6 20M37 30 39 5M57 36 73 17"/>:<path d="M8 8C-3 40 37 60 81 26M62 25 84 23 81 45"/>}</svg>;
+}
+function ServiceLaptop() {
+  return <svg className="service-laptop-real" viewBox="0 0 340 260" fill="none" aria-hidden="true">
+    <defs>
+      <linearGradient id="service-metal" x1="170" y1="178" x2="170" y2="237" gradientUnits="userSpaceOnUse"><stop stopColor="#b7bfc2"/><stop offset=".6" stopColor="#e2e6e7"/><stop offset="1" stopColor="#9aa4a9"/></linearGradient>
+      <linearGradient id="service-bezel" x1="45" y1="16" x2="295" y2="180" gradientUnits="userSpaceOnUse"><stop stopColor="#616c70"/><stop offset=".25" stopColor="#242e32"/><stop offset="1" stopColor="#121b1e"/></linearGradient>
+    </defs>
+    <ellipse cx="170" cy="241" rx="150" ry="8" fill="#13170d" opacity=".13"/>
+    <rect x="45" y="16" width="250" height="165" rx="8" fill="url(#service-bezel)" stroke="#78858a"/>
+    <rect x="51" y="22" width="238" height="151" rx="3" fill="#0c120f"/>
+    <circle cx="170" cy="19" r="1.3" fill="#8f9c9d"/>
+    <text x="64" y="37" fill="#d4e62d" fontSize="5" fontFamily="monospace">✳ NORTH / STUDIO</text>
+    <text x="239" y="37" fill="#a9b1a5" fontSize="3.5" fontFamily="monospace">WORK · ABOUT</text>
+    <path d="M64 45H276" stroke="#ffffff15"/>
+    <text x="67" y="75" fill="#f6f0e8" fontSize="24" fontFamily="Anton">MODERN WEBSITES.</text>
+    <text x="67" y="104" fill="#d4e62d" fontSize="24" fontFamily="Anton">REAL RESULTS.</text>
+    <text x="68" y="124" fill="#b1bc9f" fontSize="4.5" fontFamily="monospace">Thoughtful design. Built to work.</text>
+    <rect x="67" y="139" width="62" height="15" rx="7.5" fill="#d4e62d"/>
+    <text x="77" y="148.5" fill="#13170d" fontSize="4" fontFamily="monospace">EXPLORE WORK ↗</text>
+    <path d="m247 105 3 13 13-5-8 12 12 6-15 1 2 14-9-10-10 11 4-15-14-3 14-5-7-12 12 7Z" fill="#f6f0e8" opacity=".8"/>
+    <path d="M45 180H295L330 230H10Z" fill="url(#service-metal)" stroke="#8c989c" strokeWidth=".7"/>
+    <path d="M54 184H286L303 211H37Z" fill="#8e989e"/>
+    {Array.from({length:4},(_,row)=>Array.from({length:13},(_,col)=>{
+      const start=54-row*4.5, step=17.4+row*.68, x=start+col*step, y=186+row*6;
+      return <path key={`${row}-${col}`} d={`M${x} ${y}h${step-3}l1.5 4H${x-1.5}Z`} fill="#2c373c"/>;
+    }))}
+    <path d="M142 214H198L204 225H136Z" fill="#b8c0c4" stroke="#879499" strokeWidth=".6"/>
+    <path d="M10 230H330V233Q328 238 318 238H22Q12 238 10 233Z" fill="#7e8b91"/>
+    <path d="M10 230H330" stroke="#edf0f1" strokeWidth="1.5"/>
+    <path d="M147 231H193L189 234H151Z" fill="#56666d"/>
+  </svg>;
+}
+
+function ServiceIllustration({index}) {
+  return <div className={`service-illustration service-illustration-${index}`} aria-hidden="true">
+    {index===0?<><div className="service-tape"/><ServiceDoodle type="burst" className="service-device-burst"/><ServiceLaptop/></>:index===1?<div className="service-phone"><div className="service-phone-notch"/><small>your workspace</small><span className="service-phone-label">A little more clarity.</span><strong>All in one<span>place.</span></strong><svg viewBox="0 0 170 70" fill="none"><path d="M0 63 24 45 44 50 65 29 85 35 112 12 136 20 170 0" stroke="currentColor" strokeWidth="3"/><path d="M0 63 24 45 44 50 65 29 85 35 112 12 136 20 170 0V70H0Z" fill="currentColor" opacity=".12"/></svg><div className="service-phone-task"><i/>Design system<span>Ready</span></div><div className="service-phone-task"><i/>Application<span>In progress</span></div><div className="service-phone-task"><i/>Next release<span>On track</span></div></div>:<><div className="service-code"><div><i/><i/><i/></div><pre><span>const</span> improve = <span>async</span> () =&gt; {'{'}{'\n'}  await fixBugs();{'\n'}  await optimize();{'\n'}  await deploy();{'\n'}  <span>return</span> 'Better.';{'\n'}{'}'}</pre></div><div className="service-performance"><small>Performance</small><div><strong>98</strong><span>Looking good ↗</span></div></div></>}
+    {index===1&&<ServiceDoodle className="service-phone-doodle"/>}
+  </div>;
+}
 function Services() {
   const compact=useCompactMotion();
-  return <section className="services-section" id="services" aria-labelledby="services-title"><div className="section-wrap"><SectionHeading number="02" id="services-title" title="How I can help." note="IDEAS INTO WORKING SOFTWARE" /><p className="section-intro">A focused feature, a fresh website, or a complete application.<br />Here’s where I can contribute.</p><div className="service-grid">{serviceItems.map((service,i)=><Reveal as="a" className="service-card" href="#contact" key={service.title} axis="x" distance={compact?-12:-20} delay={i*.1}><div className="service-card-top"><span className="eyebrow">0{i+1} / SERVICE</span><span aria-hidden="true">{service.icon}</span></div><h3>{service.title}</h3><p>{service.description}</p><p className="service-outcome">{service.outcome}</p><span className="service-card-action">Let’s discuss <Arrow direction="→" /></span></Reveal>)}</div></div></section>;
+  return <section className="services-section" id="services" aria-labelledby="services-title"><div className="section-wrap">
+    <SectionHeading number="02" id="services-title" title={<><span className="service-title-lead">How I can </span><span className="service-title-help">help.</span></>} /><Reveal className="services-section-intro"><p>A focused feature, a fresh website, or a complete application. Here’s where I can contribute.</p><span className="services-heading-note" aria-hidden="true"><ServiceDoodle type="burst"/>Ideas into<br/>working software.<ServiceDoodle/></span></Reveal>
+    <div className="service-grid">{serviceItems.map((service,i)=><Reveal as="article" className={`service-card service-card-${i}`} key={service.title} distance={compact?12:20} delay={i*.08}>
+      <div className="service-card-top"><strong>0{i+1}</strong><span className="service-number-line"/><span className="eyebrow">Service</span></div>
+      {i===2&&<div className="service-top-note" aria-hidden="true"><ServiceDoodle/>Faster<br/>smoother<br/>better.</div>}
+      <div className="service-card-body"><div className="service-copy"><h3>{service.title}</h3><p>{service.description}</p></div><ServiceIllustration index={i}/></div>
+      <div className="service-card-ending"><ServiceDoodle/><p className="service-outcome">{service.outcome}</p></div>
+    </Reveal>)}</div>
+  </div></section>;
 }
+
 const experienceItems = [
   {role:'Full-stack Developer',company:'Northline Studio',period:'Oct 2025 — Sep 2026',duration:'1 year',initials:'NS',summary:'Worked across React interfaces, Node.js APIs, and PostgreSQL integrations for web applications.',details:['Built reusable interface components and connected frontend features to backend services.','Worked on API behavior, data handling, testing, and release preparation.']},
   {role:'Frontend Developer',company:'Oakbyte Digital',period:'Oct 2024 — Sep 2025',duration:'1 year',initials:'OD',summary:'Focused on responsive interfaces and turning design ideas into usable, consistent web pages.',details:['Developed responsive screens with React, JavaScript, and Tailwind.','Collaborated on component structure, accessibility, and browser testing.']},
@@ -173,28 +328,54 @@ const experienceDetails = [
   {responsibilities:['Clarified project requirements and agreed on scope with clients.','Built websites and small applications, sharing progress and incorporating feedback.','Prepared deployment, documentation, and a practical handover.'],delivered:['Business websites and small application features.','Project documentation and launch support.'],skills:['JavaScript','React','Python','Web development','Deployment','Client communication']},
 ];
 function ExperienceDialog({ item, index, onClose }) {
-  const {closing,close,dialogProps}=useModalDialog(onClose);
-  const details = experienceDetails[index];
-  return <dialog {...dialogProps} className={`experience-dialog ${closing ? 'is-closing' : ''}`} aria-labelledby="experience-dialog-title" aria-describedby="experience-dialog-summary">
-    <div className="experience-dialog-header"><span className="eyebrow">EXPERIENCE / 0{index+1}</span><button className="experience-dialog-close" onClick={close} aria-label="Close experience details" autoFocus>×</button></div>
-    <div className="experience-dialog-heading"><h2 id="experience-dialog-title">{item.role}</h2><p>{item.company}</p><div className="experience-dialog-meta"><span>{item.period}</span><span>{item.duration}</span><span className="sample-label">{item.freelance ? 'Sample freelance work' : 'Sample company'}</span></div></div>
-    <p className="experience-dialog-summary" id="experience-dialog-summary">{item.summary}</p>
-    <div className="experience-dialog-work"><section aria-labelledby="role-responsibilities"><h3 id="role-responsibilities">Responsibilities</h3><ul>{details.responsibilities.map(text=><li key={text}>{text}</li>)}</ul></section><section aria-labelledby="role-deliverables"><h3 id="role-deliverables">Work delivered</h3><ul>{details.delivered.map(text=><li key={text}>{text}</li>)}</ul></section></div>
-    <section className="experience-dialog-skills" aria-labelledby="role-skills"><h3 id="role-skills">Skills & tools</h3><ul>{details.skills.map(skill=><li key={skill}>{skill}</li>)}</ul></section>
-    <p className="experience-dialog-note">Illustrative experience details for preview. Replace with your actual work.</p>
+  const {ref,closing,close,dialogProps}=useModalDialog(onClose);
+  const compact=useCompactMotion();
+  const [tab,setTab]=useState(0);
+  const tabs=['Overview','Responsibilities','Tools'];
+  const details=experienceDetails[index];
+  const tabKey=event=>{
+    const next={ArrowLeft:(tab+tabs.length-1)%tabs.length,ArrowRight:(tab+1)%tabs.length,Home:0,End:tabs.length-1}[event.key];
+    if(next!==undefined){event.preventDefault();setTab(next);ref.current.querySelector(`#role-tab-${next}`).focus();}
+  };
+  return <dialog {...dialogProps} className={`experience-dialog ${closing ? 'is-closing' : ''}`} aria-labelledby="experience-dialog-title" aria-describedby={!compact||tab===0?'experience-dialog-summary':undefined}>
+    <div className="role-details-closebar"><button className="enquiry-close" type="button" onClick={close} aria-label="Close experience details" autoFocus>×</button></div>
+    <aside className="enquiry-aside role-details-aside">
+      <span className="eyebrow">EXPERIENCE / 0{index+1}</span>
+      <h2 id="experience-dialog-title">{item.role}</h2>
+      <p className="role-details-company">{item.company}</p>
+      <dl className="role-details-meta"><div><dt>Period</dt><dd>{item.period}</dd></div><div><dt>Duration</dt><dd>{item.duration}</dd></div></dl>
+      <small>{item.freelance ? 'Sample freelance work' : 'Sample company & role'} · Illustrative experience</small>
+    </aside>
+    <div className="role-details-main">
+      <span className="eyebrow">THE ROLE</span>
+      <h3 className="role-details-title">Work &amp; contribution.</h3>
+      {compact&&<div className="role-details-tabs" role="tablist" aria-label="Experience details" onKeyDown={tabKey}>{tabs.map((label,i)=><button key={label} type="button" role="tab" id={`role-tab-${i}`} aria-selected={tab===i} aria-controls="role-details-panel" tabIndex={tab===i?0:-1} onClick={()=>setTab(i)}>{label}</button>)}</div>}
+      <div className="role-details-panel" {...(compact?{role:'tabpanel',id:'role-details-panel','aria-labelledby':`role-tab-${tab}`,tabIndex:0}:{})}>
+        {(!compact||tab===0)&&<p className="role-details-summary" id="experience-dialog-summary">{item.summary}</p>}
+        {(!compact||tab===1)&&<section className="role-details-section" aria-labelledby="role-responsibilities"><h3 id="role-responsibilities">Responsibilities</h3><ul>{details.responsibilities.map(text=><li key={text}>{text}</li>)}</ul></section>}
+        {(!compact||tab===0)&&<section className="role-details-section" aria-labelledby="role-deliverables"><h3 id="role-deliverables">Work delivered</h3><ul>{details.delivered.map(text=><li key={text}>{text}</li>)}</ul></section>}
+        {(!compact||tab===2)&&<section className="role-details-section" aria-labelledby="role-skills"><h3 id="role-skills">Skills &amp; tools</h3><ul className="role-details-tools">{details.skills.map(skill=><li key={skill}>{skill}</li>)}</ul></section>}
+      </div>
+    </div>
   </dialog>;
 }
+
 function Experience() {
   const [selected,setSelected]=useState(null);
   const panel=useRef(null);
   const {onKeyDown}=useCenteredScroll(panel,'.role-entry',experienceItems.length);
   const closeDetails=()=>{const trigger=selected?.trigger;setSelected(null);requestAnimationFrame(()=>trigger?.focus({preventScroll:true}));};
   return <section className="experience-section" id="experience" aria-labelledby="experience-title"><div className="section-wrap">
-    <SectionHeading number="04" id="experience-title" title="Experience." note="THE WORK BEHIND THE SKILLS"/>
+    <SectionHeading number="04" id="experience-title" title={<span className="experience-title-mark">Experience.</span>} note="THE WORK BEHIND THE SKILLS"/>
+    <span className="experience-heading-note" aria-hidden="true">Building skills.<br/>Shipping work.<ServiceDoodle type="burst"/><ServiceDoodle/></span>
     <div className="experience-layout"><div className="experience-overview"><div className="experience-metric"><strong>03<span aria-hidden="true">.</span></strong><span>YEARS / TWO COMPANIES + FREELANCE</span></div><p>From focused interfaces<br/>to complete applications.</p><span className="eyebrow experience-scroll-hint">EXPLORE MY ROLES <span aria-hidden="true">↗</span></span></div>
       <div className="experience-browser">
         <div className="role-timeline" ref={panel} role="region" aria-label="Experience roles, scroll vertically to browse" tabIndex={0} onKeyDown={onKeyDown}>{experienceItems.map((item,i)=><article className="role-entry" key={item.company}>
-          <div className="role-entry-meta"><span className="eyebrow">0{i+1} / {i===0?'MOST RECENT':'PREVIOUSLY'}</span><span>{item.period}</span></div><h3>{item.role}</h3><div className="role-entry-company"><span>{item.company}</span><small>{item.freelance?'Sample freelance work':'Sample company'}</small><span className="role-tenure">{item.duration}</span></div><p>{item.summary}</p><button className="role-entry-open" aria-label={`View experience: ${item.role} at ${item.company}`} aria-haspopup="dialog" onClick={event=>setSelected({item,index:i,trigger:event.currentTarget})}><span>Details ↗</span></button>
+          <div className="role-card-top"><span className="eyebrow">0{i+1} / {i===0?'MOST RECENT':'PREVIOUSLY'}</span><span className="role-card-period">{item.period}<small>{item.duration}</small></span></div>
+          <div className="role-card-heading"><h3>{item.role}</h3><p>{item.company}<small>{item.freelance?'Sample freelance work':'Sample company'}</small></p></div>
+          <p className="role-card-summary">{item.summary}</p>
+          <div className="role-card-footer"><span className="role-card-tools">{experienceDetails[i].skills.slice(0,3).join(' / ')}</span><span className="role-card-link" aria-hidden="true">View role <Arrow /></span></div>
+          <button className="role-entry-open" aria-label={`View experience: ${item.role} at ${item.company}`} aria-haspopup="dialog" onClick={event=>setSelected({item,index:i,trigger:event.currentTarget})} />
         </article>)}</div>
 
       </div>
@@ -209,7 +390,7 @@ const processSteps = [
 ];
 function Process() {
   const [openStep, setOpenStep] = useState(0);
-  return <section className="process-section" id="process" aria-labelledby="process-title"><div className="section-wrap"><SectionHeading number="05" id="process-title" title="How I work." note="A CLEAR PATH FROM START TO SHIP" /><div className="process-grid"><div className="process-intro"><h3>Good work starts<br />with a <mark>clear plan.</mark></h3><p>A practical process, open communication, and progress you can follow.</p><a className="button primary-button" href="#contact">Start a conversation <Arrow direction="→" /></a></div><div className="process-steps">{processSteps.map((step,i)=><div className="process-step" key={step.title} data-open={openStep===i}>
+  return <section className="process-section" id="process" aria-labelledby="process-title"><div className="section-wrap"><SectionHeading number="05" id="process-title" title={<><span className="process-title-lead">How I </span><span className="process-title-mark">work.</span></>} note="A CLEAR PATH FROM START TO SHIP" /><div className="process-grid"><div className="process-intro"><h3><span className="process-statement-lead">Good work starts<br /> with a </span><mark>clear plan.</mark><ServiceDoodle type="burst" className="process-statement-doodle"/></h3><p>A practical process, open communication, and progress you can follow.</p><EnquiryButton className="button primary-button">Start a conversation <Arrow direction="→" /></EnquiryButton></div><div className="process-steps">{processSteps.map((step,i)=><div className="process-step" key={step.title} data-open={openStep===i}>
         <h4><button className="process-trigger" id={`process-trigger-${i}`} aria-expanded={openStep===i} aria-controls={`process-panel-${i}`} onClick={()=>setOpenStep(current=>current===i ? null : i)}><span>0{i+1}</span><span>{step.title}</span><span className="process-plus" aria-hidden="true">+</span></button></h4>
         <div className="process-panel" id={`process-panel-${i}`} role="region" aria-labelledby={`process-trigger-${i}`} aria-hidden={openStep!==i} inert={openStep!==i}><div className="process-panel-inner"><div className="process-step-body"><p>{step.description}</p><span><b>THE OUTCOME</b>{step.outcome}</span></div></div></div>
       </div>)}</div></div></div></section>;
@@ -217,36 +398,104 @@ function Process() {
 const sampleTestimonials = [
   {quote:'Clear communication, thoughtful implementation, and a smooth handover. The whole process felt easy to follow.',name:'Alex Morgan',role:'Sample client',initials:'AM'},
   {quote:'Arjun worked through the details carefully and kept the project moving. The result was straightforward to use and maintain.',name:'Priya Shah',role:'Sample teammate',initials:'PS'},
+  {quote:'It was easy to share ideas and work through changes together. The small details received as much care as the bigger picture.',name:'Sam Taylor',role:'Sample collaborator',initials:'ST'},
+  {quote:'Arjun took time to understand what we needed and explained the options clearly. Feedback was easy to share and put into practice.',name:'Jordan Lee',role:'Sample project partner',initials:'JL'},
 ];
 function Testimonials() {
-  return <section className="testimonials-section section-wrap" id="testimonials" aria-labelledby="testimonials-title"><SectionHeading number="07" id="testimonials-title" title="In their words." note="FEEDBACK & COLLABORATION"/><div className="testimonials-meta"><p className="section-intro">A little perspective from the other side of the project.</p><span className="sample-label">Sample testimonials</span></div><div className="testimonial-grid">{sampleTestimonials.map((item,i)=><Reveal as="figure" className="testimonial-card" key={item.name} delay={i*.1}><span className="editorial-quote-mark" aria-hidden="true">“</span><blockquote>{item.quote}</blockquote><figcaption><strong>{item.name}</strong><small>{item.role} · Illustrative quote</small></figcaption></Reveal>)}</div><p className="sample-note">Sample quotes and names for design preview. Replace with real feedback and permission to publish.</p></section>;
+  const track = useRef(null);
+  const count = sampleTestimonials.length;
+  const middle = count * 2;
+  const current = useRef(middle + 1);
+  const [active, setActive] = useState(1);
+  const reducedMotion = useReducedMotion();
+  function moveTo(index, behavior = reducedMotion ? 'instant' : 'smooth') {
+    const panel = track.current;
+    const card = panel?.children[index];
+    if (card) panel.scrollTo({left:card.offsetLeft - (panel.clientWidth - card.offsetWidth) / 2, behavior});
+  }
+  function recenter() {
+    const panel = track.current;
+    const index = current.current;
+    const target = middle + index % count;
+    if (index === target) return;
+    const shift = panel.children[target].offsetLeft - panel.children[index].offsetLeft;
+    current.current = target;
+    panel.scrollTo({left:panel.scrollLeft + shift, behavior:'instant'});
+  }
+  useEffect(() => {
+    const panel = track.current;
+    const observer = new ResizeObserver(() => {
+      current.current = middle + current.current % count;
+      moveTo(current.current, 'instant');
+    });
+    observer.observe(panel);
+    panel.addEventListener('scrollend', recenter);
+    return () => {observer.disconnect();panel.removeEventListener('scrollend', recenter);};
+  }, []);
+  function syncActive() {
+    const panel = track.current;
+    const center = panel.scrollLeft + panel.clientWidth / 2;
+    const cards = Array.from(panel.children);
+    const closest = cards.reduce((best, card, i) => Math.abs(card.offsetLeft + card.offsetWidth / 2 - center) < Math.abs(cards[best].offsetLeft + cards[best].offsetWidth / 2 - center) ? i : best, 0);
+    current.current = closest;
+    setActive(closest % count);
+    // Extra copies leave room for momentum; recycle before reaching an outer edge.
+    if (closest < count || closest >= count * 4) recenter();
+  }
+  return <section className="testimonials-section section-wrap" id="testimonials" aria-labelledby="testimonials-title">
+    <SectionHeading number="07" id="testimonials-title" title={<><span className="testimonials-title-lead">In their </span><span className="testimonials-title-mark">words.</span></>} note="FEEDBACK & COLLABORATION" />
+    <p className="testimonials-intro">A few words from the people I work with.</p>
+    <div className="testimonials-carousel">
+      <div className="testimonial-track" ref={track} onScroll={syncActive} role="region" aria-label="Testimonials, scroll horizontally to explore" aria-roledescription="carousel" tabIndex={0} onKeyDown={event => {
+        if (event.target !== event.currentTarget) return;
+        if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+          event.preventDefault();
+          moveTo(current.current + (event.key === 'ArrowRight' ? 1 : -1));
+        }
+      }}>
+        {Array.from({length:5},(_,copy)=>sampleTestimonials.map((item,i)=><figure className="testimonial-slide" key={`${copy}-${item.name}`} data-tone={i} data-active={active === i} role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${count}`} aria-hidden={copy !== 2 ? true : undefined}>
+          <figcaption><span className="testimonial-initials" aria-hidden="true">{item.initials}</span><div><strong>{item.name}</strong><span>{item.role}</span></div></figcaption>
+          <blockquote><p>“{item.quote}”</p></blockquote>
+        </figure>))}
+      </div>
+    </div>
+  </section>;
 }
+
 function About() {
-  return <section className="about" id="about" aria-labelledby="about-title"><div className="section-wrap"><div className="section-heading"><span className="eyebrow">(06)</span><h2 id="about-title">More than a stack.</h2><span className="heading-note">// A LITTLE ABOUT ME</span></div>
+  return <section className="about" id="about" aria-labelledby="about-title"><div className="section-wrap"><div className="section-heading"><span className="eyebrow">(06)</span><h2 id="about-title"><span className="about-title-lead">More than a </span><span className="about-title-mark">stack.</span></h2><span className="heading-note">// A LITTLE ABOUT ME</span></div>
     <div className="about-grid">
-      <Reveal className="about-portrait">
-        <figure className="about-photo"><img src={aboutPortrait} alt="Arjun Sathia wearing glasses and a suit" loading="lazy" width="1173" height="1536" /><figcaption className="about-photo-caption">// Arjun Sathia · Software engineer</figcaption></figure>
-        <span className="about-stamp" aria-hidden="true"><span className="about-stamp-code">&lt;/&gt;</span><span className="about-stamp-copy"><small>CURRENTLY</small><strong>OPEN</strong></span></span>
-      </Reveal>
+      <div className="about-portrait">
+        <figure className="about-photo"><img src={aboutPortrait} alt="Arjun Sathia wearing glasses and a suit" loading="lazy" width="1173" height="1536" /><figcaption className="about-photo-caption"><span className="about-caption-name">// Arjun Sathia</span><span className="about-caption-divider"> · </span><span className="about-caption-role">Software engineer &amp; freelancer</span></figcaption></figure>
+      </div>
       <Reveal className="about-content" delay={.08}>
         <h3 className="about-name">HI, I’M<br /><mark>ARJUN.</mark></h3>
         <p className="about-lead">I’m a software engineer who enjoys figuring out how things work — and making them work better.</p>
         <div className="about-copy"><p>I build across the full stack, from React interfaces to backend services and databases. I care about clear code, useful details, and the person on the other side of the screen.</p><p>I’m looking for a team to grow with, and I’m available for freelance projects too.</p></div>
-        <dl className="about-facts"><div><dt>Focus</dt><dd>Full-stack web applications</dd></div><div><dt>Works with</dt><dd>React · Node.js · Python</dd></div><div><dt>Open to</dt><dd>Full-time roles & freelance</dd></div></dl>
-        <div className="about-actions"><a className="button primary-button" href="#contact">Let’s work together <Arrow direction="→" /></a><a className="button secondary-button" href="#work">See my work <Arrow /></a></div>
       </Reveal>
     </div>
   </div></section>;
 }
 function Contact() {
-  return <section className="contact" id="contact" aria-labelledby="contact-title"><div className="section-wrap"><div className="contact-top"><p className="eyebrow"><span className="status-dot" />AVAILABLE FOR ROLES & PROJECTS</p><span className="eyebrow">GOT SOMETHING IN MIND?</span></div><Reveal as="h2" id="contact-title">LET’S MAKE<br /><span>IT HAPPEN.</span><Arrow /></Reveal><Reveal className="contact-socials" delay={.08}><SocialLinks /></Reveal><Reveal className="contact-bottom" delay={.12}><p>A role on your team. A new web application.<br />I’d love to hear what you’re working on.</p>{profile.email ? <a className="button primary-button" href={`mailto:${profile.email}`}>Say hello <Arrow direction="→" /></a> : <p className="contact-placeholder">Contact details coming soon.</p>}</Reveal><Footer /></div></section>;
+  return <section className="contact" id="contact" aria-labelledby="contact-title"><div className="section-wrap">
+    <div className="contact-top"><p className="eyebrow"><span className="status-dot" />AVAILABLE FOR ROLES & PROJECTS</p><span className="eyebrow">GOT SOMETHING IN MIND?</span></div>
+    <Reveal as="h2" className="contact-headline" id="contact-title">LET’S MAKE<br /><mark>IT HAPPEN.</mark></Reveal>
+    <Reveal className="contact-socials" delay={.08}><SocialLinks /></Reveal>
+    <Reveal className="contact-bottom" delay={.12}><p>A role on your team. A new web application.<br />I’d love to hear what you’re working on.</p><svg className="contact-long-arrow" viewBox="0 0 240 240" fill="currentColor" aria-hidden="true"><path transform="translate(0 240) scale(1 -1)" d="M24 216C92 196 145 142 185 72L165 61L224 24L221 94L202 83C154 160 96 207 24 216Z" /></svg><EnquiryButton className="button primary-button">Let’s talk <Arrow direction="→" /></EnquiryButton></Reveal>
+    <Footer />
+  </div></section>;
 }
+
 function Footer() {
   return <footer className="contact-footer"><span>© {new Date().getFullYear()} Arjun Sathia</span><p>SOFTWARE ENGINEER / FULL-STACK DEVELOPER</p></footer>;
 }
 
 function App() {
-  return <MotionConfig reducedMotion="user"><a className="skip" href="#work">Skip to work</a><Header /><main><Hero /><Intro /><Work /><Services /><Skills /><Experience /><Process /><About /><Testimonials /><Contact /></main></MotionConfig>;
+  const [enquiry,setEnquiry] = useState(null);
+  const enquiryTrigger = useRef(null);
+  const openEnquiry = (request, trigger) => {enquiryTrigger.current=trigger;setEnquiry(request);};
+  const closeEnquiry = () => {setEnquiry(null);requestAnimationFrame(()=>enquiryTrigger.current?.focus({preventScroll:true}));};
+  return <MotionConfig reducedMotion="user"><EnquiryContext.Provider value={openEnquiry}><PremiumCursor /><a className="skip" href="#work">Skip to work</a><Header /><main><Hero /><Intro /><Work /><Services /><Skills /><Experience /><Process /><About /><Testimonials /><Contact /></main>{enquiry && <EnquiryDialog request={enquiry} onClose={closeEnquiry} />}</EnquiryContext.Provider></MotionConfig>;
 }
 
 createRoot(document.getElementById('root')).render(<React.StrictMode><App /></React.StrictMode>);
