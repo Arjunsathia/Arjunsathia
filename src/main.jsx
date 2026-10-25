@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import {motion, MotionConfig, useReducedMotion} from 'motion/react';
 import {Reveal, Entrance, motionEase, useCompactMotion, useCenteredScroll} from './motion.jsx';
 import { siJavascript, siTypescript, siPython, siReact, siNextdotjs, siTailwindcss, siNodedotjs, siDjango, siGraphql, siMongodb, siPostgresql, siDocker, siGit, siGithub } from 'simple-icons';
-import portrait from '../assets/portrait-warm-lighting.png';
+import portrait from '../assets/portrait-warm-lighting.webp';
 import aboutPortrait from '../assets/arjun-about.jpeg';
 import '../fonts.css';
 import '../styles.css';
@@ -16,14 +16,39 @@ const projects = [
   { name: 'Pulse', accent: '#9edbc9', summary: 'A simple overview of service health and uptime.', type: 'dashboard', title: 'Service monitoring', description: 'A sample monitoring dashboard concept for checking service status, recent incidents, and uptime in one place.', tags: ['React', 'Python', 'PostgreSQL'], direction: 'Group service health, incident history, and recent activity into a readable overview, with clear status labels that do not rely on color alone.', details: 'Proposed implementation: scheduled health checks, a Python API, persistent incident records, accessible status indicators, and explicit loading and failure states. This is a sample concept, not a production service.' },
   { name: 'Draft', accent: '#edc88f', summary: 'A quiet workspace for writing and publishing.', type: 'editor', title: 'Publishing workspace', description: 'A sample publishing workspace concept for organizing articles, editing drafts, and preparing content for release.', tags: ['Next.js', 'TypeScript', 'MongoDB'], direction: 'Keep the writing experience focused, with drafts and publishing controls close at hand. Separate editing from preview so each task stays clear.', details: 'Proposed implementation: authenticated draft management, autosave, Markdown previews, validated publishing endpoints, and keyboard-accessible controls. All features describe a concept implementation.' },
 ];
+const navItems = [['work','Projects'],['services','Services'],['skills','Stack'],['experience','Experience'],['about','About me'],['contact','Contact']];
 const Arrow = ({ direction = '↗', ...props }) => <span aria-hidden="true" {...props}>{direction}</span>;
+// Shared modal behavior: open on mount, lock page scroll, contain focus, and close on Escape or backdrop click.
+function useModalDialog(onClose) {
+  const ref=useRef(null),timer=useRef(null);
+  const [closing,setClosing]=useState(false);
+  const reduce=useReducedMotion();
+  useEffect(()=>{
+    const previous=document.body.style.overflow;
+    if(!ref.current.open)ref.current.showModal();
+    document.body.style.overflow='hidden';
+    return()=>{document.body.style.overflow=previous;clearTimeout(timer.current);};
+  },[]);
+  const close=()=>{if(closing)return;setClosing(true);timer.current=setTimeout(onClose,reduce?0:180);};
+  const onKeyDown=event=>{
+    if(event.key!=='Tab')return;
+    const elements=Array.from(ref.current.querySelectorAll('button,[tabindex="0"],a[href]')).filter(element=>element.tabIndex>=0&&!element.disabled);
+    const first=elements[0],last=elements[elements.length-1];
+    if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
+    else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
+  };
+  const onClick=event=>{
+    if(event.target===ref.current){const r=ref.current.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)close();}
+  };
+  return {ref,closing,close,reduce,dialogProps:{ref,onClose,onCancel:event=>{event.preventDefault();close();},onKeyDown,onClick}};
+}
 const Wordmark = () => <a className="wordmark" href="#home" aria-label={`${profile.name}, home`}>{profile.name}<span>.</span></a>;
-function SocialLinks({ compact = false }) {
+function SocialLinks() {
   const [notice,setNotice] = useState('');
   useEffect(()=>{if(!notice)return;const timer=setTimeout(()=>setNotice(''),3000);return()=>clearTimeout(timer);},[notice]);
-  return <div className={`social-links ${compact ? 'compact' : ''}`} aria-label="Social profiles">{[['GitHub',profile.github],['LinkedIn',profile.linkedin]].map(([name,url])=>{
-    const contents = <><svg viewBox="0 0 24 24" aria-hidden="true">{name === 'GitHub' ? <path d={siGithub.path} fill="currentColor" /> : <><rect x="2" y="2" width="20" height="20" rx="2" fill="currentColor" /><circle cx="7" cy="7" r="1.3" fill="var(--social-cutout, var(--paper))" /><path d="M6 10h2v8H6zm4 0h2v1c1-2 6-2 6 2v5h-2v-5c0-2-4-2-4 0v5h-2z" fill="var(--social-cutout, var(--paper))" /></>}</svg>{!compact && <span>{name}</span>}{url && !compact && <Arrow />}</>;
-    return url ? <a key={name} className="social-link" href={url} target="_blank" rel="noopener noreferrer" aria-label={`${name} profile`}>{contents}</a> : <button type="button" key={name} className="social-link pending" onClick={()=>setNotice(`${name} profile link hasn’t been added yet.`)} aria-label={`${name} profile link coming soon`} title={`${name} profile link coming soon`}>{contents}{!compact && <small>Coming soon</small>}</button>;
+  return <div className="social-links" aria-label="Social profiles">{[['GitHub',profile.github],['LinkedIn',profile.linkedin]].map(([name,url])=>{
+    const contents = <><svg viewBox="0 0 24 24" aria-hidden="true">{name === 'GitHub' ? <path d={siGithub.path} fill="currentColor" /> : <><rect x="2" y="2" width="20" height="20" rx="2" fill="currentColor" /><circle cx="7" cy="7" r="1.3" fill="var(--social-cutout, var(--paper))" /><path d="M6 10h2v8H6zm4 0h2v1c1-2 6-2 6 2v5h-2v-5c0-2-4-2-4 0v5h-2z" fill="var(--social-cutout, var(--paper))" /></>}</svg><span>{name}</span>{url && <Arrow />}</>;
+    return url ? <a key={name} className="social-link" href={url} target="_blank" rel="noopener noreferrer" aria-label={`${name} profile`}>{contents}</a> : <button type="button" key={name} className="social-link pending" onClick={()=>setNotice(`${name} profile link hasn’t been added yet.`)} aria-label={`${name} profile link coming soon`} title={`${name} profile link coming soon`}>{contents}<small>Coming soon</small></button>;
   })}{notice && <span className="social-notice" role="status">{notice}</span>}</div>;
 }
 function Header() {
@@ -50,9 +75,9 @@ function Header() {
   return <header className="header" ref={header}>
     <div className="topline" aria-hidden="true"><div>{[0,1,2,3].map(i=><span key={i}>FRONTEND <b>✳</b> BACKEND <b>✳</b> WRITING CODE <b>✳</b> SOLVING PROBLEMS <b>✳</b> BUILDING FOR THE WEB <b>✳</b> OPEN TO OPPORTUNITIES <b>✳</b> </span>)}</div></div>
     <div className="header-inner"><Wordmark />
-      <nav className="desktop-nav" aria-label="Main navigation">{[['work','Projects'],['services','Services'],['skills','Stack'],['experience','Experience'],['about','About me'],['contact','Contact']].map(([id,label])=><a key={id} href={`#${id}`} aria-current={active===id?'location':undefined}>{label}</a>)} </nav><a className="button primary-button header-cta" href="#contact">Let’s talk <Arrow direction="↗" /></a>
+      <nav className="desktop-nav" aria-label="Main navigation">{navItems.map(([id,label])=><a key={id} href={`#${id}`} aria-current={active===id?'location':undefined}>{label}</a>)} </nav><a className="button primary-button header-cta" href="#contact">Let’s talk <Arrow direction="↗" /></a>
       <button ref={toggle} className="menu-toggle" aria-label={open ? 'Close navigation' : 'Open navigation'} aria-expanded={open} aria-controls="mobile-nav" onClick={() => setOpen(!open)}><span /><span /></button>
-      <nav id="mobile-nav" className="mobile-nav" aria-label="Mobile navigation" hidden={!open}>{[['work','Projects'],['services','Services'],['skills','Stack'],['experience','Experience'],['about','About me'],['contact','Contact']].map(([id,label],i)=><a key={id} href={`#${id}`} onClick={()=>setOpen(false)}>{label}<span>0{i+1}</span></a>)}</nav>
+      <nav id="mobile-nav" className="mobile-nav" aria-label="Mobile navigation" hidden={!open}>{navItems.map(([id,label],i)=><a key={id} href={`#${id}`} onClick={()=>setOpen(false)}>{label}<span>0{i+1}</span></a>)}</nav>
     </div>
   </header>;
 }
@@ -62,7 +87,7 @@ function Hero() {
     <Entrance className="hero-meta" delay={.04}><span>SOFTWARE ENGINEER / FULL STACK</span><span><span className="status-dot" /> OPEN TO WORK & FREELANCE</span></Entrance>
     <div className="name-stage"><h1 id="hero-title">{['Arjun','Sathia'].map((name,i)=><motion.span key={name} initial={reduce?false:{clipPath:'inset(100% 0 0 0)',opacity:0}} animate={{clipPath:'inset(0% 0 0 0)',opacity:1}} transition={{duration:reduce?0:.55,delay:.08+i*.1,ease:motionEase}}>{name}</motion.span>)}</h1>
       <Entrance className="dev-stamp label-stamp" delay={.43} aria-hidden="true"><span className="label-stamp-code">&lt;/&gt;</span><span className="label-stamp-copy"><small>FULL STACK</small><strong>DEV</strong></span></Entrance>
-      <div className="hero-portrait"><motion.img className="portrait" src={portrait} alt="Seated portrait with warm studio lighting" fetchPriority="high" width="1024" height="1536" initial={reduce?false:{opacity:0,scale:1.025}} animate={{opacity:1,scale:1}} transition={{duration:reduce?0:.55,delay:.22,ease:motionEase}}/><Entrance as="span" className="portrait-caption" delay={.5}>// Thoughtful code. Useful software.</Entrance></div>
+      <div className="hero-portrait"><motion.img className="portrait" src={portrait} alt="Seated portrait with warm studio lighting" fetchPriority="high" width="941" height="1672" initial={reduce?false:{opacity:0,scale:1.025}} animate={{opacity:1,scale:1}} transition={{duration:reduce?0:.55,delay:.22,ease:motionEase}}/><Entrance as="span" className="portrait-caption" delay={.5}>// Thoughtful code. Useful software.</Entrance></div>
     </div>
     <div className="hero-bottom"><Entrance className="hero-actions" delay={.52}><a className="button primary-button" href="#contact">Discuss a project <Arrow direction="→" /></a><a className="button secondary-button" href="#work">View projects <Arrow /></a></Entrance></div>
   </section>;
@@ -75,31 +100,14 @@ function ProjectArt({ project, index, onClick, decorative = false }) {
   return decorative ? <div className={`project-image ${project.type}`} aria-hidden="true">{contents}</div> : <button className={`project-image ${project.type}`} onClick={onClick} aria-label={`Explore ${project.name} concept`}>{contents}</button>;
 }
 function ProjectDialog({project,index,onClose}) {
-  const ref=useRef(null),timer=useRef(null);
-  const [closing,setClosing]=useState(false),[tab,setTab]=useState(0);
-  const reduce=useReducedMotion();
+  const {ref,closing,close,reduce,dialogProps}=useModalDialog(onClose);
+  const [tab,setTab]=useState(0);
   const tabs=['Overview','Approach','Development','Stack'];
-  useEffect(()=>{
-    const previous=document.body.style.overflow;
-    if(!ref.current.open)ref.current.showModal();
-    document.body.style.overflow='hidden';
-    return()=>{document.body.style.overflow=previous;clearTimeout(timer.current);};
-  },[]);
-  const close=()=>{if(closing)return;setClosing(true);timer.current=setTimeout(onClose,reduce?0:180);};
-  const trapFocus=event=>{
-    if(event.key!=='Tab')return;
-    const elements=Array.from(ref.current.querySelectorAll('button,[tabindex="0"],a[href]')).filter(element=>element.tabIndex>=0&&!element.disabled);
-    const first=elements[0],last=elements[elements.length-1];
-    if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
-    else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
-  };
   const tabKey=event=>{
     const next={ArrowLeft:(tab+3)%4,ArrowRight:(tab+1)%4,Home:0,End:3}[event.key];
     if(next!==undefined){event.preventDefault();setTab(next);ref.current.querySelector(`#project-tab-${next}`).focus();}
   };
-  return <dialog ref={ref} className={`case-dialog project-modal ${closing?'is-closing':''}`} style={{'--project-accent':project.accent}} aria-labelledby="case-title" aria-describedby="case-summary" onClose={onClose} onCancel={event=>{event.preventDefault();close();}} onKeyDown={trapFocus} onClick={event=>{
-    if(event.target===ref.current){const r=ref.current.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)close();}
-  }}>
+  return <dialog {...dialogProps} className={`case-dialog project-modal ${closing?'is-closing':''}`} style={{'--project-accent':project.accent}} aria-labelledby="case-title" aria-describedby="case-summary">
     <header className="project-modal-bar"><span className="eyebrow"><i aria-hidden="true"/>PROJECT / 0{index+1}<span>CONCEPT</span></span><button className="project-modal-close" aria-label="Close project" onClick={close} autoFocus>×</button></header>
     <div className="project-modal-heading"><h2 id="case-title">{project.name}<span>.</span></h2><p>{project.title}</p><p id="case-summary" className="sr-only">{project.summary}</p></div>
     <div className="project-modal-tabs" role="tablist" aria-label="Project details" onKeyDown={tabKey}>{tabs.map((label,i)=><button key={label} role="tab" id={`project-tab-${i}`} aria-selected={tab===i} aria-controls="project-detail-panel" tabIndex={tab===i?0:-1} onClick={()=>setTab(i)}>{label}</button>)}</div>
@@ -165,29 +173,9 @@ const experienceDetails = [
   {responsibilities:['Clarified project requirements and agreed on scope with clients.','Built websites and small applications, sharing progress and incorporating feedback.','Prepared deployment, documentation, and a practical handover.'],delivered:['Business websites and small application features.','Project documentation and launch support.'],skills:['JavaScript','React','Python','Web development','Deployment','Client communication']},
 ];
 function ExperienceDialog({ item, index, onClose }) {
-  const ref = useRef(null), timer = useRef(null);
-  const [closing, setClosing] = useState(false);
+  const {closing,close,dialogProps}=useModalDialog(onClose);
   const details = experienceDetails[index];
-  useEffect(()=>{
-    const previousOverflow = document.body.style.overflow;
-    if (!ref.current.open) ref.current.showModal();
-    document.body.style.overflow = 'hidden';
-    return ()=>{document.body.style.overflow = previousOverflow;clearTimeout(timer.current);};
-  },[]);
-  const close = ()=>{
-    if (closing) return;
-    setClosing(true);
-    timer.current = setTimeout(onClose,180);
-  };
-  return <dialog ref={ref} className={`experience-dialog ${closing ? 'is-closing' : ''}`} aria-labelledby="experience-dialog-title" aria-describedby="experience-dialog-summary" onCancel={event=>{event.preventDefault();close();}} onClose={onClose} onKeyDown={event=>{
-    if(event.key!=='Tab') return;
-    const controls=Array.from(ref.current.querySelectorAll('button:not([disabled]), a[href], [tabindex="0"]'));
-    const first=controls[0],last=controls[controls.length-1];
-    if(event.shiftKey && document.activeElement===first){event.preventDefault();last?.focus();}
-    else if(!event.shiftKey && document.activeElement===last){event.preventDefault();first?.focus();}
-  }} onClick={event=>{
-    if(event.target===ref.current){const box=ref.current.getBoundingClientRect();if(event.clientX<box.left||event.clientX>box.right||event.clientY<box.top||event.clientY>box.bottom) close();}
-  }}>
+  return <dialog {...dialogProps} className={`experience-dialog ${closing ? 'is-closing' : ''}`} aria-labelledby="experience-dialog-title" aria-describedby="experience-dialog-summary">
     <div className="experience-dialog-header"><span className="eyebrow">EXPERIENCE / 0{index+1}</span><button className="experience-dialog-close" onClick={close} aria-label="Close experience details" autoFocus>×</button></div>
     <div className="experience-dialog-heading"><h2 id="experience-dialog-title">{item.role}</h2><p>{item.company}</p><div className="experience-dialog-meta"><span>{item.period}</span><span>{item.duration}</span><span className="sample-label">{item.freelance ? 'Sample freelance work' : 'Sample company'}</span></div></div>
     <p className="experience-dialog-summary" id="experience-dialog-summary">{item.summary}</p>
