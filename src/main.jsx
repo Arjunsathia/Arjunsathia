@@ -224,8 +224,17 @@ function Testimonials() {
 function About() {
   return <section className="about" id="about" aria-labelledby="about-title"><div className="section-wrap"><div className="section-heading"><span className="eyebrow">(06)</span><h2 id="about-title">More than a stack.</h2><span className="heading-note">// A LITTLE ABOUT ME</span></div>
     <div className="about-grid">
-      <Reveal className="about-name">HI, I’M<br /><span className="about-highlight">ARJUN.</span><span className="about-code-mark" aria-hidden="true">&lt;/&gt;</span></Reveal>
-      <Reveal className="about-profile" delay={.08}><figure className="about-photo"><div className="about-photo-frame"><img src={aboutPortrait} alt="Arjun Sathia wearing glasses and a suit" loading="lazy" width="1173" height="1536" /></div><figcaption><span><strong>ARJUN SATHIA</strong><small>SOFTWARE ENGINEER / FULL STACK</small></span></figcaption></figure><div className="about-copy"><p>I’m a software engineer who enjoys figuring out how things work — and making them work better.</p><p>I build across the full stack, from React interfaces to backend services and databases. I care about clear code, useful details, and the person on the other side of the screen.</p><p>I’m looking for a team to grow with, and I’m available for freelance projects too.</p></div></Reveal>
+      <Reveal className="about-portrait">
+        <figure className="about-photo"><img src={aboutPortrait} alt="Arjun Sathia wearing glasses and a suit" loading="lazy" width="1173" height="1536" /><figcaption className="about-photo-caption">// Arjun Sathia · Software engineer</figcaption></figure>
+        <span className="about-stamp" aria-hidden="true"><span className="about-stamp-code">&lt;/&gt;</span><span className="about-stamp-copy"><small>CURRENTLY</small><strong>OPEN</strong></span></span>
+      </Reveal>
+      <Reveal className="about-content" delay={.08}>
+        <h3 className="about-name">HI, I’M<br /><mark>ARJUN.</mark></h3>
+        <p className="about-lead">I’m a software engineer who enjoys figuring out how things work — and making them work better.</p>
+        <div className="about-copy"><p>I build across the full stack, from React interfaces to backend services and databases. I care about clear code, useful details, and the person on the other side of the screen.</p><p>I’m looking for a team to grow with, and I’m available for freelance projects too.</p></div>
+        <dl className="about-facts"><div><dt>Focus</dt><dd>Full-stack web applications</dd></div><div><dt>Works with</dt><dd>React · Node.js · Python</dd></div><div><dt>Open to</dt><dd>Full-time roles & freelance</dd></div></dl>
+        <div className="about-actions"><a className="button primary-button" href="#contact">Let’s work together <Arrow direction="→" /></a><a className="button secondary-button" href="#work">See my work <Arrow /></a></div>
+      </Reveal>
     </div>
   </div></section>;
 }
