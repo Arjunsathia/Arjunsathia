@@ -1,6 +1,7 @@
 import {useEffect} from 'react';
 
-// A cosmetic pointer overlay. Native cursors remain available for touch and text entry.
+// A minimal pointer overlay: a dot that gains a ring over interactive elements.
+// Native cursors remain for touch, text entry, keyboard use, and forced-colors mode.
 export function PremiumCursor() {
   useEffect(() => {
     const media = window.matchMedia('(hover: hover) and (pointer: fine) and (forced-colors: none)');
@@ -13,6 +14,7 @@ export function PremiumCursor() {
     let visible = false;
     let lastTarget = null;
     let topDialog = null;
+    let x = 0, y = 0, frame = 0, refreshFrame = 0, settleTimer = 0;
 
     const hide = () => {
       visible = false;
@@ -31,22 +33,40 @@ export function PremiumCursor() {
       }
       cursor.dataset.dark = dark;
     };
+    // Hover and press styles fade the background in; read it again once they have settled.
+    const settle = () => { clearTimeout(settleTimer); settleTimer = setTimeout(() => { if (lastTarget?.isConnected) inspectTarget(lastTarget); }, 220); };
+    const render = () => {
+      frame = 0;
+      cursor.style.transform = `translate3d(${x}px,${y}px,0)`;
+    };
     const move = event => {
       if (!media.matches || event.pointerType !== 'mouse' || !(event.target instanceof Element)) { hide(); return; }
       const target = event.target;
       if (target.closest('input,textarea,select,[contenteditable="true"],iframe')) { hide(); return; }
-      if (target !== lastTarget) { inspectTarget(target); lastTarget = target; }
-      cursor.style.transform = `translate3d(${event.clientX}px,${event.clientY}px,0)`;
+      x = event.clientX; y = event.clientY;
+      if (target !== lastTarget) { inspectTarget(target); lastTarget = target; settle(); }
       if (!visible || !cursor.matches(':popover-open')) {
+        // Place the cursor before showing it so it never flashes at the corner.
+        render();
         cursor.showPopover();
         visible = true;
         document.documentElement.classList.add('premium-cursor-enabled');
-      }
+      } else if (!frame) frame = requestAnimationFrame(render);
     };
+    // Content can move under a still pointer (scrolling, dialogs opening); re-read what is under it.
+    const refresh = () => {
+      refreshFrame = 0;
+      if (!visible) return;
+      const target = document.elementFromPoint(x, y);
+      if (!target || target === lastTarget) return;
+      if (target.closest('input,textarea,select,[contenteditable="true"],iframe')) { hide(); return; }
+      inspectTarget(target); lastTarget = target; settle();
+    };
+    const scheduleRefresh = () => { if (!refreshFrame) refreshFrame = requestAnimationFrame(refresh); };
     const leave = event => { if (!event.relatedTarget) hide(); };
-    const down = () => { cursor.dataset.pressed = 'true'; };
-    const up = () => { cursor.dataset.pressed = 'false'; };
-    const key = event => { if (event.key === 'Tab' || event.key === 'Escape') hide(); };
+    const down = () => { cursor.dataset.pressed = 'true'; settle(); };
+    const up = () => { cursor.dataset.pressed = 'false'; settle(); };
+    const key = event => { if (event.key === 'Tab') hide(); };
     const visibility = () => { if (document.hidden) hide(); };
     // Re-promote the noninteractive overlay when a dialog enters the top layer.
     const observer = new MutationObserver(() => {
@@ -56,6 +76,7 @@ export function PremiumCursor() {
         topDialog = next;
         lastTarget = null;
         if (visible) { if (cursor.matches(':popover-open')) cursor.hidePopover(); cursor.showPopover(); }
+        scheduleRefresh();
       }
     });
     observer.observe(document.body, {subtree:true, childList:true, attributes:true, attributeFilter:['open']});
@@ -63,17 +84,22 @@ export function PremiumCursor() {
     document.addEventListener('pointerout', leave, {passive:true});
     document.addEventListener('pointerdown', down, {passive:true});
     document.addEventListener('pointerup', up, {passive:true});
+    document.addEventListener('scroll', scheduleRefresh, {passive:true, capture:true});
     document.addEventListener('keydown', key);
     document.addEventListener('visibilitychange', visibility);
     window.addEventListener('blur', hide);
     media.addEventListener('change', hide);
     return () => {
       hide();
+      cancelAnimationFrame(frame);
+      cancelAnimationFrame(refreshFrame);
+      clearTimeout(settleTimer);
       observer.disconnect();
       document.removeEventListener('pointermove', move);
       document.removeEventListener('pointerout', leave);
       document.removeEventListener('pointerdown', down);
       document.removeEventListener('pointerup', up);
+      document.removeEventListener('scroll', scheduleRefresh, {capture:true});
       document.removeEventListener('keydown', key);
       document.removeEventListener('visibilitychange', visibility);
       window.removeEventListener('blur', hide);
