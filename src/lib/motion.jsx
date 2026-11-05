@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {motion, useReducedMotion} from 'motion/react';
-import {handoffAtScrollBoundary} from './scroll-boundary.js';
+import {handoffAtScrollBoundary, createTouchHandoff} from './scroll-boundary.js';
 
 export const motionEase=[.16,1,.3,1];
 export function useCompactMotion(){
@@ -66,10 +66,26 @@ export function useCenteredScroll(ref,selector,count){
     const schedule=()=>{if(!frame)frame=requestAnimationFrame(update);};
     const resize=new ResizeObserver(schedule);resize.observe(panel);entries.forEach(entry=>resize.observe(entry));
     const onWheel=event=>handoffAtScrollBoundary(event,panel);
-    panel.addEventListener('scroll',schedule,{passive:true});
+    // Touch: once a swipe or fling reaches the end of the list, the page carries on scrolling.
+    const touch=createTouchHandoff(panel);
+    const onTouchStart=event=>touch.start(event.touches[0].clientY);
+    const onTouchMove=event=>touch.move(event.touches[0].clientY,event);
+    const onTouchEnd=()=>touch.end();
+    const onScroll=()=>{schedule();touch.scrolled();};
+    panel.addEventListener('scroll',onScroll,{passive:true});
     panel.addEventListener('wheel',onWheel,{passive:false});
+    panel.addEventListener('touchstart',onTouchStart,{passive:true});
+    // Not passive: at an edge, the first movement may be cancelled so iOS scrolls the page instead of bouncing the list.
+    panel.addEventListener('touchmove',onTouchMove,{passive:false});
+    panel.addEventListener('touchend',onTouchEnd,{passive:true});
+    panel.addEventListener('touchcancel',onTouchEnd,{passive:true});
     update();
-    return()=>{cancelAnimationFrame(frame);resize.disconnect();panel.removeEventListener('scroll',schedule);panel.removeEventListener('wheel',onWheel);};
+    return()=>{
+      cancelAnimationFrame(frame);resize.disconnect();touch.cancel();
+      panel.removeEventListener('scroll',onScroll);panel.removeEventListener('wheel',onWheel);
+      panel.removeEventListener('touchstart',onTouchStart);panel.removeEventListener('touchmove',onTouchMove);
+      panel.removeEventListener('touchend',onTouchEnd);panel.removeEventListener('touchcancel',onTouchEnd);
+    };
   },[ref,selector,reduce]);
   const goTo=index=>{
     const panel=ref.current;

@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import {motion} from 'motion/react';
 import {Reveal, Sequence, Item, motionEase, useCompactMotion, useCenteredScroll} from '../lib/motion.jsx';
-import {projects, projectPreviewList} from '../content/site.js';
+import {projects, projectPreviewList, techIcons} from '../content/site.js';
 import {Arrow, ServiceDoodle} from '../components/icons.jsx';
 import {SectionHeading} from '../components/SectionHeading.jsx';
 import {useModalDialog} from '../hooks/useModalDialog.js';
@@ -39,7 +39,7 @@ function ProjectDialog({project,index,onClose}) {
       <p className="project-detail-category">{project.title}</p>
       <p id="case-summary">{project.summary}</p>
       <div className="project-detail-toolset"><span className="eyebrow">PROPOSED STACK</span><ul>{project.tags.map(tag=><li key={tag}>{tag}</li>)}</ul></div>
-      <small>Illustrative project concept.</small>
+      <small>Personal concept project.</small>
     </aside>
     <div className="project-detail-main">
       <div className="project-detail-heading"><span className="eyebrow">A CLOSER LOOK</span><h3>Project details.</h3></div>
@@ -59,7 +59,7 @@ function ProjectEntry({project,index,onOpen,compact}) {
       <div className="project-card-category"><strong>0{index+1}</strong><span aria-hidden="true"/><span className="eyebrow">{project.tags.includes('Node.js')?'Full stack':'Web application'} / {project.type==='dashboard'?'Dashboard':project.type==='editor'?'Workspace':'Productivity'}</span></div>
       <div className="work-entry-name"><h3 id={`work-entry-title-${index}`}><button onClick={open} aria-haspopup="dialog" aria-label={`View ${project.name} project`}>{project.name}</button></h3><p className="project-card-subtitle">{project.title}</p></div>
       <p className="project-card-summary">{project.description}</p>
-      {!compact&&<ul className="project-card-tags" aria-label="Technologies">{project.tags.map(tag=><li key={tag}>{tag}</li>)}</ul>}
+      {!compact&&<ul className="project-card-tags" aria-label="Technologies">{project.tags.map(tag=><li key={tag}>{techIcons[tag]&&<svg viewBox="0 0 24 24" aria-hidden="true"><path d={techIcons[tag]} fill="currentColor"/></svg>}{tag}</li>)}</ul>}
       <div className="project-card-footer"><button className="work-entry-link" onClick={open} aria-haspopup="dialog" aria-label={`Read ${project.name} details`}>View project <Arrow/></button></div>
     </div>
     {compact
@@ -84,7 +84,7 @@ export function Work() {
     {compact?<><Sequence className="work-section-heading" gap={.1}><div><Item as="span" variant="fade" className="eyebrow">(01)</Item><Item as="h2" variant="line" id="work-title">Selected<br/><Item as="mark" variant="wipe">work.<ServiceDoodle type="burst"/></Item></Item></div><Item className="work-section-description"><p>A collection of project concepts, turning ideas into useful interfaces, workspaces, and tools.</p></Item></Sequence>
 </>:<><SectionHeading number="01" id="work-title" title={<><span className="work-title-lead">Selected </span><Item as="span" variant="wipe" className="work-title-mark">work.</Item></>} note="INTERFACES / TOOLS / APPLICATIONS" /><Reveal className="project-stack-intro" delay={.1}><p>A few selected project concepts.</p><span className="eyebrow">05 / PROJECT CONCEPTS</span></Reveal></>}
     <ProjectBrowser key={compact?'mobile':'desktop'} entries={entries} onOpen={openProject} compact={compact}/>
-    <p className="sample-note project-stack-note">Illustrative project concepts · Full details inside each project.</p>
+    <p className="sample-note project-stack-note">Personal concept projects · Full details inside each project.</p>
     {selected!==null && <ProjectDialog project={projects[selected]} index={selected} onClose={closeProject} />}
   </section>;
 }

@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#f6f0e8" />
+    <!-- Sets the theme before anything paints, so a dark page never flashes light. src/lib/theme.js takes over from here. -->
+    <style>html{background:#f6f0e8}html[data-theme=dark]{background:#0a0c09;color-scheme:dark}</style>
+    <script>(function(){var s=null;try{s=localStorage.getItem('theme')}catch(e){}var t=s==='light'||s==='dark'?s:matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.dataset.theme=t;if(t==='dark')document.querySelector('meta[name=theme-color]').content='#0a0c09'})()</script>
     <meta name="description" content="Arjun Sathia — software engineer and full-stack developer. Available for full-time roles and freelance web development." />
     <title>Arjun Sathia — Software Engineer & Full-Stack Developer</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

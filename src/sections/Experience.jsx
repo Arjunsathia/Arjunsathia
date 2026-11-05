@@ -22,7 +22,6 @@ function ExperienceDialog({ item, index, onClose }) {
       <h2 id="experience-dialog-title">{item.role}</h2>
       <p className="role-details-company">{item.company}</p>
       <dl className="role-details-meta"><div><dt>Period</dt><dd>{item.period}</dd></div><div><dt>Duration</dt><dd>{item.duration}</dd></div></dl>
-      <small>{item.freelance ? 'Sample freelance work' : 'Sample company & role'} · Illustrative experience</small>
     </aside>
     <div className="role-details-main">
       <span className="eyebrow">THE ROLE</span>
@@ -38,6 +37,10 @@ function ExperienceDialog({ item, index, onClose }) {
   </dialog>;
 }
 
+// The icon on each role card (phones only): layers for full-stack, a screen for frontend, a briefcase for freelance.
+const roleIcons = ['M12 3 3 8l9 5 9-5-9-5ZM3 12.500l9 5 9-5M3 17l9 5 9-5', 'M3 4h18v12H3V4ZM8 21h8M12 16v5', 'M3 8h18v12H3V8ZM8 8V5a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3M3 13h18'];
+const RoleIcon = ({index}) => <span className="role-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={roleIcons[index % roleIcons.length]}/></svg></span>;
+
 export function Experience() {
   const [selected,setSelected]=useState(null);
   const panel=useRef(null);
@@ -49,14 +52,15 @@ export function Experience() {
     <div className="experience-layout"><Sequence className="experience-overview" gap={.1}><Item variant="line" className="experience-metric"><strong>03<span aria-hidden="true">.</span></strong><span>YEARS / TWO COMPANIES + FREELANCE</span></Item><Item as="p">From focused interfaces<br/>to complete applications.</Item><Item as="span" variant="fade" className="eyebrow experience-scroll-hint">EXPLORE MY ROLES <Arrow/></Item></Sequence>
       <Reveal className="experience-browser" distance={28} delay={.15}>
         <div className="role-timeline" ref={panel} role="region" aria-label="Experience roles, scroll vertically to browse" tabIndex={0} onKeyDown={onKeyDown}>{experienceItems.map((item,i)=><article className="role-entry" key={item.company}>
+          <RoleIcon index={i}/>
           <div className="role-card-top"><span className="eyebrow">0{i+1} / {i===0?'MOST RECENT':'PREVIOUSLY'}</span><span className="role-card-period">{item.period}<small>{item.duration}</small></span></div>
-          <div className="role-card-heading"><h3>{item.role}</h3><p>{item.company}<small>{item.freelance?'Sample freelance work':'Sample company'}</small></p></div>
+          <div className="role-card-heading"><h3>{item.role}</h3><p>{item.company}</p></div>
           <p className="role-card-summary">{item.summary}</p>
-          <div className="role-card-footer"><span className="role-card-tools">{experienceDetails[i].skills.slice(0,3).join(' / ')}</span><span className="role-card-link" aria-hidden="true">View role <Arrow /></span></div>
+          <div className="role-card-footer"><span className="role-card-tools">{experienceDetails[i].skills.slice(0,3).map((skill,j)=><React.Fragment key={skill}>{j>0&&<i> / </i>}<span>{skill}</span></React.Fragment>)}</span><span className="role-card-link" aria-hidden="true">View role <Arrow /></span></div>
           <button className="role-entry-open" aria-label={`View experience: ${item.role} at ${item.company}`} aria-haspopup="dialog" onClick={event=>setSelected({item,index:i,trigger:event.currentTarget})} />
         </article>)}</div>
 
       </Reveal>
-    </div><p className="sample-note">Illustrative roles and companies for layout preview. Replace with your actual employment details.</p>{selected&&<ExperienceDialog item={selected.item} index={selected.index} onClose={closeDetails}/>}
+    </div>{selected&&<ExperienceDialog item={selected.item} index={selected.index} onClose={closeDetails}/>}
   </div></section>;
 }

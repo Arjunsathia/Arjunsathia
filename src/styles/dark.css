@@ -1,0 +1,517 @@
+/* The sheen on green surfaces is a registered colour, so it can fade. Browsers without this simply show flat green. */
+@property --sheen {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: #ffffff00;
+}
+:root {
+  --dark-fade: 240ms ease;
+}
+
+/* Theme controls, the tag's switch states, and the parts of dark mode that are designed by hand.
+   Most of dark mode comes from the tokens in tokens.css; this file adds what tokens can't: gradients, photos and metal. */
+
+/* ---- Shared helpers ---- */
+.visually-hidden,
+.hero-tag-switch {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+/* The hidden switch is the keyboard control; its focus ring shows on the tag. */
+.name-stage:has(.hero-tag-switch:focus-visible) .hero-badge {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 4px;
+}
+
+/* ---- The tag as a switch ---- */
+.hero .hero-name-word .hero-badge {
+  transition: box-shadow .18s ease, border-color .18s ease;
+}
+/* Always shows the current theme. */
+.hero-tag-mode {
+  position: absolute;
+  top: 9px;
+  right: 11px;
+  display: grid;
+  place-items: center;
+  width: 15px;
+  height: 15px;
+  color: #4a5040;
+  transition: scale .18s ease, color .18s ease;
+}
+.hero-tag-mode svg {
+  width: 100%;
+  height: 100%;
+}
+/* Appears on hover, while held, and once on a first visit on touch screens. */
+.hero-tag-hint {
+  position: absolute;
+  top: calc(100% + 7px);
+  left: 50%;
+  translate: -50% 0;
+  padding: 4px 9px;
+  border-radius: 99px;
+  background: var(--bg-chip);
+  color: var(--on-dark);
+  font: 600 9px/1.3 var(--mono);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease;
+}
+.hero-tag-hint-release {
+  display: none;
+}
+.hero-badge:hover .hero-tag-hint,
+.hero-badge.is-dragging .hero-tag-hint,
+.hero-badge.is-hinting .hero-tag-hint {
+  opacity: 1;
+}
+/* Armed: pulled far enough, so letting go will switch. */
+.hero .hero-name-word .hero-badge.is-armed {
+  box-shadow:
+    inset 0 1px 0 #ffffffcc,
+    0 0 0 3px #9fe05a59,
+    0 0 26px #9fe05a8c,
+    0 16px 26px -16px #13170dd9;
+}
+.hero-badge.is-armed .hero-tag-mode {
+  scale: 1.3;
+}
+.hero-badge.is-armed .hero-tag-hint-pull {
+  display: none;
+}
+.hero-badge.is-armed .hero-tag-hint-release {
+  display: inline;
+}
+.hero-badge.is-armed .hero-tag-hint {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+@media (max-width:700px) {
+  .hero-tag-mode {
+    top: 5px;
+    right: 6px;
+    width: 10px;
+    height: 10px;
+  }
+  .hero-tag-hint {
+    font-size: 8px;
+    padding: 3px 7px;
+  }
+  /* The tag itself is small on phones: an invisible margin makes it at least 44px tall to grab. */
+  .hero .hero-name-word .hero-badge::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+  }
+}
+
+/* ---- The theme change: a circle of the new theme spreads from the tag ---- */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) {
+  z-index: 2;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+/* Everything changes together, not at each element's own transition speed. */
+.theme-switching,
+.theme-switching * {
+  transition: none !important;
+}
+
+/* ---- Project previews: the mat is painted here, so it follows the theme ---- */
+.work-entry img,
+.project-modal img,
+.preview-viewer-image img {
+  background-color: var(--preview-mat);
+}
+
+/* ---- Dark mode: light and depth ---- */
+[data-theme=dark] body {
+  background-color: var(--bg-page);
+}
+/* 1. Hero: the signature glow behind the name. */
+[data-theme=dark] .hero {
+  background-image: radial-gradient(60% 55% at 22% 34%, #9fe05a14 0%, transparent 70%);
+}
+/* 2. The bands that were already dark: a soft fall of light, which separates them from their neighbours. */
+[data-theme=dark] .intro-section,
+[data-theme=dark] .services-section,
+[data-theme=dark] .process-section {
+  background-image: linear-gradient(180deg, #181d15 0%, var(--bg-band) 38%, var(--bg-band) 100%);
+}
+/* 3. Contact: a glow rising towards the final call to action. */
+[data-theme=dark] .contact {
+  background-image: radial-gradient(70% 70% at 50% 110%, #9fe05a26 0%, transparent 70%), linear-gradient(180deg, #181d15 0%, var(--bg-band) 30%);
+}
+/* 4. Primary buttons: a solid colour with a fixed soft sheen. Only the colour changes on hover and press,
+   so the button fades smoothly and never passes through transparent. */
+[data-theme=dark] body .button.primary-button,
+[data-theme=dark] body .header-inner>.header-cta,
+[data-theme=dark] body .process-intro .button,
+[data-theme=dark] body .contact-bottom>.button,
+[data-theme=dark] body .project-card-footer .work-entry-link {
+  --sheen: #ffffff2d;
+  background-color: var(--accent);
+  background-image: linear-gradient(180deg, var(--sheen) 0%, #ffffff00 100%);
+  background-size: auto;
+  background-position: 0 0;
+  color: var(--on-accent);
+  border-color: #ffffff2e;
+  transition: background-color var(--dark-fade), border-color var(--dark-fade), color var(--dark-fade), box-shadow var(--dark-fade), transform var(--dark-fade), --sheen var(--dark-fade);
+}
+@media (hover:hover) and (pointer:fine) {
+  [data-theme=dark] body .button.primary-button:hover,
+  [data-theme=dark] body .header-inner>.header-cta:hover,
+  [data-theme=dark] body .process-intro .button:hover,
+  [data-theme=dark] body .contact-bottom>.button:hover,
+  [data-theme=dark] body .project-card-footer .work-entry-link:hover {
+    --sheen: #ffffff00;
+    background-color: #b7ec78;
+    background-image: linear-gradient(180deg, var(--sheen) 0%, #ffffff00 100%);
+    color: var(--on-accent);
+  }
+}
+[data-theme=dark] body .button.primary-button:active,
+[data-theme=dark] body .header-inner>.header-cta:active,
+[data-theme=dark] body .process-intro .button:active,
+[data-theme=dark] body .contact-bottom>.button:active,
+[data-theme=dark] body .project-card-footer .work-entry-link:active {
+  --sheen: #ffffff00;
+  background-color: #7fc63f;
+  background-image: linear-gradient(180deg, var(--sheen) 0%, #ffffff00 100%);
+  color: var(--on-accent);
+}
+/* 5. Popups: a faint top-lit gradient and a visible edge, because shadows don't show on black. */
+[data-theme=dark] dialog {
+  background-image: linear-gradient(180deg, #ffffff08 0%, transparent 180px);
+  box-shadow: 0 0 0 1px #ffffff1f, 0 30px 80px -20px #000000;
+}
+
+/* ---- Dark mode: the About photo is dimmed slightly; the hero photo stays as it is ---- */
+[data-theme=dark] .about-photo img {
+  filter: brightness(.92);
+}
+
+/* ---- Dark mode: the tag's metal turns to gunmetal ---- */
+[data-theme=dark] .hero .hero-name-word .hero-badge {
+  background:
+    repeating-linear-gradient(100deg, #ffffff0a 0 1px, transparent 1px 4px),
+    linear-gradient(135deg, #3a3f35 0%, #23271f 36%, #363b30 55%, #1c2019 100%);
+  border-color: var(--accent);
+  box-shadow: inset 0 1px 0 #ffffff26, inset 0 -1px 0 #00000080, 0 16px 26px -14px #000000;
+}
+[data-theme=dark] .hero .hero-name-word .hero-badge.is-armed {
+  box-shadow: inset 0 1px 0 #ffffff26, 0 0 0 3px #9fe05a59, 0 0 26px #9fe05a8c, 0 16px 26px -14px #000000;
+}
+[data-theme=dark] .hero .hero-name-word .hero-badge::before {
+  background: var(--bg-page);
+  border-color: #7d8274;
+}
+[data-theme=dark] .hero .hero-name-word .hero-badge-top {
+  color: #c2c8b4;
+}
+[data-theme=dark] .hero .hero-name-word .hero-badge strong {
+  color: #f2f4ea;
+  text-shadow: 0 1px 0 #00000080;
+}
+[data-theme=dark] .hero-tag-mode {
+  color: var(--accent);
+}
+[data-theme=dark] .hero-tag-hint {
+  box-shadow: 0 0 0 1px #ffffff1f;
+}
+[data-theme=dark] .hero-tag-links {
+  stroke: #6f7468;
+}
+
+/* ---- Dark mode: About's violet stamp stays the one non-green colour, lifted so it shows on black ---- */
+[data-theme=dark] .about {
+  --about-violet: #9a6ae0;
+  --about-violet-mid: #8352c9;
+  --about-violet-deep: #6d3fb0;
+}
+
+/* ---- Dark mode: Stack ---- */
+[data-theme=dark] {
+  --stack-glow: #9fe05a;
+  --stack-server: #39462c;
+  --stack-server-mid: #4a5a38;
+}
+[data-theme=dark] .stack-illustration svg > circle:first-of-type {
+  opacity: .12;
+}
+/* Brand colours are lifted so dark logos stay readable; the near-black ones simply use the text colour. */
+[data-theme=dark] .skill-pill svg {
+  color: color-mix(in oklab, var(--skill-brand, var(--text-strong)) 62%, white);
+}
+[data-theme=dark] .skill-pill[data-tool='Next.js'] svg,
+[data-theme=dark] .skill-pill[data-tool='Django'] svg {
+  color: var(--text-strong);
+}
+
+/* ---- Dark mode: forms ---- */
+[data-theme=dark] input:-webkit-autofill,
+[data-theme=dark] textarea:-webkit-autofill {
+  -webkit-text-fill-color: var(--text-strong);
+  box-shadow: inset 0 0 0 100px var(--bg-card);
+  caret-color: var(--text-strong);
+}
+
+/* ---- Dark mode: text that sits on the green accent ---- */
+[data-theme=dark] .topline {
+  color: var(--on-accent);
+}
+[data-theme=dark] .desktop-nav>a[aria-current=location]:not(:hover) {
+  color: var(--on-accent);
+}
+
+/* ---- Dark mode: the stamps on Process and Contact use the green accent ---- */
+[data-theme=dark] .contact-headline>mark,
+[data-theme=dark] .process-intro h3 mark {
+  --stamp-fill: var(--accent);
+  --stamp-border: #0b100640;
+}
+
+/* ---- Dark mode: off-focus project cards take only a whisper of each project's colour ---- */
+[data-theme=dark] .project-wheel .work-entry {
+  background-color: color-mix(in srgb, var(--project-highlight) 3%, var(--bg-card));
+  border-color: var(--line);
+}
+[data-theme=dark] .project-preview-paper {
+  background: color-mix(in srgb, var(--project-highlight) 16%, transparent);
+}
+
+/* ---- Dark mode: the three service cards keep their colours, turned down so they don't glare on black ---- */
+[data-theme=dark] .services-section .service-card {
+  filter: brightness(.9);
+}
+
+/* ---- Dark mode: off-focus cards stay readable ---- */
+[data-theme=dark] .project-wheel .work-entry:not([data-active=true]),
+[data-theme=dark] .role-timeline .role-entry:not([data-active=true]) {
+  opacity: .78;
+}
+[data-theme=dark] .testimonial-slide:not([data-active=true]) {
+  opacity: .72;
+}
+
+/* ---- Dark mode: menu button and social links ---- */
+[data-theme=dark] body .header-inner .menu-toggle span {
+  background: var(--text-strong);
+}
+[data-theme=dark] body .header-inner .menu-toggle[aria-expanded=true] {
+  background-color: var(--bg-raised);
+  border-color: var(--line-strong);
+}
+@media (hover:hover) and (pointer:fine) {
+  [data-theme=dark] .contact .social-link:hover small {
+    color: var(--on-accent);
+  }
+}
+
+/* ---- Both themes: "View projects" fills dark on hover, so its light text stays readable ---- */
+@media (hover:hover) and (pointer:fine) {
+  body .hero .secondary-button:hover {
+    background-color: var(--bg-chip);
+  }
+}
+
+/* ---- Dark mode: the three manifesto stamps step through the green palette ---- */
+[data-theme=dark] .intro-section h2 .test-mark {
+  background: #c9f29c;
+}
+
+/* ---- Light mode: stronger small labels on the hero ---- */
+:root[data-theme=light] body .hero .hero-meta>span {
+  color: #3d4331;
+}
+
+/* ---- Light mode: off-focus cards stay readable (they still step back through their scale and tint) ---- */
+:root[data-theme=light] .project-wheel .work-entry:not([data-active=true]) {
+  opacity: calc(.72 + var(--center-opacity, .55) * .28);
+}
+:root[data-theme=light] .role-timeline .role-entry:not([data-active=true]),
+:root[data-theme=light] .experience-section .role-timeline .role-entry:not([data-active=true]) {
+  opacity: .92;
+}
+:root[data-theme=light] .testimonial-slide:not([data-active=true]) {
+  opacity: .92;
+}
+/* The enquiry title's full stop, and small print on the green hover. */
+:root[data-theme=light] .enquiry-title-period {
+  color: var(--accent-text);
+}
+@media (hover:hover) and (pointer:fine) {
+  .contact .social-link:hover small {
+    color: var(--on-accent);
+  }
+}
+
+/* ---- Dark mode: the "Let's talk" green on the open project, the open role and the Stack row in focus ----
+   Everything on these surfaces turns dark, because light text doesn't read on green. */
+[data-theme=dark] .project-wheel .work-entry,
+[data-theme=dark] .experience-section .role-timeline .role-entry,
+[data-theme=dark] .skills-section .skill-row {
+  --sheen: #ffffff00;
+  background-image: linear-gradient(180deg, var(--sheen) 0%, #ffffff00 100%);
+}
+[data-theme=dark] .project-wheel .work-entry[data-active=true],
+[data-theme=dark] .experience-section .role-timeline .role-entry[data-active=true],
+[data-theme=dark] .skills-section .skill-row:is(:hover, [data-selected=true]) {
+  --sheen: #ffffff2d;
+  background-color: var(--accent);
+  border-color: #ffffff2e;
+}
+
+/* The open project. The screen preview inside it stays as it is. */
+[data-theme=dark] .project-wheel .work-entry[data-active=true] .project-card-copy *:not(.work-entry-link, .work-entry-link *) {
+  color: var(--on-accent);
+  border-color: #0b100659;
+}
+[data-theme=dark] .project-wheel .work-entry[data-active=true] .project-card-category>span[aria-hidden] {
+  background: #0b100680;
+}
+[data-theme=dark] .project-wheel .work-entry[data-active=true] .project-preview-paper {
+  background: #0b100629;
+}
+[data-theme=dark] .project-wheel .work-entry[data-active=true] .project-preview-burst {
+  color: var(--on-accent);
+}
+/* A green button can't sit on a green card, so here it is dark. */
+[data-theme=dark] body .project-wheel .work-entry[data-active=true] .project-card-footer .work-entry-link {
+  --sheen: #ffffff00;
+  background-color: var(--on-accent);
+  color: #f2f4ea;
+  border-color: #0b1006;
+}
+@media (hover:hover) and (pointer:fine) {
+  [data-theme=dark] body .project-wheel .work-entry[data-active=true] .project-card-footer .work-entry-link:hover {
+    background-color: #27301d;
+    color: #f2f4ea;
+  }
+}
+[data-theme=dark] body .project-wheel .work-entry[data-active=true] .project-card-footer .work-entry-link:active {
+  background-color: #27301d;
+  color: #f2f4ea;
+}
+[data-theme=dark] .project-wheel .work-entry[data-active=true] :focus-visible,
+[data-theme=dark] .role-timeline .role-entry[data-active=true] :focus-visible {
+  outline-color: var(--on-accent);
+}
+
+/* The open role. */
+[data-theme=dark] .experience-section .role-timeline .role-entry[data-active=true] * {
+  color: var(--on-accent);
+  border-color: #0b100659;
+}
+
+/* The Stack row being hovered (or, on phones, selected). The skill pills stay dark, so they stand out on the green. */
+[data-theme=dark] .skills-section .skill-row:is(:hover, [data-selected=true]) :is(.skill-row-number, .skill-row-copy h3, .skill-row-copy>p, .skill-row-arrow, .skill-row-arrow *) {
+  color: var(--on-accent);
+}
+[data-theme=dark] .skills-section .skill-row:is(:hover, [data-selected=true]) .skill-row-dash {
+  background: #0b100680;
+  border-color: #0b100680;
+}
+[data-theme=dark] .skills-section .skill-row:is(:hover, [data-selected=true]) .skill-pill {
+  background: var(--bg-page);
+  color: var(--text-strong);
+  border-color: #ffffff2e;
+}
+@media (hover:hover) and (pointer:fine) {
+  [data-theme=dark] .skills-section .skill-row .skill-pill:hover {
+    background: var(--bg-raised);
+    color: var(--on-dark);
+    border-color: #ffffff5c;
+  }
+}
+
+/* ---- Dark mode: green surfaces and everything on them change together, at one speed ---- */
+[data-theme=dark] .project-wheel .work-entry,
+[data-theme=dark] .experience-section .role-timeline .role-entry,
+[data-theme=dark] .skills-section .skill-row {
+  transition: background-color var(--dark-fade), border-color var(--dark-fade), opacity var(--dark-fade), --sheen var(--dark-fade);
+}
+[data-theme=dark] .project-wheel .work-entry .project-card-copy *:not(.work-entry-link, .work-entry-link *),
+[data-theme=dark] .project-wheel .work-entry .project-preview-paper,
+[data-theme=dark] .project-wheel .work-entry .project-preview-burst,
+[data-theme=dark] .project-wheel .work-entry .work-entry-link *,
+[data-theme=dark] .role-timeline .role-entry>*,
+[data-theme=dark] .role-timeline .role-entry>* *,
+[data-theme=dark] .skills-section .skill-row-number,
+[data-theme=dark] .skills-section .skill-row-copy h3,
+[data-theme=dark] .skills-section .skill-row-copy>p,
+[data-theme=dark] .skills-section .skill-row-dash,
+[data-theme=dark] .skills-section .skill-pill,
+[data-theme=dark] .skills-section .skill-pill * {
+  transition: color var(--dark-fade), background-color var(--dark-fade), border-color var(--dark-fade);
+}
+@media (prefers-reduced-motion:reduce) {
+  [data-theme=dark] body .button.primary-button,
+  [data-theme=dark] body .header-inner>.header-cta,
+  [data-theme=dark] body .process-intro .button,
+  [data-theme=dark] body .contact-bottom>.button,
+  [data-theme=dark] body .project-card-footer .work-entry-link,
+  [data-theme=dark] .project-wheel .work-entry,
+  [data-theme=dark] .project-wheel .work-entry *,
+  [data-theme=dark] .role-timeline .role-entry,
+  [data-theme=dark] .role-timeline .role-entry *,
+  [data-theme=dark] .skills-section .skill-row,
+  [data-theme=dark] .skills-section .skill-row * {
+    transition: none;
+  }
+}
+
+/* ---- Both themes: buttons that lift on hover keep a small invisible strip below them,
+   so a pointer on the bottom edge can't make them rise away, drop back and flicker ---- */
+@media (hover:hover) and (pointer:fine) {
+  .hero .button:hover::after,
+  .header-inner>.header-cta:hover::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 4px;
+  }
+}
+
+/* ---- Light mode: the header's "Let's talk" is a plain colour, so its hover can fade (it looks the same at rest) ---- */
+:root[data-theme=light] body .header-inner>.header-cta {
+  background-image: none;
+  background-color: var(--lime);
+  transition: background-color .2s, color .2s, transform .2s, box-shadow .2s, border-color .2s;
+}
+@media (hover:hover) and (pointer:fine) {
+  :root[data-theme=light] body .header-inner>.header-cta:hover {
+    background-image: none;
+    background-color: var(--ink);
+  }
+}
+
+/* ---- Dark mode: the detailed project preview sits on its own layer, so the card's fade doesn't redraw it every frame ---- */
+[data-theme=dark] .project-wheel .project-card-screen,
+[data-theme=dark] .project-wheel .project-card-demo-image {
+  will-change: transform;
+}
+
+/* ---- Dark mode: the Contact arrow's hover uses the green hover colour ---- */
+[data-theme=dark] .contact:hover .contact-long-arrow {
+  color: #b7ec78;
+}
