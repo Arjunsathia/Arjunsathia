@@ -178,9 +178,9 @@ const groupLabel = (label, count, size) => `<g opacity="0">${enter(0, 0, -10, .5
     <rect x="2" y="${size * .2}" width="5" height="${size * 1.25}" rx="2.5" fill="url(#bar)"/>
     <text x="18" y="${size * 1.25}" class="sans fg" font-size="${size}" font-weight="700" letter-spacing="1.6">${esc(label.toUpperCase())}${count ? `<tspan class="faint" font-weight="500" letter-spacing="0">  ${count}</tspan>` : ''}</text></g>`;
 
-for (const [layout, perLine, cell, nameSize, labelSize, suffix] of [['desktop', 9, 88, 12.5, 15, ''], ['mobile', 4, 100, 15, 19, '-mobile']]) {
+for (const [layout, perLine, cell, nameSize, labelSize, suffix] of [['desktop', 9, 74, 12, 15, ''], ['mobile', 4, 86, 14, 19, '-mobile']]) {
   for (const [file, label, items] of stackGroups) {
-    const rows = Math.ceil(items.length / perLine), top = labelSize * 2.6, cellH = cell + nameSize * 2.6;
+    const rows = Math.ceil(items.length / perLine), top = labelSize * 2.3, cellH = cell * .78 + nameSize * 3.6;
     const labelW = 18 + label.length * (labelSize * .72 + 1.6) + labelSize * 2; // room for the title and its count
     // On phones every group uses the full row width, so all groups shrink by the same amount.
     const W = Math.ceil(Math.max(layout === 'mobile' ? perLine * cell : Math.min(items.length, perLine) * cell, labelW)), H = top + rows * cellH;
@@ -188,7 +188,7 @@ for (const [layout, perLine, cell, nameSize, labelSize, suffix] of [['desktop', 
     const tiles = items.map(([slug, name], i) => {
       const icon = icons[slug], c = iconColours(icon.hex), cls = `c${i}`;
       if (c) colours.push([cls, c]);
-      const x = (i % perLine) * cell, y = top + Math.floor(i / perLine) * cellH, box = cell * .68, bx = x + (cell - box) / 2, s = box * .52 / 24;
+      const x = (i % perLine) * cell, y = top + Math.floor(i / perLine) * cellH, box = cell * .78, bx = x + (cell - box) / 2, s = box * .52 / 24;
       const lines = twoLines(name);
       return `<g opacity="0">${enter(.1 + i * .06, 12, 0, .6)}
       <rect x="${bx}" y="${y}" width="${box}" height="${box}" rx="${box * .27}" class="inner" stroke-width="1.2"/>
