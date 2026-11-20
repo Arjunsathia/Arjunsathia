@@ -130,7 +130,7 @@
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com?user=Arjunsathia&hide_border=true&background=0d1117&ring=4493f8&fire=4493f8&currStreakNum=e6edf3&currStreakLabel=4493f8&sideNums=e6edf3&sideLabels=9198a1&dates=6e7681&stroke=30363d" />
-  <img width="100%" alt="GitHub contribution streak" src="https://streak-stats.demolab.com?user=Arjunsathia&hide_border=true&background=ffffff&ring=0969da&fire=0969da&currStreakNum=1f2328&currStreakLabel=0969da&sideNums=1f2328&sideLabels=59636e&dates=818b98&stroke=d0d7de" />
+  <img width="560" alt="GitHub contribution streak" src="https://streak-stats.demolab.com?user=Arjunsathia&hide_border=true&background=ffffff&ring=0969da&fire=0969da&currStreakNum=1f2328&currStreakLabel=0969da&sideNums=1f2328&sideLabels=59636e&dates=818b98&stroke=d0d7de" />
 </picture>
 
 <picture>
