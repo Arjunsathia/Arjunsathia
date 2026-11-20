@@ -1,86 +1,69 @@
-<!-- Header -->
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0b0f0a,60:1a2410,100:d4e62d&height=220&section=header&text=Arjun%20Sathia&fontSize=62&fontColor=f4f7e8&fontAlignY=36&desc=Full-Stack%20Developer%20%C2%B7%20Kozhikode%2C%20India&descSize=18&descAlignY=58&descAlign=50&animation=fadeIn" width="100%" alt="Arjun Sathia" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://capsule-render.vercel.app/api?type=waving&color=0:0d1117,55:161b22,100:1f6feb&height=230&section=header&text=Arjun%20Sathia&fontSize=64&fontColor=e6edf3&fontAlignY=36&desc=Full-Stack%20Developer&descSize=20&descAlignY=57&animation=fadeIn" />
+  <img width="100%" alt="Arjun Sathia — Full-Stack Developer" src="https://capsule-render.vercel.app/api?type=waving&color=0:ffffff,55:f6f8fa,100:54aeff&height=230&section=header&text=Arjun%20Sathia&fontSize=64&fontColor=1f2328&fontAlignY=36&desc=Full-Stack%20Developer&descSize=20&descAlignY=57&animation=fadeIn" />
+</picture>
 
-<a href="https://github.com/Arjunsathia">
-  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=20&duration=2800&pause=900&color=D4E62D&center=true&vCenter=true&width=640&lines=I+build+production+CRMs+and+fintech+platforms;React+%C2%B7+Next.js+%C2%B7+Node.js+%C2%B7+PostgreSQL+%C2%B7+MongoDB;WhatsApp+Cloud+API+%C2%B7+MetaTrader+5+integrations;Correct+under+load.+Tested+by+default." alt="Typing intro" />
-</a>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=500&size=19&duration=2600&pause=1000&color=2F81F7&center=true&vCenter=true&width=620&lines=Building+production+CRMs+and+fintech+platforms;React+%C2%B7+Next.js+%C2%B7+Node.js+%C2%B7+PostgreSQL+%C2%B7+MongoDB;WhatsApp+Cloud+API+%C2%B7+MetaTrader+5+integrations;Correct+under+load.+Tested+by+default." />
+  <img alt="Building production CRMs and fintech platforms" src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=500&size=19&duration=2600&pause=1000&color=0969DA&center=true&vCenter=true&width=620&lines=Building+production+CRMs+and+fintech+platforms;React+%C2%B7+Next.js+%C2%B7+Node.js+%C2%B7+PostgreSQL+%C2%B7+MongoDB;WhatsApp+Cloud+API+%C2%B7+MetaTrader+5+integrations;Correct+under+load.+Tested+by+default." />
+</picture>
 
-<br/>
+<br/><br/>
 
-<a href="PORTFOLIO_URL"><img src="https://img.shields.io/badge/Portfolio-d4e62d?style=for-the-badge&logo=googlechrome&logoColor=0b0f0a" alt="Portfolio" /></a>
-<a href="https://www.linkedin.com/in/arjunsathia/"><img src="https://img.shields.io/badge/LinkedIn-0b0f0a?style=for-the-badge&logo=linkedin&logoColor=d4e62d" alt="LinkedIn" /></a>
-<a href="mailto:arjunsathia.in@gmail.com"><img src="https://img.shields.io/badge/Email-0b0f0a?style=for-the-badge&logo=gmail&logoColor=d4e62d" alt="Email" /></a>
-<img src="https://komarev.com/ghpvc/?username=Arjunsathia&style=for-the-badge&color=d4e62d&label=Profile+views" alt="Profile views" />
+<a href="PORTFOLIO_URL"><img src="https://img.shields.io/badge/Portfolio-1f6feb?style=flat-square&logo=googlechrome&logoColor=white" alt="Portfolio" /></a>&nbsp;
+<a href="https://www.linkedin.com/in/arjunsathia/"><img src="https://img.shields.io/badge/LinkedIn-0a66c2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>&nbsp;
+<a href="mailto:arjunsathia.in@gmail.com"><img src="https://img.shields.io/badge/Email-238636?style=flat-square&logo=gmail&logoColor=white" alt="Email" /></a>&nbsp;
+<img src="https://img.shields.io/badge/Kozhikode,_India-30363d?style=flat-square&logo=googlemaps&logoColor=white" alt="Kozhikode, India" />&nbsp;
+<img src="https://img.shields.io/badge/Open_to_work-238636?style=flat-square&logo=checkmarx&logoColor=white" alt="Open to work" />
 
 </div>
 
 <br/>
 
-## `> whoami`
+### About
 
-```js
-const arjun = {
-  role:      "Full-Stack Developer @ Wisbato",
-  location:  "Kozhikode, Kerala, India",
-  building:  ["WhatsApp CRM (3 client companies)", "HighCRM — forex brokerage CRM on MetaTrader 5"],
-  focus:     ["transactions that never double-spend", "rate-limit-aware messaging", "secure auth"],
-  testing:   "300+ automated tests across my main projects",
-  openTo:    ["full-time roles", "freelance projects"],
+```ts
+const arjun: Developer = {
+  role:     "Full-Stack Developer @ Wisbato",
+  building: ["WhatsApp CRM · 3 client companies", "HighCRM · forex brokerage CRM on MetaTrader 5"],
+  strengths: ["transactions that never double-spend", "rate-limit-aware messaging", "secure auth"],
+  testing:  "300+ automated tests across my main projects",
+  openTo:   ["full-time roles", "freelance projects"],
 };
 ```
 
 <br/>
 
-## `> stack`
+### Tech stack
 
-<table>
-  <tr>
-    <td width="150"><b>Languages</b></td>
-    <td><img src="https://skillicons.dev/icons?i=js,ts,html,css&theme=dark" alt="Languages" /></td>
-  </tr>
-  <tr>
-    <td><b>Frontend</b></td>
-    <td><img src="https://skillicons.dev/icons?i=react,nextjs,redux,tailwind,vite&theme=dark" alt="Frontend" /></td>
-  </tr>
-  <tr>
-    <td><b>Backend</b></td>
-    <td><img src="https://skillicons.dev/icons?i=nodejs,express,mongodb,postgres,supabase&theme=dark" alt="Backend" /></td>
-  </tr>
-  <tr>
-    <td><b>Testing</b></td>
-    <td><img src="https://skillicons.dev/icons?i=jest,vitest,postman&theme=dark" alt="Testing" /></td>
-  </tr>
-  <tr>
-    <td><b>DevOps</b></td>
-    <td><img src="https://skillicons.dev/icons?i=docker,nginx,githubactions,git,vercel&theme=dark" alt="DevOps" /></td>
-  </tr>
-  <tr>
-    <td><b>Also</b></td>
-    <td>
-      <img src="https://img.shields.io/badge/Socket.IO-0b0f0a?style=flat-square&logo=socketdotio&logoColor=d4e62d" alt="Socket.IO" />
-      <img src="https://img.shields.io/badge/TanStack_Query-0b0f0a?style=flat-square&logo=reactquery&logoColor=d4e62d" alt="TanStack Query" />
-      <img src="https://img.shields.io/badge/Sequelize-0b0f0a?style=flat-square&logo=sequelize&logoColor=d4e62d" alt="Sequelize" />
-      <img src="https://img.shields.io/badge/WhatsApp_Cloud_API-0b0f0a?style=flat-square&logo=whatsapp&logoColor=d4e62d" alt="WhatsApp Cloud API" />
-      <img src="https://img.shields.io/badge/MetaTrader_5_API-0b0f0a?style=flat-square&logo=chartdotjs&logoColor=d4e62d" alt="MetaTrader 5 API" />
-      <img src="https://img.shields.io/badge/JWT_·_OAuth_·_RBAC-0b0f0a?style=flat-square&logo=jsonwebtokens&logoColor=d4e62d" alt="JWT, OAuth, RBAC" />
-      <img src="https://img.shields.io/badge/Swagger-0b0f0a?style=flat-square&logo=swagger&logoColor=d4e62d" alt="Swagger" />
-      <img src="https://img.shields.io/badge/PM2-0b0f0a?style=flat-square&logo=pm2&logoColor=d4e62d" alt="PM2" />
-      <img src="https://img.shields.io/badge/Render-0b0f0a?style=flat-square&logo=render&logoColor=d4e62d" alt="Render" />
-    </td>
-  </tr>
-</table>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=js,ts,html,css,react,nextjs,redux,tailwind,vite,nodejs,express,mongodb,postgres,supabase,jest,vitest,postman,docker,nginx,githubactions,git,vercel&theme=dark&perline=11" />
+  <img alt="JavaScript, TypeScript, HTML, CSS, React, Next.js, Redux, Tailwind CSS, Vite, Node.js, Express, MongoDB, PostgreSQL, Supabase, Jest, Vitest, Postman, Docker, Nginx, GitHub Actions, Git, Vercel" src="https://skillicons.dev/icons?i=js,ts,html,css,react,nextjs,redux,tailwind,vite,nodejs,express,mongodb,postgres,supabase,jest,vitest,postman,docker,nginx,githubactions,git,vercel&theme=light&perline=11" />
+</picture>
 
-<br/>
+<sub>
+<img src="https://img.shields.io/badge/Socket.IO-30363d?style=flat-square&logo=socketdotio&logoColor=white" alt="Socket.IO" />
+<img src="https://img.shields.io/badge/TanStack_Query-30363d?style=flat-square&logo=reactquery&logoColor=white" alt="TanStack Query" />
+<img src="https://img.shields.io/badge/Sequelize-30363d?style=flat-square&logo=sequelize&logoColor=white" alt="Sequelize" />
+<img src="https://img.shields.io/badge/WhatsApp_Cloud_API-30363d?style=flat-square&logo=whatsapp&logoColor=white" alt="WhatsApp Cloud API" />
+<img src="https://img.shields.io/badge/MetaTrader_5_API-30363d?style=flat-square&logo=chartdotjs&logoColor=white" alt="MetaTrader 5 API" />
+<img src="https://img.shields.io/badge/JWT_·_OAuth_·_RBAC-30363d?style=flat-square&logo=jsonwebtokens&logoColor=white" alt="JWT, OAuth, RBAC" />
+<img src="https://img.shields.io/badge/Swagger-30363d?style=flat-square&logo=swagger&logoColor=white" alt="Swagger" />
+<img src="https://img.shields.io/badge/PM2-30363d?style=flat-square&logo=pm2&logoColor=white" alt="PM2" />
+<img src="https://img.shields.io/badge/Render-30363d?style=flat-square&logo=render&logoColor=white" alt="Render" />
+</sub>
 
-## `> featured work`
+<br/><br/>
+
+### Featured work
 
 <table>
   <tr>
     <td valign="top" width="50%">
-      <h3>NexChain</h3>
-      <sub><b>CRYPTO PAPER-TRADING PLATFORM</b> · Personal</sub>
+      <h4>NexChain</h4>
+      <sub>CRYPTO PAPER-TRADING PLATFORM · PERSONAL</sub>
       <p>Trade live Binance prices with a $10k virtual balance using market, limit, stop and OCO orders.</p>
       <ul>
         <li>Server-side order-matching engine on live WebSockets</li>
@@ -88,18 +71,17 @@ const arjun = {
         <li>Rotating refresh tokens, TOTP 2FA, Gemini AI assistant</li>
         <li>140+ automated tests with GitHub Actions CI</li>
       </ul>
-      <p>
-        <img src="https://img.shields.io/badge/React_19-20232a?style=flat-square&logo=react&logoColor=61dafb" alt="React" />
-        <img src="https://img.shields.io/badge/Express_5-20232a?style=flat-square&logo=express&logoColor=white" alt="Express" />
-        <img src="https://img.shields.io/badge/MongoDB-20232a?style=flat-square&logo=mongodb&logoColor=47a248" alt="MongoDB" />
-        <img src="https://img.shields.io/badge/WebSockets-20232a?style=flat-square&logo=socketdotio&logoColor=white" alt="WebSockets" />
-      </p>
-      <a href="LIVE_DEMO_URL"><img src="https://img.shields.io/badge/Live_demo-d4e62d?style=for-the-badge&logoColor=0b0f0a" alt="Live demo" /></a>
-      <a href="NEXCHAIN_REPO_URL"><img src="https://img.shields.io/badge/Source-0b0f0a?style=for-the-badge&logo=github&logoColor=d4e62d" alt="Source code" /></a>
+      <img src="https://img.shields.io/badge/React_19-30363d?style=flat-square&logo=react&logoColor=61dafb" alt="React 19" />
+      <img src="https://img.shields.io/badge/Express_5-30363d?style=flat-square&logo=express&logoColor=white" alt="Express 5" />
+      <img src="https://img.shields.io/badge/MongoDB-30363d?style=flat-square&logo=mongodb&logoColor=47a248" alt="MongoDB" />
+      <img src="https://img.shields.io/badge/WebSockets-30363d?style=flat-square&logo=socketdotio&logoColor=white" alt="WebSockets" />
+      <br/><br/>
+      <a href="LIVE_DEMO_URL"><img src="https://img.shields.io/badge/Live_demo-238636?style=for-the-badge&logo=vercel&logoColor=white" alt="Live demo" /></a>
+      <a href="NEXCHAIN_REPO_URL"><img src="https://img.shields.io/badge/Source-30363d?style=for-the-badge&logo=github&logoColor=white" alt="Source code" /></a>
     </td>
     <td valign="top" width="50%">
-      <h3>HighCRM</h3>
-      <sub><b>FOREX BROKERAGE CRM & CLIENT PORTAL</b> · Wisbato</sub>
+      <h4>HighCRM</h4>
+      <sub>FOREX BROKERAGE CRM & CLIENT PORTAL · WISBATO</sub>
       <p>Onboarding, KYC, MetaTrader 5 accounts, funding and support for a forex brokerage. Running in production.</p>
       <ul>
         <li>MT5 gateway integration with automatic session re-login</li>
@@ -107,51 +89,49 @@ const arjun = {
         <li>Roles-and-permissions matrix: 12 modules × 7 actions</li>
         <li>Real-time support tickets over Socket.IO</li>
       </ul>
-      <p>
-        <img src="https://img.shields.io/badge/React_19-20232a?style=flat-square&logo=react&logoColor=61dafb" alt="React" />
-        <img src="https://img.shields.io/badge/Node.js-20232a?style=flat-square&logo=nodedotjs&logoColor=5fa04e" alt="Node.js" />
-        <img src="https://img.shields.io/badge/PostgreSQL-20232a?style=flat-square&logo=postgresql&logoColor=4169e1" alt="PostgreSQL" />
-        <img src="https://img.shields.io/badge/Nginx-20232a?style=flat-square&logo=nginx&logoColor=009639" alt="Nginx" />
-      </p>
-      <img src="https://img.shields.io/badge/Private_client_project-2a3324?style=for-the-badge&logo=lock&logoColor=d4e62d" alt="Private client project" />
+      <img src="https://img.shields.io/badge/React_19-30363d?style=flat-square&logo=react&logoColor=61dafb" alt="React 19" />
+      <img src="https://img.shields.io/badge/Node.js-30363d?style=flat-square&logo=nodedotjs&logoColor=5fa04e" alt="Node.js" />
+      <img src="https://img.shields.io/badge/PostgreSQL-30363d?style=flat-square&logo=postgresql&logoColor=699eca" alt="PostgreSQL" />
+      <img src="https://img.shields.io/badge/Socket.IO-30363d?style=flat-square&logo=socketdotio&logoColor=white" alt="Socket.IO" />
+      <br/><br/>
+      <img src="https://img.shields.io/badge/Private_·_client_project-30363d?style=for-the-badge&logo=lock&logoColor=white" alt="Private client project" />
     </td>
   </tr>
   <tr>
     <td valign="top" colspan="2">
-      <h3>WhatsApp CRM</h3>
-      <sub><b>BUSINESS MESSAGING & CLASS AUTOMATION</b> · Wisbato · Used by 3 client companies</sub>
+      <h4>WhatsApp CRM</h4>
+      <sub>BUSINESS MESSAGING & CLASS AUTOMATION · WISBATO · USED BY 3 CLIENT COMPANIES</sub>
       <p>Extended an open-source WhatsApp CRM into an education platform that runs a training institute's student communication end to end.</p>
       <ul>
         <li>Cron-driven scheduler for personalised class reminders and WhatsApp attendance check-ins</li>
         <li>Broadcast queue and send governor that backs off automatically on Meta rate limits</li>
         <li>Planner payload cut from <b>~320 KB to ~37 KB</b> · 60+ SQL migrations · ~200 Vitest test files</li>
       </ul>
-      <p>
-        <img src="https://img.shields.io/badge/Next.js_16-20232a?style=flat-square&logo=nextdotjs&logoColor=white" alt="Next.js" />
-        <img src="https://img.shields.io/badge/TypeScript-20232a?style=flat-square&logo=typescript&logoColor=3178c6" alt="TypeScript" />
-        <img src="https://img.shields.io/badge/Supabase-20232a?style=flat-square&logo=supabase&logoColor=3fcf8e" alt="Supabase" />
-        <img src="https://img.shields.io/badge/WhatsApp_Cloud_API-20232a?style=flat-square&logo=whatsapp&logoColor=25d366" alt="WhatsApp Cloud API" />
-        <img src="https://img.shields.io/badge/Docker-20232a?style=flat-square&logo=docker&logoColor=2496ed" alt="Docker" />
-      </p>
-      <img src="https://img.shields.io/badge/Private_client_project-2a3324?style=for-the-badge&logo=lock&logoColor=d4e62d" alt="Private client project" />
+      <img src="https://img.shields.io/badge/Next.js_16-30363d?style=flat-square&logo=nextdotjs&logoColor=white" alt="Next.js 16" />
+      <img src="https://img.shields.io/badge/TypeScript-30363d?style=flat-square&logo=typescript&logoColor=3178c6" alt="TypeScript" />
+      <img src="https://img.shields.io/badge/Supabase-30363d?style=flat-square&logo=supabase&logoColor=3fcf8e" alt="Supabase" />
+      <img src="https://img.shields.io/badge/WhatsApp_Cloud_API-30363d?style=flat-square&logo=whatsapp&logoColor=25d366" alt="WhatsApp Cloud API" />
+      <img src="https://img.shields.io/badge/Docker-30363d?style=flat-square&logo=docker&logoColor=2496ed" alt="Docker" />
+      <br/><br/>
+      <img src="https://img.shields.io/badge/Private_·_client_project-30363d?style=for-the-badge&logo=lock&logoColor=white" alt="Private client project" />
     </td>
   </tr>
 </table>
 
 <br/>
 
-## `> experience`
+### Experience
 
 <table>
   <tr>
-    <td width="190" valign="top"><sub><b>OCT 2025 — PRESENT</b></sub></td>
+    <td width="170" valign="top"><code>Oct 2025 — now</code></td>
     <td>
       <b>Full Stack Developer</b> · Wisbato<br/>
       <sub>Develop and maintain full-stack applications for client businesses, mainly a WhatsApp CRM and HighCRM, a forex brokerage CRM integrated with MetaTrader 5.</sub>
     </td>
   </tr>
   <tr>
-    <td valign="top"><sub><b>JAN 2025 — AUG 2025</b></sub></td>
+    <td valign="top"><code>Jan — Aug 2025</code></td>
     <td>
       <b>Full Stack Developer Intern</b> · Luminar Technolab<br/>
       <sub>Built RESTful APIs in Node.js and Express.js with JWT authentication and role-based access, plus 30+ reusable React components with Redux and Tailwind CSS.</sub>
@@ -161,16 +141,33 @@ const arjun = {
 
 <br/>
 
-## `> github`
+### GitHub activity
 
 <div align="center">
 
-<img height="170" src="https://github-readme-stats.vercel.app/api?username=Arjunsathia&show_icons=true&include_all_commits=true&count_private=true&rank_icon=github&hide_border=true&bg_color=0b0f0a&title_color=d4e62d&icon_color=d4e62d&text_color=e8ecd9&ring_color=d4e62d" alt="GitHub stats" />
-<img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Arjunsathia&layout=compact&langs_count=8&hide_border=true&bg_color=0b0f0a&title_color=d4e62d&text_color=e8ecd9" alt="Top languages" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api?username=Arjunsathia&show_icons=true&include_all_commits=true&count_private=true&rank_icon=github&hide_border=true&theme=github_dark&bg_color=0d1117&title_color=e6edf3&icon_color=2f81f7&ring_color=2f81f7" />
+  <img height="165" alt="GitHub stats" src="https://github-readme-stats.vercel.app/api?username=Arjunsathia&show_icons=true&include_all_commits=true&count_private=true&rank_icon=github&hide_border=true&bg_color=ffffff&title_color=1f2328&text_color=59636e&icon_color=0969da&ring_color=0969da" />
+</picture>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api/top-langs/?username=Arjunsathia&layout=compact&langs_count=8&hide_border=true&theme=github_dark&bg_color=0d1117&title_color=e6edf3" />
+  <img height="165" alt="Top languages" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Arjunsathia&layout=compact&langs_count=8&hide_border=true&bg_color=ffffff&title_color=1f2328&text_color=59636e" />
+</picture>
 
-<img src="https://streak-stats.demolab.com?user=Arjunsathia&hide_border=true&background=0b0f0a&ring=d4e62d&fire=d4e62d&currStreakNum=f4f7e8&currStreakLabel=d4e62d&sideNums=f4f7e8&sideLabels=a6b49f&dates=83917f&stroke=2a3324" alt="GitHub streak" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com?user=Arjunsathia&hide_border=true&background=0d1117&ring=2f81f7&fire=2f81f7&currStreakNum=e6edf3&currStreakLabel=2f81f7&sideNums=e6edf3&sideLabels=7d8590&dates=7d8590&stroke=30363d" />
+  <img alt="GitHub streak" src="https://streak-stats.demolab.com?user=Arjunsathia&hide_border=true&background=ffffff&ring=0969da&fire=0969da&currStreakNum=1f2328&currStreakLabel=0969da&sideNums=1f2328&sideLabels=59636e&dates=59636e&stroke=d0d7de" />
+</picture>
 
-<img width="100%" src="https://github-readme-activity-graph.vercel.app/graph?username=Arjunsathia&bg_color=0b0f0a&color=a6b49f&line=d4e62d&point=f4f7e8&area=true&area_color=d4e62d&hide_border=true&custom_title=Contribution%20activity" alt="Contribution graph" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-activity-graph.vercel.app/graph?username=Arjunsathia&bg_color=0d1117&color=7d8590&line=2f81f7&point=e6edf3&area=true&area_color=2f81f7&hide_border=true&custom_title=Contribution%20activity" />
+  <img width="100%" alt="Contribution activity" src="https://github-readme-activity-graph.vercel.app/graph?username=Arjunsathia&bg_color=ffffff&color=59636e&line=0969da&point=1f2328&area=true&area_color=0969da&hide_border=true&custom_title=Contribution%20activity" />
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/output/github-snake-dark.svg" />
+  <img width="100%" alt="Contribution snake animation" src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/output/github-snake.svg" />
+</picture>
 
 </div>
 
@@ -178,8 +175,11 @@ const arjun = {
 
 <div align="center">
 
-<sub>Open to full-time roles and freelance work · Reach me at <a href="mailto:arjunsathia.in@gmail.com">arjunsathia.in@gmail.com</a></sub>
+<sub>Open to full-time roles and freelance work · <a href="mailto:arjunsathia.in@gmail.com">arjunsathia.in@gmail.com</a></sub>
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:d4e62d,40:1a2410,100:0b0f0a&height=120&section=footer" width="100%" alt="" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://capsule-render.vercel.app/api?type=waving&color=0:1f6feb,45:161b22,100:0d1117&height=110&section=footer" />
+  <img width="100%" alt="" src="https://capsule-render.vercel.app/api?type=waving&color=0:54aeff,45:f6f8fa,100:ffffff&height=110&section=footer" />
+</picture>
 
 </div>
