@@ -39,12 +39,12 @@ const ease = 'calcMode="spline" keySplines=".16 1 .3 1" keyTimes="0;1"';
 const enter = (begin, dy = 14, dx = 0, dur = .8) => `<animate attributeName="opacity" from="0" to="1" begin="${begin}s" dur="${dur}s" fill="freeze"/><animateTransform attributeName="transform" type="translate" from="${dx} ${dy}" to="0 0" begin="${begin}s" dur="${dur}s" fill="freeze" ${ease}/>`;
 
 // ---------- Header: centred, so it reads well at any width ----------
-{
-  const W = 800, H = 400, cx = W / 2;
+for (const [W, file] of [[800, 'header-mobile.svg'], [1100, 'header.svg']]) {
+  const H = 400, cx = W / 2, k = W / 800;
   const lines = ['CRM & fintech platforms', 'WhatsApp Cloud API · MetaTrader 5', 'React · Next.js · Node.js · PostgreSQL'];
   const cycle = 9, slot = cycle / lines.length;
   const rotating = lines.map((t, i) => `<g opacity="0"><animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;.06;.28;.33;1" dur="${cycle}s" begin="${1.4 + i * slot}s" repeatCount="indefinite"/><animateTransform attributeName="transform" type="translate" values="0 10;0 0;0 0;0 -10;0 -10" keyTimes="0;.06;.28;.33;1" dur="${cycle}s" begin="${1.4 + i * slot}s" repeatCount="indefinite"/><text x="${cx}" y="292" text-anchor="middle" class="mono blue" font-size="24">${esc(t)}</text></g>`).join('');
-  write('header.svg', svg(W, H, 'Arjun Sathia — Full-Stack Developer at Wisbato, building CRM and fintech platforms', `
+  write(file, svg(W, H, 'Arjun Sathia — Full-Stack Developer at Wisbato, building CRM and fintech platforms', `
   <defs>
     <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="60"/></filter>
     <filter id="focus" x="-10%" y="-40%" width="120%" height="180%"><feGaussianBlur stdDeviation="10"><animate attributeName="stdDeviation" from="10" to="0" begin=".2s" dur="1s" fill="freeze" ${ease}/></feGaussianBlur></filter>
@@ -61,9 +61,9 @@ const enter = (begin, dy = 14, dx = 0, dur = .8) => `<animate attributeName="opa
   <g clip-path="url(#clip)">
     <rect width="${W}" height="${H}" fill="url(#dots)" mask="url(#dotMask)"/>
     <g filter="url(#soft)" opacity=".5">
-      <circle r="130" cx="140" cy="60" class="glow-blue"><animate attributeName="cx" values="140;260;140" dur="16s" repeatCount="indefinite"/></circle>
-      <circle r="120" cx="680" cy="340" class="glow-purple"><animate attributeName="cx" values="680;560;680" dur="18s" repeatCount="indefinite"/></circle>
-      <circle r="80" cx="700" cy="40" class="glow-green" opacity=".7"><animate attributeName="cy" values="40;90;40" dur="13s" repeatCount="indefinite"/></circle>
+      <circle r="130" cx="${140 * k}" cy="60" class="glow-blue"><animate attributeName="cx" values="${140 * k};${260 * k};${140 * k}" dur="16s" repeatCount="indefinite"/></circle>
+      <circle r="120" cx="${680 * k}" cy="340" class="glow-purple"><animate attributeName="cx" values="${680 * k};${560 * k};${680 * k}" dur="18s" repeatCount="indefinite"/></circle>
+      <circle r="80" cx="${700 * k}" cy="40" class="glow-green" opacity=".7"><animate attributeName="cy" values="40;90;40" dur="13s" repeatCount="indefinite"/></circle>
     </g>
   </g>
   <g opacity="0">${enter(0, 10)}
@@ -82,28 +82,29 @@ const enter = (begin, dy = 14, dx = 0, dur = .8) => `<animate attributeName="opa
 
 // ---------- Section headers: number tile, title sliding in, a rule with a travelling light ----------
 const sections = [['about', '01', 'About', 'who I am'], ['stack', '02', 'Tech stack', 'tools I ship with'], ['work', '03', 'Featured work', "things I've built"], ['experience', '04', 'Experience', "where I've worked"], ['activity', '05', 'GitHub activity', 'live from GitHub']];
-for (const [file, num, title, note] of sections) {
-  write(`title-${file}.svg`, svg(800, 100, `${title} — ${note}`, `
+for (const [file, num, title, note] of sections) for (const [W, suffix] of [[800, '-mobile'], [1100, '']]) {
+  write(`title-${file}${suffix}.svg`, svg(W, 96, `${title} — ${note}`, `
   <defs>
     <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="stop-a"/><stop offset="1" class="stop-b"/></linearGradient>
     <linearGradient id="rule" x1="0" x2="1"><stop offset="0" class="stop-a"/><stop offset=".6" class="stop-b" stop-opacity=".5"/><stop offset="1" class="stop-b" stop-opacity="0"/></linearGradient>
     <linearGradient id="spark" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
   </defs>
   <g opacity="0">${enter(0, 0, 0, .6)}
-    <rect x="2" y="14" width="64" height="64" rx="18" fill="url(#tile)"/>
-    <text x="34" y="56" text-anchor="middle" class="sans on-accent" font-size="26" font-weight="700">${num}</text>
+    <rect x="2" y="14" width="62" height="62" rx="18" fill="url(#tile)"/>
+    <text x="33" y="55" text-anchor="middle" class="sans on-accent" font-size="26" font-weight="700">${num}</text>
   </g>
-  <g opacity="0">${enter(.15, 0, -24)}<text x="88" y="62" class="sans fg" font-size="42" font-weight="700" letter-spacing="-1">${esc(title)}</text></g>
-  <g opacity="0">${enter(.45, 0, 16)}<text x="798" y="58" text-anchor="end" class="mono faint" font-size="22">${esc(note)}</text></g>
-  <rect x="0" y="94" height="3" width="0" rx="1.5" fill="url(#rule)"><animate attributeName="width" from="0" to="800" begin=".2s" dur="1.4s" fill="freeze" ${ease}/></rect>
-  <rect x="-140" y="94" width="140" height="3" fill="url(#spark)" opacity=".7"><animate attributeName="x" values="-140;800;800" keyTimes="0;.45;1" dur="5s" begin="1.6s" repeatCount="indefinite"/></rect>`));
+  <g opacity="0">${enter(.15, 0, -24)}<text x="86" y="60" class="sans fg" font-size="44" font-weight="700" letter-spacing="-1">${esc(title)}</text></g>
+  <g opacity="0">${enter(.45, 0, 16)}<text x="${W - 2}" y="56" text-anchor="end" class="mono faint" font-size="24">${esc(note)}</text></g>
+  <rect x="0" y="90" height="3" width="0" rx="1.5" fill="url(#rule)"><animate attributeName="width" from="0" to="${W}" begin=".2s" dur="1.4s" fill="freeze" ${ease}/></rect>
+  <rect x="-160" y="90" width="160" height="3" fill="url(#spark)" opacity=".7"><animate attributeName="x" values="-160;${W};${W}" keyTimes="0;.45;1" dur="5s" begin="1.6s" repeatCount="indefinite"/></rect>`));
 }
 
 // ---------- Project banners: key facts on the left, a small live animation on the right ----------
-const banner = (file, {tag, name, subtitle, fact, color, glow, art, title}) => write(file, svg(800, 280, title, `
-  <defs><filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="50"/></filter><clipPath id="clip"><rect x="1" y="1" width="798" height="278" rx="24"/></clipPath></defs>
-  <rect x="1" y="1" width="798" height="278" rx="24" class="card" stroke-width="1.5"/>
-  <g clip-path="url(#clip)"><circle cx="680" cy="60" r="150" class="${glow}" opacity=".35" filter="url(#soft)"><animate attributeName="cx" values="680;740;680" dur="12s" repeatCount="indefinite"/></circle></g>
+const banner = (file, opts) => { for (const [W, suffix] of [[800, '-mobile'], [1100, '']]) bannerAt(W, file.replace('.svg', suffix + '.svg'), opts); };
+const bannerAt = (W, file, {tag, name, subtitle, fact, color, glow, art, title}) => write(file, svg(W, 280, title, `
+  <defs><filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="50"/></filter><clipPath id="clip"><rect x="1" y="1" width="${W - 2}" height="278" rx="24"/></clipPath></defs>
+  <rect x="1" y="1" width="${W - 2}" height="278" rx="24" class="card" stroke-width="1.5"/>
+  <g clip-path="url(#clip)"><circle cx="${W - 120}" cy="60" r="150" class="${glow}" opacity=".35" filter="url(#soft)"><animate attributeName="cx" values="${W - 120};${W - 60};${W - 120}" dur="12s" repeatCount="indefinite"/></circle></g>
   <g opacity="0">${enter(0, 0, -16)}
     <circle cx="46" cy="58" r="7" class="${color}"/>
     <text x="64" y="66" class="mono muted" font-size="22">${esc(tag)}</text>
@@ -111,7 +112,7 @@ const banner = (file, {tag, name, subtitle, fact, color, glow, art, title}) => w
     <text x="40" y="186" class="sans muted" font-size="26">${esc(subtitle)}</text>
     <text x="40" y="234" class="sans ${color}" font-size="24" font-weight="600">${esc(fact)}</text>
   </g>
-  <g opacity="0">${enter(.3, 0, 16)}<rect x="520" y="36" width="250" height="208" rx="18" class="inner" stroke-width="1.5"/>${art}</g>`));
+  <g opacity="0">${enter(.3, 0, 16)}<g transform="translate(${W - 800} 0)"><rect x="520" y="36" width="250" height="208" rx="18" class="inner" stroke-width="1.5"/>${art}</g></g>`));
 
 { // WhatsApp CRM: reminder, attendance code and reply, on a loop
   const bubble = (i, x, y, w, text, out) => { const a = 0.08 + i * 0.16; return `<g opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;${a.toFixed(2)};${(a + .05).toFixed(2)};.9;1" dur="7s" repeatCount="indefinite"/><rect x="${x}" y="${y}" width="${w}" height="44" rx="16" class="${out ? 'bubble-out' : 'bubble-in'}" stroke-width="1.2"/><text x="${x + 16}" y="${y + 29}" class="sans ${out ? 'on-accent' : 'fg'}" font-size="20"${out ? ' font-weight="700"' : ''}>${esc(text)}</text></g>`; };

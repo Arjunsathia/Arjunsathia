@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src=".github/assets/header.svg" width="100%" alt="Arjun Sathia — Full-Stack Developer at Wisbato, building CRM and fintech platforms" />
+<picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/header-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/header.svg" width="100%" alt="Arjun Sathia — Full-Stack Developer at Wisbato, building CRM and fintech platforms" /></picture>
 
 <br/>
 
@@ -12,7 +12,7 @@
 
 <br/>
 
-<img src=".github/assets/title-about.svg" width="100%" alt="01 · About" />
+<picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-about-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-about.svg" width="100%" alt="01 · About" /></picture>
 
 - **Now** · Full-Stack Developer at **Wisbato**, Kozhikode
 - **Building** · A WhatsApp CRM used by 3 client companies, and HighCRM on MetaTrader 5
@@ -21,7 +21,7 @@
 
 <br/>
 
-<img src=".github/assets/title-stack.svg" width="100%" alt="02 · Tech stack" />
+<picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-stack-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-stack.svg" width="100%" alt="02 · Tech stack" /></picture>
 
 <table>
   <tr>
@@ -49,9 +49,9 @@
 
 <br/>
 
-<img src=".github/assets/title-work.svg" width="100%" alt="03 · Featured work" />
+<picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-work-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-work.svg" width="100%" alt="03 · Featured work" /></picture>
 
-<img src=".github/assets/project-whatsapp-crm.svg" width="100%" alt="WhatsApp CRM — messaging and class automation, used by 3 client companies" />
+<picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/project-whatsapp-crm-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/project-whatsapp-crm.svg" width="100%" alt="WhatsApp CRM — messaging and class automation, used by 3 client companies" /></picture>
 
 - **Scheduler** · Automated class reminders and notes for every student
 - **Attendance** · Students check in on WhatsApp with a session code
@@ -62,7 +62,7 @@
 
 <br/>
 
-<img src=".github/assets/project-highcrm.svg" width="100%" alt="HighCRM — forex brokerage CRM and client portal on MetaTrader 5" />
+<picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/project-highcrm-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/project-highcrm.svg" width="100%" alt="HighCRM — forex brokerage CRM and client portal on MetaTrader 5" /></picture>
 
 - **MetaTrader 5** · Live and demo accounts with automatic session re-login
 - **Funding** · Deposits and withdrawals in PostgreSQL transactions
@@ -73,7 +73,7 @@
 
 <br/>
 
-<a href="https://nexchain-black.vercel.app"><img src=".github/assets/project-nexchain.svg" width="100%" alt="NexChain — crypto paper-trading platform on live Binance prices" /></a>
+<a href="https://nexchain-black.vercel.app"><picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/project-nexchain-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/project-nexchain.svg" width="100%" alt="NexChain — crypto paper-trading platform on live Binance prices" /></picture></a>
 
 - **Trading** · Market, limit, stop and OCO orders on live prices
 - **Engine** · Server-side matching; MongoDB transactions stop double fills
@@ -86,7 +86,7 @@
 
 <br/><br/>
 
-<img src=".github/assets/title-experience.svg" width="100%" alt="04 · Experience" />
+<picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-experience-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-experience.svg" width="100%" alt="04 · Experience" /></picture>
 
 <table>
   <tr>
@@ -101,7 +101,7 @@
 
 <br/>
 
-<img src=".github/assets/title-activity.svg" width="100%" alt="05 · GitHub activity" />
+<picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-activity-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-activity.svg" width="100%" alt="05 · GitHub activity" /></picture>
 
 <div align="center">
 
@@ -117,6 +117,6 @@
 
 <br/><br/>
 
-<img src=".github/assets/footer.svg" width="100%" alt="Thanks for stopping by. Let's build something reliable together." />
+<img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/footer.svg" width="100%" alt="Thanks for stopping by. Let's build something reliable together." />
 
 </div>
