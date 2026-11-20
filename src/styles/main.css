@@ -11046,3 +11046,95 @@ body .experience-section .role-timeline .role-entry .role-card-link {
     margin-top: 6px;
   }
 }
+
+/* ---- Phones: a compact popup ----
+   A smaller sheet (at most 600px tall, with room around it), a tighter dark header and a slim one-line live-site button. */
+@media (max-width:700px) {
+  .project-modal,
+  .experience-dialog {
+    --popup-height: min(600px, calc(100dvh - 120px));
+    width: calc(100% - 32px);
+    max-width: 420px;
+  }
+  .project-modal .project-detail-aside {
+    padding: 16px 64px 14px 18px;
+    gap: 0;
+  }
+  .project-detail-aside>.eyebrow {
+    margin: 0;
+  }
+  .project-modal .project-detail-aside h2 {
+    margin: 6px 0 2px;
+    font-size: 28px;
+    line-height: 1.05;
+  }
+  .project-modal .project-detail-category {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .project-detail-closebar>.enquiry-close {
+    top: 10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+  }
+  /* Slim live-site button: one line, the address is left to larger screens. */
+  .project-detail-live {
+    gap: 8px;
+    margin: 10px 0 0;
+    padding: 4px 4px 4px 12px;
+    box-shadow: 0 8px 20px -12px color-mix(in srgb, var(--project-accent) 80%, transparent), inset 0 0 0 1px #ffffff2e;
+  }
+  .project-detail-live-dot {
+    width: 6px;
+    height: 6px;
+  }
+  .project-detail-live-dot::after {
+    inset: -3px;
+    border-width: 1.5px;
+  }
+  .project-detail-live-text>strong {
+    font-size: 12px;
+  }
+  .project-detail-live-text>small {
+    display: none;
+  }
+  .project-detail-live>.glyph {
+    width: 24px;
+    height: 24px;
+  }
+  .project-detail-live>.glyph>svg {
+    width: 11px;
+    height: 11px;
+  }
+  .project-detail-main {
+    padding: 12px 16px 14px;
+  }
+  .project-modal-tabs {
+    padding-bottom: 10px;
+  }
+  .project-modal-tabs>button {
+    min-height: 38px;
+  }
+  .project-modal-page {
+    padding: 14px 0;
+    gap: 14px;
+  }
+  /* Experience: the same tighter header. */
+  .experience-dialog .role-details-aside {
+    padding: 16px 18px 14px;
+  }
+  /* Only the title keeps clear of the close button; the period and duration row uses the full width. */
+  .experience-dialog .role-details-aside h2 {
+    max-width: none;
+    margin-right: 48px;
+    font-size: 28px;
+    line-height: 1.05;
+  }
+  .role-details-closebar>.enquiry-close {
+    top: 10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+  }
+}
