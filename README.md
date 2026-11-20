@@ -1,59 +1,110 @@
-# Arjun Sathia — developer portfolio
+<div align="center">
 
-A single-page portfolio built with React 19, Vite, and Motion for React.
+<a><picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/header-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/header.svg" width="100%" alt="Arjun Sathia — Full-Stack Developer at Wisbato, building CRM and fintech platforms" /></picture></a>
 
-## Getting started
+<br/>
 
-```sh
-npm install
-npm run dev       # http://localhost:5173/ (also reachable from other devices on your network)
-npm run build     # production build in dist/
-npm run preview   # serve the production build
-npm test          # unit tests (node --test)
-```
+<a href="https://arjunsathia.vercel.app"><img src="https://img.shields.io/badge/Portfolio-0d1117?style=for-the-badge&logo=vercel&logoColor=white" alt="Portfolio" /></a>
+<a href="https://www.linkedin.com/in/arjunsathia/"><img src="https://img.shields.io/badge/LinkedIn-0a66c2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
+<a href="mailto:arjunsathia.in@gmail.com"><img src="https://img.shields.io/badge/Email-1f6feb?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" /></a>
 
-## Project structure
+</div>
 
-```
-index.html                     Page shell, meta tags
-public/favicon.svg             Favicon
-src/
-  main.jsx                     Entry point: mounts <App /> and loads the styles
-  App.jsx                      Page layout: the section order and the shared enquiry dialog
-  content/site.js              All text and data: profile, projects, services, stack, roles, process, testimonials, ticker
-  sections/                    One component per page section (Header, Hero, Intro, Work, Services, Skills,
-                               Experience, Process, About, Testimonials, Contact)
-  components/
-    icons.jsx                  SVG arrow, asterisk, and hand-drawn doodle marks
-    Enquiry.jsx                "Let's talk" button and the enquiry dialog
-    SectionHeading.jsx         Numbered section title with the animated highlight
-    PremiumCursor.jsx          Custom pointer (mouse only; touch, keyboard, and forced-colors keep the native cursor)
-  hooks/useModalDialog.js      Shared dialog behavior: open, focus trap, Escape/backdrop close, scroll lock
-  lib/motion.jsx               Reveal/entrance animations and the centered-scroll list hook
-  lib/scroll-boundary.js       Hands wheel scrolling from an inner list to the page at its edges
-  styles/fonts.css             @font-face declarations (self-hosted WOFF2)
-  styles/main.css              All site styles; design tokens (colors, shadows) are custom properties
-  assets/images/               Portraits
-  assets/fonts/                Fonts and their licenses (SIL OFL 1.1)
-  assets/project-previews/     Illustrative screens for each project: overview, detail, and mobile
-tests/                         Tests for the scroll-boundary logic
-```
+<br/>
 
-To change any text on the site, edit `src/content/site.js`; the components only handle layout and behavior.
+<a><picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-about-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-about.svg" width="100%" alt="01 · About" /></picture></a>
 
-## Content to personalize
+- **Now** · Full-Stack Developer at **Wisbato**, Kozhikode
+- **Building** · A WhatsApp CRM used by 3 client companies, and HighCRM on MetaTrader 5
+- **Focus** · Transactions, rate limits and secure auth, backed by 300+ automated tests
+- **Open to** · Full-time roles and freelance projects
 
-- **Contact details:** the `profile` object at the top of `src/content/site.js` holds sample `email` and `phone` values, shown in the enquiry dialog and labeled as samples there. `github` and `linkedin` are empty; until they are filled in, the Contact section shows a "coming soon" notice instead of a link.
-- **Enquiry form:** the "Let's talk" and "Discuss a project" buttons open a demo form. It validates input but sends nothing ("Demo mode"). Connect it to a form service or API before relying on it.
-- **Content:** projects (WhatsApp CRM, MT5 Broker CRM, NexChain), experience (Wisbato, Luminar Technolab) and the stack all live in `src/content/site.js`. The four testimonials are still samples, labeled as such on the page; replace them with approved feedback before publishing.
-- **Project previews:** each project shows three screens from `src/assets/project-previews/` named `<slug>-overview.svg`, `<slug>-detail.svg`, and `<slug>-mobile.svg`, where `slug` is set on each project. The screens are illustrative mockups, not screenshots of client systems.
-- **Images:** the hero portrait is `src/assets/images/portrait-warm-lighting.webp`; the About portrait is `src/assets/images/arjun-about.jpeg`.
-- **Project colors:** each project's `accent` field sets the color of its card and its detail dialog.
-- **Social previews:** `index.html` has Open Graph title and description tags. Once the site has a public URL, add `og:url` and an `og:image` (an absolute URL to a 1200×630 image).
+<br/>
 
-## Behavior notes
+<a><picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-stack-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-stack.svg" width="100%" alt="02 · Tech stack" /></picture></a>
 
-- Page scrolling is native. The Projects and Experience lists scroll inside their panels, and once a list reaches its first or last item, further wheel movement scrolls the page instead (`src/scroll-boundary.js`). Testimonials scroll horizontally as a looping carousel.
-- Every dialog (project details, preview viewer, experience details, enquiry) is a native `<dialog>` using one hook, `useModalDialog`: Escape and backdrop clicks close it, focus stays inside while it is open and returns to the trigger afterwards, and the page behind cannot scroll.
-- Project dialogs have Overview, Previews, Approach, Development, and Stack tabs; the preview viewer steps through screens with the arrow keys. On small screens the experience dialog splits into Overview, Responsibilities, and Tools tabs. All tab lists respond to the arrow, Home, and End keys.
-- Animations follow the visitor's reduced-motion setting: with it on, movement is disabled and dialogs close instantly.
+<a><picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-languages-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-languages.svg" alt="Languages: JavaScript, TypeScript, HTML5, CSS" /></picture></a>
+
+<a><picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-frontend-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-frontend.svg" alt="Frontend: React, Next.js, Redux Toolkit, Tailwind CSS, Bootstrap, Vite, Three.js" /></picture></a>
+
+<a><picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-backend-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-backend.svg" alt="Backend and APIs: Node.js, Express, Socket.IO, REST APIs, WhatsApp Cloud API, Gemini AI" /></picture></a>
+
+<a><picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-databases-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-databases.svg" alt="Databases: PostgreSQL, MongoDB, Supabase, Sequelize, Mongoose" /></picture></a>
+
+<a><picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-libraries-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-libraries.svg" alt="Libraries: TanStack Query, React Hook Form, Zod, React Flow, Framer Motion, Cloudinary" /></picture></a>
+
+<a><picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-auth-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-auth.svg" alt="Auth and security: JWT, Google OAuth" /></picture></a>
+
+<a><picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-testing-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-testing.svg" alt="Testing: Jest, Vitest, Postman, Swagger" /></picture></a>
+
+<a><picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-devops-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-devops.svg" alt="DevOps and tools: Docker, Nginx, GitHub Actions, Git, GitHub, Vercel, Render, PM2, Linux" /></picture></a>
+
+<a><picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-also-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-also.svg" alt="Also: SQL, REST and Webhooks, MetaTrader 5 API, Row Level Security, PGlite, Recharts, RBAC, TOTP 2FA, bcrypt" /></picture></a>
+
+<br/>
+
+<a><picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-work-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-work.svg" width="100%" alt="03 · Featured work" /></picture></a>
+
+<a><picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/project-whatsapp-crm-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/project-whatsapp-crm.svg" width="100%" alt="WhatsApp CRM — messaging and class automation, used by 3 client companies" /></picture></a>
+
+- **Scheduler** · Automated class reminders and notes for every student
+- **Attendance** · Students check in on WhatsApp with a session code
+- **Safe sending** · Broadcast queue that backs off on Meta rate limits
+- **Quality** · Payload ~320 KB → ~37 KB · ~200 test files
+
+<a><picture><img src="https://img.shields.io/badge/Next.js-21262d?style=flat-square&logo=nextdotjs&logoColor=white" alt="Next.js" /></picture></a> <a><picture><img src="https://img.shields.io/badge/TypeScript-21262d?style=flat-square&logo=typescript&logoColor=3178c6" alt="TypeScript" /></picture></a> <a><picture><img src="https://img.shields.io/badge/Supabase-21262d?style=flat-square&logo=supabase&logoColor=3fcf8e" alt="Supabase" /></picture></a> <a><picture><img src="https://img.shields.io/badge/WhatsApp_API-21262d?style=flat-square&logo=whatsapp&logoColor=25d366" alt="WhatsApp Cloud API" /></picture></a>
+
+<br/>
+
+<a><picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/project-highcrm-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/project-highcrm.svg" width="100%" alt="HighCRM — forex brokerage CRM and client portal on MetaTrader 5" /></picture></a>
+
+- **MetaTrader 5** · Live and demo accounts with automatic session re-login
+- **Funding** · Deposits and withdrawals in PostgreSQL transactions
+- **Access** · Permission matrix of 12 modules × 7 actions
+- **Compliance** · KYC approval required before any money action
+
+<a><picture><img src="https://img.shields.io/badge/React-21262d?style=flat-square&logo=react&logoColor=61dafb" alt="React" /></picture></a> <a><picture><img src="https://img.shields.io/badge/Node.js-21262d?style=flat-square&logo=nodedotjs&logoColor=5fa04e" alt="Node.js" /></picture></a> <a><picture><img src="https://img.shields.io/badge/PostgreSQL-21262d?style=flat-square&logo=postgresql&logoColor=699eca" alt="PostgreSQL" /></picture></a> <a><picture><img src="https://img.shields.io/badge/Socket.IO-21262d?style=flat-square&logo=socketdotio&logoColor=white" alt="Socket.IO" /></picture></a>
+
+<br/>
+
+<a href="https://nexchain-black.vercel.app"><picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/project-nexchain-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/project-nexchain.svg" width="100%" alt="NexChain — crypto paper-trading platform on live Binance prices" /></picture></a>
+
+- **Trading** · Market, limit, stop and OCO orders on live prices
+- **Engine** · Server-side matching; MongoDB transactions stop double fills
+- **Security** · Rotating refresh tokens, TOTP 2FA, rate limits
+- **Quality** · 140+ automated tests with GitHub Actions CI
+
+<a href="https://nexchain-black.vercel.app"><img src="https://img.shields.io/badge/Live_demo-1f6feb?style=for-the-badge&logo=vercel&logoColor=white" alt="Live demo" /></a>
+<a href="https://github.com/Arjunsathia/NexChain-FE"><img src="https://img.shields.io/badge/Frontend-21262d?style=for-the-badge&logo=github&logoColor=white" alt="Frontend source" /></a>
+<a href="https://github.com/Arjunsathia/NexChain-backend"><img src="https://img.shields.io/badge/Backend-21262d?style=for-the-badge&logo=github&logoColor=white" alt="Backend source" /></a>
+
+<br/><br/>
+
+<a><picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-experience-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-experience.svg" width="100%" alt="04 · Experience" /></picture></a>
+
+<table>
+  <tr>
+    <td width="130"><code>2025 → now</code></td>
+    <td><b>Full Stack Developer</b><br/>Wisbato · Kozhikode</td>
+  </tr>
+  <tr>
+    <td><code>Jan–Aug 2025</code></td>
+    <td><b>Full Stack Developer Intern</b><br/>Luminar Technolab</td>
+  </tr>
+</table>
+
+<br/>
+
+<a><picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-activity-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-activity.svg" width="100%" alt="05 · GitHub activity" /></picture></a>
+
+<div align="center">
+
+<a><picture><source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com?user=Arjunsathia&hide_border=true&background=0d1117&ring=4493f8&fire=4493f8&currStreakNum=e6edf3&currStreakLabel=4493f8&sideNums=e6edf3&sideLabels=9198a1&dates=6e7681&stroke=30363d" /><img width="560" alt="GitHub contribution streak" src="https://streak-stats.demolab.com?user=Arjunsathia&hide_border=true&background=ffffff&ring=0969da&fire=0969da&currStreakNum=1f2328&currStreakLabel=0969da&sideNums=1f2328&sideLabels=59636e&dates=818b98&stroke=d0d7de" /></picture></a>
+
+<a><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/output/github-snake-dark.svg" /><img width="100%" alt="Contribution snake animation" src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/output/github-snake.svg" /></picture></a>
+
+<br/><br/>
+
+<a><picture><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/footer.svg" width="100%" alt="Thanks for stopping by. Let's build something reliable together." /></picture></a>
+
+</div>
