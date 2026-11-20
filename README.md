@@ -52,7 +52,7 @@
 - **Safe sending** · Broadcast queue that backs off on Meta rate limits
 - **Quality** · Payload ~320 KB → ~37 KB · ~200 test files
 
-<a><img src="https://img.shields.io/badge/Next.js-21262d?style=flat-square&logo=nextdotjs&logoColor=white" alt="Next.js" /></a> <a><img src="https://img.shields.io/badge/TypeScript-21262d?style=flat-square&logo=typescript&logoColor=3178c6" alt="TypeScript" /></a> <a><img src="https://img.shields.io/badge/Supabase-21262d?style=flat-square&logo=supabase&logoColor=3fcf8e" alt="Supabase" /></a> <a><img src="https://img.shields.io/badge/WhatsApp_API-21262d?style=flat-square&logo=whatsapp&logoColor=25d366" alt="WhatsApp Cloud API" /></a>
+<a><picture><img src="https://img.shields.io/badge/Next.js-21262d?style=flat-square&logo=nextdotjs&logoColor=white" alt="Next.js" /></picture></a> <a><picture><img src="https://img.shields.io/badge/TypeScript-21262d?style=flat-square&logo=typescript&logoColor=3178c6" alt="TypeScript" /></picture></a> <a><picture><img src="https://img.shields.io/badge/Supabase-21262d?style=flat-square&logo=supabase&logoColor=3fcf8e" alt="Supabase" /></picture></a> <a><picture><img src="https://img.shields.io/badge/WhatsApp_API-21262d?style=flat-square&logo=whatsapp&logoColor=25d366" alt="WhatsApp Cloud API" /></picture></a>
 
 <br/>
 
@@ -63,7 +63,7 @@
 - **Access** · Permission matrix of 12 modules × 7 actions
 - **Compliance** · KYC approval required before any money action
 
-<a><img src="https://img.shields.io/badge/React-21262d?style=flat-square&logo=react&logoColor=61dafb" alt="React" /></a> <a><img src="https://img.shields.io/badge/Node.js-21262d?style=flat-square&logo=nodedotjs&logoColor=5fa04e" alt="Node.js" /></a> <a><img src="https://img.shields.io/badge/PostgreSQL-21262d?style=flat-square&logo=postgresql&logoColor=699eca" alt="PostgreSQL" /></a> <a><img src="https://img.shields.io/badge/Socket.IO-21262d?style=flat-square&logo=socketdotio&logoColor=white" alt="Socket.IO" /></a>
+<a><picture><img src="https://img.shields.io/badge/React-21262d?style=flat-square&logo=react&logoColor=61dafb" alt="React" /></picture></a> <a><picture><img src="https://img.shields.io/badge/Node.js-21262d?style=flat-square&logo=nodedotjs&logoColor=5fa04e" alt="Node.js" /></picture></a> <a><picture><img src="https://img.shields.io/badge/PostgreSQL-21262d?style=flat-square&logo=postgresql&logoColor=699eca" alt="PostgreSQL" /></picture></a> <a><picture><img src="https://img.shields.io/badge/Socket.IO-21262d?style=flat-square&logo=socketdotio&logoColor=white" alt="Socket.IO" /></picture></a>
 
 <br/>
 
@@ -99,18 +99,12 @@
 
 <div align="center">
 
-<a><picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com?user=Arjunsathia&hide_border=true&background=0d1117&ring=4493f8&fire=4493f8&currStreakNum=e6edf3&currStreakLabel=4493f8&sideNums=e6edf3&sideLabels=9198a1&dates=6e7681&stroke=30363d" />
-  <img width="560" alt="GitHub contribution streak" src="https://streak-stats.demolab.com?user=Arjunsathia&hide_border=true&background=ffffff&ring=0969da&fire=0969da&currStreakNum=1f2328&currStreakLabel=0969da&sideNums=1f2328&sideLabels=59636e&dates=818b98&stroke=d0d7de" />
-</picture></a>
+<a><picture><source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com?user=Arjunsathia&hide_border=true&background=0d1117&ring=4493f8&fire=4493f8&currStreakNum=e6edf3&currStreakLabel=4493f8&sideNums=e6edf3&sideLabels=9198a1&dates=6e7681&stroke=30363d" /><img width="560" alt="GitHub contribution streak" src="https://streak-stats.demolab.com?user=Arjunsathia&hide_border=true&background=ffffff&ring=0969da&fire=0969da&currStreakNum=1f2328&currStreakLabel=0969da&sideNums=1f2328&sideLabels=59636e&dates=818b98&stroke=d0d7de" /></picture></a>
 
-<a><picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/output/github-snake-dark.svg" />
-  <img width="100%" alt="Contribution snake animation" src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/output/github-snake.svg" />
-</picture></a>
+<a><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/output/github-snake-dark.svg" /><img width="100%" alt="Contribution snake animation" src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/output/github-snake.svg" /></picture></a>
 
 <br/><br/>
 
-<a><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/footer.svg" width="100%" alt="Thanks for stopping by. Let's build something reliable together." /></a>
+<a><picture><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/footer.svg" width="100%" alt="Thanks for stopping by. Let's build something reliable together." /></picture></a>
 
 </div>
