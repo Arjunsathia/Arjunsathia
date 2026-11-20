@@ -10901,28 +10901,41 @@ body .experience-section .role-timeline .role-entry .role-card-link {
   display: none;
 }
 
-/* On wider screens the dark side never scrolls; only the light side does, and only when its content needs the room.
-   (Phones keep one scrolling sheet, because the two sides stack there.) */
+/* ---- Popup size and scrolling ----
+   The project and experience popups have one fixed size, whatever the tab or project, so they never grow or
+   shrink with their content: the dark part stays still and only the light part scrolls inside it, when needed.
+   The enquiry form has no tabs, so it keeps its natural size; its dark side still never scrolls. */
+.project-modal,
+.experience-dialog {
+  --popup-height: min(760px, calc(100dvh - 40px));
+}
 @media (min-width:701px) {
   .project-modal[open],
   .experience-dialog[open],
   .enquiry-dialog[open] {
     overflow: hidden;
   }
+  .project-modal[open],
+  .experience-dialog[open] {
+    height: var(--popup-height);
+  }
   .project-detail-aside,
   .role-details-aside,
   .enquiry-dialog>.enquiry-aside {
     overflow: hidden;
   }
+  /* The light side fills the popup's height (less its 1px top and bottom border) and scrolls within it. */
   .project-detail-main,
-  .role-details-main,
+  .role-details-main {
+    height: calc(var(--popup-height) - 2px);
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
   .enquiry-main {
     max-height: calc(100dvh - 42px);
     overflow-y: auto;
     overscroll-behavior: contain;
-  }
-  .project-detail-main {
-    min-height: min(610px, calc(100dvh - 42px));
   }
   /* The details keep their natural height, so a long tab scrolls instead of running over the footer note. */
   .project-detail-main>* {
@@ -10930,6 +10943,31 @@ body .experience-section .role-timeline .role-entry .role-card-link {
   }
   .project-detail-main>.project-modal-page {
     flex: 1 0 auto;
+  }
+}
+/* Phones: the same fixed sheet. The dark header stays at the top and the light part below it scrolls. */
+@media (max-width:700px) {
+  .project-modal,
+  .experience-dialog {
+    --popup-height: min(780px, calc(100dvh - 24px));
+  }
+  .project-modal[open],
+  .experience-dialog[open] {
+    display: flex;
+    flex-direction: column;
+    height: var(--popup-height);
+    overflow: hidden;
+  }
+  .project-modal[open]>.project-detail-aside,
+  .experience-dialog[open]>.role-details-aside {
+    flex: none;
+  }
+  .project-modal[open]>.project-detail-main,
+  .experience-dialog[open]>.role-details-main {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 }
 /* Shorter laptop screens: a tighter project side panel, so it always fits without scrolling. */
@@ -10950,5 +10988,61 @@ body .experience-section .role-timeline .role-entry .role-card-link {
   }
   .project-detail-toolset {
     padding-top: 18px;
+  }
+}
+
+/* ---- Project cards: the name carries a faint tint of the project's own colour ----
+   About a fifth of the accent mixed into the text colour: dark olive or teal on light cards, soft mint on dark ones.
+   The highlighted card in dark mode keeps its dark text on the green fill (a more specific rule in dark.css). */
+.project-wheel .work-entry-name h3 button {
+  color: color-mix(in oklab, var(--project-highlight, var(--accent)) 22%, var(--text-strong));
+}
+.project-wheel .work-entry-name h3 button:hover {
+  color: color-mix(in oklab, var(--project-highlight, var(--accent)) 40%, var(--text-strong));
+}
+
+/* ---- Project cards on phones: a clear step down from name to subtitle to summary ---- */
+@media (max-width:700px) {
+  body .project-wheel .project-card-category {
+    margin: 0 0 12px;
+  }
+  body .project-wheel .work-entry-name {
+    margin: 0 0 10px;
+  }
+  body .project-wheel .work-entry-name h3 {
+    font-size: 34px;
+    line-height: 1.02;
+    letter-spacing: -.02em;
+  }
+  body .project-wheel .project-card-subtitle {
+    margin: 6px 0 0;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -.01em;
+  }
+  body .project-wheel .project-card-summary {
+    max-width: 36ch;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+    opacity: .9;
+  }
+}
+@media (max-width:360px) {
+  body .project-wheel .work-entry-name h3 {
+    font-size: 30px;
+  }
+  body .project-wheel .project-card-subtitle {
+    font-size: 13px;
+  }
+  body .project-wheel .project-card-summary {
+    font-size: 12.5px;
+  }
+}
+@media (min-width:701px) {
+  /* A little air between the big project name and its subtitle. */
+  body .project-wheel .project-card-subtitle {
+    margin-top: 6px;
   }
 }
