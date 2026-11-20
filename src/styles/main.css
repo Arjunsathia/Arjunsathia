@@ -10797,52 +10797,133 @@ body .experience-section .role-timeline .role-entry .role-card-link {
   }
 }
 
-/* ---- Project popup: link to the live site (only for projects that have one) ---- */
+/* ---- Project popup: "Visit live site" button (only for projects with a public URL) ----
+   Filled with the project's own colour, with a live dot, the site's address and an arrow in a circle. */
 .project-detail-live {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  margin: 0 0 8px;
-  padding: 9px 14px;
-  border: 1px solid color-mix(in srgb, var(--project-accent) 55%, transparent);
+  gap: 12px;
+  margin: 2px 0 10px;
+  padding: 7px 7px 7px 16px;
   border-radius: 999px;
-  color: var(--project-accent);
-  font: 600 12px/1.4 var(--sans);
+  background: var(--project-accent);
+  color: #13170d;
   text-decoration: none;
-  transition: background-color .2s, color .2s;
+  box-shadow: 0 14px 34px -14px color-mix(in srgb, var(--project-accent) 75%, transparent), inset 0 0 0 1px #ffffff2e;
+  transition: transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s, filter .25s;
 }
 .project-detail-live:hover {
-  background: var(--project-accent);
-  color: var(--bg-chip);
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+  box-shadow: 0 18px 40px -14px color-mix(in srgb, var(--project-accent) 90%, transparent), inset 0 0 0 1px #ffffff40;
+}
+.project-detail-live:active {
+  transform: translateY(0);
 }
 .project-detail-live:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 3px;
+  outline: 2px solid var(--project-accent);
+  outline-offset: 4px;
+}
+.project-detail-live-dot {
+  position: relative;
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #13170d;
+}
+.project-detail-live-dot::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid #13170d;
+  opacity: 0;
+  animation: live-ping 2.2s cubic-bezier(.2,.7,.3,1) infinite;
+}
+@keyframes live-ping {
+  0% { transform: scale(.5); opacity: .55; }
+  80%, 100% { transform: scale(1.4); opacity: 0; }
+}
+.project-detail-live-text {
+  display: grid;
+  gap: 1px;
+  text-align: left;
+}
+.project-detail-live-text>strong {
+  font: 700 13px/1.25 var(--sans);
+  letter-spacing: -.01em;
+}
+.project-detail-live-text>small {
+  font: 500 10px/1.3 var(--mono);
+  opacity: .72;
+}
+.project-detail-live>.glyph {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #13170d;
+  color: var(--project-accent);
+  transition: transform .25s cubic-bezier(.16,1,.3,1);
+}
+.project-detail-live>.glyph>svg {
+  width: 14px;
+  height: 14px;
+}
+.project-detail-live:hover>.glyph {
+  transform: rotate(45deg);
+}
+@media (prefers-reduced-motion:reduce) {
+  .project-detail-live-dot::after { animation: none; }
+  .project-detail-live,
+  .project-detail-live>.glyph { transition: none; }
 }
 
-/* ---- Project popup scrolling: no visible scrollbars; it still scrolls by wheel, touch and keyboard ---- */
+/* ---- Split popups (projects, experience, enquiry): no visible scrollbars ----
+   They still scroll by wheel, touch and keyboard. */
 .project-modal,
-.project-detail-main {
+.experience-dialog,
+.enquiry-dialog,
+.project-detail-main,
+.role-details-main,
+.enquiry-main {
   scrollbar-width: none;
 }
 .project-modal::-webkit-scrollbar,
-.project-detail-main::-webkit-scrollbar {
+.experience-dialog::-webkit-scrollbar,
+.enquiry-dialog::-webkit-scrollbar,
+.project-detail-main::-webkit-scrollbar,
+.role-details-main::-webkit-scrollbar,
+.enquiry-main::-webkit-scrollbar {
   display: none;
 }
 
-/* On wider screens the dark side panel stays still and only the light details side scrolls, when it needs to. */
+/* On wider screens the dark side never scrolls; only the light side does, and only when its content needs the room.
+   (Phones keep one scrolling sheet, because the two sides stack there.) */
 @media (min-width:701px) {
-  .project-modal[open] {
+  .project-modal[open],
+  .experience-dialog[open],
+  .enquiry-dialog[open] {
     overflow: hidden;
   }
-  .project-detail-main {
+  .project-detail-aside,
+  .role-details-aside,
+  .enquiry-dialog>.enquiry-aside {
+    overflow: hidden;
+  }
+  .project-detail-main,
+  .role-details-main,
+  .enquiry-main {
     max-height: calc(100dvh - 42px);
-    min-height: min(610px, calc(100dvh - 42px));
     overflow-y: auto;
     overscroll-behavior: contain;
   }
-}
-@media (min-width:701px) {
+  .project-detail-main {
+    min-height: min(610px, calc(100dvh - 42px));
+  }
   /* The details keep their natural height, so a long tab scrolls instead of running over the footer note. */
   .project-detail-main>* {
     flex-shrink: 0;
@@ -10851,7 +10932,7 @@ body .experience-section .role-timeline .role-entry .role-card-link {
     flex: 1 0 auto;
   }
 }
-/* Shorter laptop screens: a tighter side panel, so it always fits without scrolling. */
+/* Shorter laptop screens: a tighter project side panel, so it always fits without scrolling. */
 @media (min-width:701px) and (max-height:760px) {
   .project-modal .project-detail-aside {
     padding-block: 26px;

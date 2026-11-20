@@ -40,7 +40,7 @@ function ProjectDialog({project,index,onClose}) {
       <h2 id="case-title">{project.name}<span>.</span></h2>
       <p className="project-detail-category">{project.title}</p>
       <p id="case-summary">{project.summary}</p>
-      {project.link&&<a className="project-detail-live" href={project.link} target="_blank" rel="noopener noreferrer">Visit live site <Arrow /><span className="sr-only"> (opens in a new tab)</span></a>}
+      {project.link&&<a className="project-detail-live" href={project.link} target="_blank" rel="noopener noreferrer"><span className="project-detail-live-dot" aria-hidden="true"/><span className="project-detail-live-text"><strong>Visit live site</strong><small>{new URL(project.link).host}</small></span><Arrow /><span className="sr-only"> (opens in a new tab)</span></a>}
       <div className="project-detail-toolset"><span className="eyebrow">CORE STACK</span><ul>{project.tags.map(tag=><li key={tag} style={techColors[tag]?{'--tech':techColors[tag]}:undefined}><TechIcon tag={tag}/>{tag}</li>)}</ul></div>
       <small>{project.context}</small>
     </aside>
