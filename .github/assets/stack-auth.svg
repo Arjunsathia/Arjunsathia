@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="234" height="160" viewBox="0 0 234 160" role="img" aria-label="Auth &amp; Security: JWT, Google OAuth"><title>Auth &amp; Security: JWT, Google OAuth</title><style>
+  .sans{font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif} .mono{font-family:ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace}
+  .card{fill:#ffffff;stroke:#d0d7de} .inner{fill:#f6f8fa;stroke:#d0d7de}
+  .fg{fill:#1f2328} .muted{fill:#59636e} .faint{fill:#818b98}
+  .blue{fill:#0969da} .purple{fill:#8250df} .green{fill:#1a7f37}
+  .s-blue{stroke:#0969da} .s-muted{stroke:#d0d7de} .dot{fill:#d0d7de}
+  .glow-blue{fill:#54aeff} .glow-purple{fill:#c297ff} .glow-green{fill:#4ac26b}
+  .pill{fill:#dafbe1;stroke:#4ac26b} .bubble-in{fill:#ffffff;stroke:#d0d7de} .bubble-out{fill:#1a7f37} .on-accent{fill:#ffffff}
+  .stop-a{stop-color:#0969da} .stop-b{stop-color:#8250df}
+  @media (prefers-color-scheme: dark){
+    .card{fill:#0d1117;stroke:#30363d} .inner{fill:#161b22;stroke:#30363d}
+    .fg{fill:#e6edf3} .muted{fill:#9198a1} .faint{fill:#6e7681}
+    .blue{fill:#4493f8} .purple{fill:#ab7df8} .green{fill:#3fb950}
+    .s-blue{stroke:#4493f8} .s-muted{stroke:#30363d} .dot{fill:#30363d}
+    .glow-blue{fill:#1f6feb} .glow-purple{fill:#8957e5} .glow-green{fill:#238636}
+    .pill{fill:#0f2a1a;stroke:#238636} .bubble-in{fill:#21262d;stroke:#30363d} .bubble-out{fill:#238636}
+    .stop-a{stop-color:#4493f8} .stop-b{stop-color:#ab7df8}
+  }
+</style><style>.c1{fill:#4285F4}@media (prefers-color-scheme: dark){.c1{fill:#4285F4}}</style><g opacity="0"><animate attributeName="opacity" from="0" to="1" begin="0s" dur="0.5s" fill="freeze"/><animateTransform attributeName="transform" type="translate" from="-10 0" to="0 0" begin="0s" dur="0.5s" fill="freeze" calcMode="spline" keySplines=".16 1 .3 1" keyTimes="0;1"/>
+    <defs><linearGradient id="bar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="stop-a"/><stop offset="1" class="stop-b"/></linearGradient></defs>
+    <rect x="2" y="3" width="5" height="18.75" rx="2.5" fill="url(#bar)"/>
+    <text x="18" y="18.75" class="sans fg" font-size="15" font-weight="700" letter-spacing="1.6">AUTH &amp; SECURITY<tspan class="faint" font-weight="500" letter-spacing="0">  2</tspan></text></g><g opacity="0"><animate attributeName="opacity" from="0" to="1" begin="0.1s" dur="0.6s" fill="freeze"/><animateTransform attributeName="transform" type="translate" from="0 12" to="0 0" begin="0.1s" dur="0.6s" fill="freeze" calcMode="spline" keySplines=".16 1 .3 1" keyTimes="0;1"/>
+      <rect x="14.079999999999998" y="39" width="59.84" height="59.84" rx="16.1568" class="inner" stroke-width="1.2"/>
+      <path transform="translate(28.4 53.4) scale(1.297)" d="M10.2 0v6.456L12 8.928l1.8-2.472V0zm3.6 6.456v3.072l2.904-.96L20.52 3.36l-2.928-2.136zm2.904 2.112l-1.8 2.496 2.928.936 6.144-1.992-1.128-3.432zM17.832 12l-2.928.936 1.8 2.496 6.144 1.992 1.128-3.432zm-1.128 3.432l-2.904-.96v3.072l3.792 5.232 2.928-2.136zM13.8 17.544L12 15.072l-1.8 2.472V24h3.6zm-3.6 0v-3.072l-2.904.96L3.48 20.64l2.928 2.136zm-2.904-2.112l1.8-2.496L6.168 12 .024 13.992l1.128 3.432zM6.168 12l2.928-.936-1.8-2.496-6.144-1.992-1.128 3.432zm1.128-3.432l2.904.96V6.456L6.408 1.224 3.48 3.36Z" class="fg"/>
+      <text x="44" y="117.0" text-anchor="middle" class="sans muted" font-size="12.5">JWT</text></g><g opacity="0"><animate attributeName="opacity" from="0" to="1" begin="0.16s" dur="0.6s" fill="freeze"/><animateTransform attributeName="transform" type="translate" from="0 12" to="0 0" begin="0.16s" dur="0.6s" fill="freeze" calcMode="spline" keySplines=".16 1 .3 1" keyTimes="0;1"/>
+      <rect x="102.08" y="39" width="59.84" height="59.84" rx="16.1568" class="inner" stroke-width="1.2"/>
+      <path transform="translate(116.4 53.4) scale(1.297)" d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z" class="c1"/>
+      <text x="132" y="117.0" text-anchor="middle" class="sans muted" font-size="12.5">Google</text><text x="132" y="132.0" text-anchor="middle" class="sans muted" font-size="12.5">OAuth</text></g></svg>

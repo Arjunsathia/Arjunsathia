@@ -149,3 +149,61 @@ const bannerAt = (W, file, {tag, name, subtitle, fact, color, glow, art, title})
   <g opacity="0">${enter(.1)}<text x="400" y="62" text-anchor="middle" class="sans fg" font-size="34" font-weight="700" letter-spacing="-.5">Thanks for stopping by.</text></g>
   <g opacity="0">${enter(.35)}<text x="400" y="104" text-anchor="middle" class="mono muted" font-size="22">Let's build something reliable together.</text></g>`));
 }
+
+// ---------- Tech stack: one card row per group, every technology as an icon tile with its name ----------
+// Brand icons come from icons.json (Simple Icons paths). Items with no brand icon go in the last group, "Also".
+const icons = JSON.parse(fs.readFileSync(path.join(out, 'icons.json'), 'utf8'));
+const stackGroups = [
+  ['languages', 'Languages', [['javascript', 'JavaScript'], ['typescript', 'TypeScript'], ['html5', 'HTML5'], ['css', 'CSS']]],
+  ['frontend', 'Frontend', [['react', 'React'], ['nextdotjs', 'Next.js'], ['redux', 'Redux Toolkit'], ['tailwindcss', 'Tailwind CSS'], ['bootstrap', 'Bootstrap'], ['vite', 'Vite'], ['threedotjs', 'Three.js']]],
+  ['backend', 'Backend & APIs', [['nodedotjs', 'Node.js'], ['express', 'Express'], ['socketdotio', 'Socket.IO'], ['openapiinitiative', 'REST APIs'], ['whatsapp', 'WhatsApp API'], ['googlegemini', 'Gemini AI']]],
+  ['databases', 'Databases', [['postgresql', 'PostgreSQL'], ['mongodb', 'MongoDB'], ['supabase', 'Supabase'], ['sequelize', 'Sequelize'], ['mongoose', 'Mongoose']]],
+  ['libraries', 'Libraries', [['reactquery', 'TanStack Query'], ['reacthookform', 'React Hook Form'], ['zod', 'Zod'], ['xyflow', 'React Flow'], ['framer', 'Framer Motion'], ['cloudinary', 'Cloudinary']]],
+  ['auth', 'Auth & Security', [['jsonwebtokens', 'JWT'], ['google', 'Google OAuth']]],
+  ['testing', 'Testing', [['jest', 'Jest'], ['vitest', 'Vitest'], ['postman', 'Postman'], ['swagger', 'Swagger']]],
+  ['devops', 'DevOps & Tools', [['docker', 'Docker'], ['nginx', 'Nginx'], ['githubactions', 'GitHub Actions'], ['git', 'Git'], ['github', 'GitHub'], ['vercel', 'Vercel'], ['render', 'Render'], ['pm2', 'PM2'], ['linux', 'Linux']]],
+];
+const alsoItems = ['SQL', 'REST & Webhooks', 'MetaTrader 5 API', 'Row Level Security', 'PGlite', 'Recharts', 'RBAC', 'TOTP 2FA', 'bcrypt'];
+
+// Brand colours, adjusted so every icon reads on a light tile and on a dark tile; near-black logos use the text colour.
+const rgb = hex => [0, 2, 4].map(i => parseInt(hex.slice(i, i + 2), 16));
+const lum = hex => { const [r, g, b] = rgb(hex); return (r * 299 + g * 587 + b * 114) / 1000; };
+const mix = (hex, to, t) => '#' + rgb(hex).map((c, i) => Math.round(c + (to[i] - c) * t).toString(16).padStart(2, '0')).join('');
+const iconColours = hex => { const l = lum(hex); if (l < 40) return null; return {light: l > 185 ? mix(hex, [0, 0, 0], .32) : '#' + hex, dark: l < 95 ? mix(hex, [255, 255, 255], .45) : '#' + hex}; };
+// Split a long name over two lines at the space nearest the middle.
+const twoLines = name => { if (name.length <= 10 || !name.includes(' ')) return [name]; const mid = name.length / 2; let best = -1; [...name].forEach((ch, i) => { if (ch === ' ' && (best < 0 || Math.abs(i - mid) < Math.abs(best - mid))) best = i; }); return [name.slice(0, best), name.slice(best + 1)]; };
+const stackStyle = colours => `<style>${colours.map(([cls, c]) => `.${cls}{fill:${c.light}}`).join('')}@media (prefers-color-scheme: dark){${colours.map(([cls, c]) => `.${cls}{fill:${c.dark}}`).join('')}}</style>`;
+const groupLabel = (label, count, size) => `<g opacity="0">${enter(0, 0, -10, .5)}
+    <defs><linearGradient id="bar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="stop-a"/><stop offset="1" class="stop-b"/></linearGradient></defs>
+    <rect x="2" y="${size * .2}" width="5" height="${size * 1.25}" rx="2.5" fill="url(#bar)"/>
+    <text x="18" y="${size * 1.25}" class="sans fg" font-size="${size}" font-weight="700" letter-spacing="1.6">${esc(label.toUpperCase())}${count ? `<tspan class="faint" font-weight="500" letter-spacing="0">  ${count}</tspan>` : ''}</text></g>`;
+
+for (const [layout, perLine, cell, nameSize, labelSize, suffix] of [['desktop', 9, 88, 12.5, 15, ''], ['mobile', 4, 100, 15, 19, '-mobile']]) {
+  for (const [file, label, items] of stackGroups) {
+    const rows = Math.ceil(items.length / perLine), top = labelSize * 2.6, cellH = cell + nameSize * 2.6;
+    const labelW = 18 + label.length * (labelSize * .72 + 1.6) + labelSize * 2; // room for the title and its count
+    const W = Math.ceil(Math.max(Math.min(items.length, perLine) * cell, labelW)), H = top + rows * cellH;
+    const colours = [];
+    const tiles = items.map(([slug, name], i) => {
+      const icon = icons[slug], c = iconColours(icon.hex), cls = `c${i}`;
+      if (c) colours.push([cls, c]);
+      const x = (i % perLine) * cell, y = top + Math.floor(i / perLine) * cellH, box = cell * .68, bx = x + (cell - box) / 2, s = box * .52 / 24;
+      const lines = twoLines(name);
+      return `<g opacity="0">${enter(.1 + i * .06, 12, 0, .6)}
+      <rect x="${bx}" y="${y}" width="${box}" height="${box}" rx="${box * .27}" class="inner" stroke-width="1.2"/>
+      <path transform="translate(${(bx + box * .24).toFixed(1)} ${(y + box * .24).toFixed(1)}) scale(${s.toFixed(3)})" d="${icon.path}" class="${c ? cls : 'fg'}"/>
+      ${lines.map((l, j) => `<text x="${x + cell / 2}" y="${(y + box + nameSize * 1.45 + j * nameSize * 1.2).toFixed(1)}" text-anchor="middle" class="sans muted" font-size="${nameSize}">${esc(l)}</text>`).join('')}</g>`;
+    }).join('');
+    write(`stack-${file}${suffix}.svg`, svg(W, Math.ceil(H), `${label}: ${items.map(i => i[1]).join(', ')}`, `${stackStyle(colours)}${groupLabel(label, items.length, labelSize)}${tiles}`));
+  }
+  // "Also": things with no brand icon, as name chips.
+  const maxW = perLine * cell, chipH = labelSize * 2, font = labelSize * .85, gap = 10;
+  let x = 0, y = labelSize * 2.6; const chips = [];
+  alsoItems.forEach((name, i) => {
+    const w = Math.round(name.length * font * .6 + font * 2.6);
+    if (x + w > maxW) { x = 0; y += chipH + gap; }
+    chips.push(`<g opacity="0">${enter(.1 + i * .05, 10, 0, .5)}<rect x="${x + 1}" y="${y}" width="${w - 2}" height="${chipH}" rx="${chipH / 2}" class="inner" stroke-width="1.2"/><circle cx="${x + font * .95}" cy="${y + chipH / 2}" r="${font * .2}" class="blue"/><text x="${x + font * 1.5}" y="${(y + chipH / 2 + font * .36).toFixed(1)}" class="sans fg" font-size="${font}">${esc(name)}</text></g>`);
+    x += w + gap;
+  });
+  write(`stack-also${suffix}.svg`, svg(maxW, Math.ceil(y + chipH + 2), `Also: ${alsoItems.join(', ')}`, `${groupLabel('Also', 0, labelSize)}${chips.join('')}`));
+}

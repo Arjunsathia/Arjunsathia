@@ -23,33 +23,23 @@
 
 <picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-stack-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-stack.svg" width="100%" alt="02 · Tech stack" /></picture>
 
-<code>languages</code><br/>
-<img src="https://skillicons.dev/icons?i=js,ts,html,css&theme=dark" alt="JavaScript, TypeScript, HTML, CSS" /> <img src="https://img.shields.io/badge/SQL-21262d?style=flat-square&logo=postgresql&logoColor=699eca" alt="SQL" />
+<picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-languages-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-languages.svg" alt="Languages: JavaScript, TypeScript, HTML5, CSS" /></picture>
 
-<code>frontend</code><br/>
-<img src="https://skillicons.dev/icons?i=react,nextjs,redux,tailwind,bootstrap,vite,threejs&theme=dark" alt="React, Next.js, Redux, Tailwind CSS, Bootstrap, Vite, Three.js" />
+<picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-frontend-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-frontend.svg" alt="Frontend: React, Next.js, Redux Toolkit, Tailwind CSS, Bootstrap, Vite, Three.js" /></picture>
 
-<code>backend</code><br/>
-<img src="https://skillicons.dev/icons?i=nodejs,express&theme=dark" alt="Node.js, Express" /><br/>
-<img src="https://img.shields.io/badge/Socket.IO-21262d?style=flat-square&logo=socketdotio&logoColor=white" alt="Socket.IO" /> <img src="https://img.shields.io/badge/REST_APIs-21262d?style=flat-square&logo=openapiinitiative&logoColor=white" alt="REST APIs" /> <img src="https://img.shields.io/badge/Webhooks-21262d?style=flat-square" alt="Webhooks" /> <img src="https://img.shields.io/badge/WhatsApp_Cloud_API-21262d?style=flat-square&logo=whatsapp&logoColor=25d366" alt="WhatsApp Cloud API" /> <img src="https://img.shields.io/badge/MetaTrader_5_API-21262d?style=flat-square" alt="MetaTrader 5 API" /> <img src="https://img.shields.io/badge/Google_Gemini-21262d?style=flat-square&logo=googlegemini&logoColor=8e75b2" alt="Google Gemini" />
+<picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-backend-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-backend.svg" alt="Backend and APIs: Node.js, Express, Socket.IO, REST APIs, WhatsApp Cloud API, Gemini AI" /></picture>
 
-<code>databases</code><br/>
-<img src="https://skillicons.dev/icons?i=postgres,mongodb,supabase,sequelize&theme=dark" alt="PostgreSQL, MongoDB, Supabase, Sequelize" /><br/>
-<img src="https://img.shields.io/badge/Mongoose-21262d?style=flat-square&logo=mongoose&logoColor=f04d35" alt="Mongoose" /> <img src="https://img.shields.io/badge/PGlite-21262d?style=flat-square&logo=postgresql&logoColor=699eca" alt="PGlite" /> <img src="https://img.shields.io/badge/Row_Level_Security-21262d?style=flat-square&logo=supabase&logoColor=3fcf8e" alt="Row Level Security" />
+<picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-databases-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-databases.svg" alt="Databases: PostgreSQL, MongoDB, Supabase, Sequelize, Mongoose" /></picture>
 
-<code>libraries</code><br/>
-<img src="https://img.shields.io/badge/TanStack_Query-21262d?style=flat-square&logo=reactquery&logoColor=ff4154" alt="TanStack Query" /> <img src="https://img.shields.io/badge/React_Hook_Form-21262d?style=flat-square&logo=reacthookform&logoColor=ec5990" alt="React Hook Form" /> <img src="https://img.shields.io/badge/Zod-21262d?style=flat-square&logo=zod&logoColor=408aff" alt="Zod" /> <img src="https://img.shields.io/badge/React_Flow-21262d?style=flat-square&logo=xyflow&logoColor=white" alt="React Flow" /> <img src="https://img.shields.io/badge/Recharts-21262d?style=flat-square" alt="Recharts" /> <img src="https://img.shields.io/badge/Framer_Motion-21262d?style=flat-square&logo=framer&logoColor=white" alt="Framer Motion" /> <img src="https://img.shields.io/badge/Cloudinary-21262d?style=flat-square&logo=cloudinary&logoColor=3448c5" alt="Cloudinary" />
+<picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-libraries-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-libraries.svg" alt="Libraries: TanStack Query, React Hook Form, Zod, React Flow, Framer Motion, Cloudinary" /></picture>
 
-<code>auth &amp; security</code><br/>
-<img src="https://img.shields.io/badge/JWT-21262d?style=flat-square&logo=jsonwebtokens&logoColor=white" alt="JWT" /> <img src="https://img.shields.io/badge/OAuth-21262d?style=flat-square&logo=google&logoColor=4285f4" alt="OAuth" /> <img src="https://img.shields.io/badge/RBAC-21262d?style=flat-square" alt="RBAC" /> <img src="https://img.shields.io/badge/TOTP_2FA-21262d?style=flat-square" alt="TOTP 2FA" /> <img src="https://img.shields.io/badge/bcrypt-21262d?style=flat-square&logo=letsencrypt&logoColor=white" alt="bcrypt" />
+<picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-auth-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-auth.svg" alt="Auth and security: JWT, Google OAuth" /></picture>
 
-<code>testing</code><br/>
-<img src="https://skillicons.dev/icons?i=jest,vitest,postman&theme=dark" alt="Jest, Vitest, Postman" /><br/>
-<img src="https://img.shields.io/badge/Swagger-21262d?style=flat-square&logo=swagger&logoColor=85ea2d" alt="Swagger" />
+<picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-testing-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-testing.svg" alt="Testing: Jest, Vitest, Postman, Swagger" /></picture>
 
-<code>devops &amp; tools</code><br/>
-<img src="https://skillicons.dev/icons?i=docker,nginx,githubactions,git,github,vercel,linux,vscode&theme=dark" alt="Docker, Nginx, GitHub Actions, Git, GitHub, Vercel, Linux, VS Code" /><br/>
-<img src="https://img.shields.io/badge/PM2-21262d?style=flat-square&logo=pm2&logoColor=white" alt="PM2" /> <img src="https://img.shields.io/badge/Render-21262d?style=flat-square&logo=render&logoColor=white" alt="Render" />
+<picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-devops-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-devops.svg" alt="DevOps and tools: Docker, Nginx, GitHub Actions, Git, GitHub, Vercel, Render, PM2, Linux" /></picture>
+
+<picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-also-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/stack-also.svg" alt="Also: SQL, REST and Webhooks, MetaTrader 5 API, Row Level Security, PGlite, Recharts, RBAC, TOTP 2FA, bcrypt" /></picture>
 
 <br/>
 
