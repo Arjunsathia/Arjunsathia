@@ -10796,3 +10796,78 @@ body .experience-section .role-timeline .role-entry .role-card-link {
     align-self: start;
   }
 }
+
+/* ---- Project popup: link to the live site (only for projects that have one) ---- */
+.project-detail-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+  padding: 9px 14px;
+  border: 1px solid color-mix(in srgb, var(--project-accent) 55%, transparent);
+  border-radius: 999px;
+  color: var(--project-accent);
+  font: 600 12px/1.4 var(--sans);
+  text-decoration: none;
+  transition: background-color .2s, color .2s;
+}
+.project-detail-live:hover {
+  background: var(--project-accent);
+  color: var(--bg-chip);
+}
+.project-detail-live:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+/* ---- Project popup scrolling: no visible scrollbars; it still scrolls by wheel, touch and keyboard ---- */
+.project-modal,
+.project-detail-main {
+  scrollbar-width: none;
+}
+.project-modal::-webkit-scrollbar,
+.project-detail-main::-webkit-scrollbar {
+  display: none;
+}
+
+/* On wider screens the dark side panel stays still and only the light details side scrolls, when it needs to. */
+@media (min-width:701px) {
+  .project-modal[open] {
+    overflow: hidden;
+  }
+  .project-detail-main {
+    max-height: calc(100dvh - 42px);
+    min-height: min(610px, calc(100dvh - 42px));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+@media (min-width:701px) {
+  /* The details keep their natural height, so a long tab scrolls instead of running over the footer note. */
+  .project-detail-main>* {
+    flex-shrink: 0;
+  }
+  .project-detail-main>.project-modal-page {
+    flex: 1 0 auto;
+  }
+}
+/* Shorter laptop screens: a tighter side panel, so it always fits without scrolling. */
+@media (min-width:701px) and (max-height:760px) {
+  .project-modal .project-detail-aside {
+    padding-block: 26px;
+  }
+  .project-detail-aside h2 {
+    font-size: clamp(34px,4vw,48px);
+    margin: 22px 0 8px;
+  }
+  .enquiry-aside>.project-detail-category {
+    margin-bottom: 14px;
+  }
+  .project-detail-aside>p#case-summary {
+    margin-bottom: 18px;
+    line-height: 1.7;
+  }
+  .project-detail-toolset {
+    padding-top: 18px;
+  }
+}

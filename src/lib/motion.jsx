@@ -58,31 +58,42 @@ export function useCenteredScroll(ref,selector,count){
       highlighted=index;
       entries.forEach((entry,i)=>{entry.dataset.active=String(i===index);});
     };
+    // Card positions only change when something resizes, so they are measured then, not on every scroll frame
+    // (re-reading layout each frame while also writing styles is what makes scrolling stutter).
+    let positions=null,measuredHeight=0;
+    const measure=()=>{
+      measuredHeight=panel.clientHeight;
+      positions=entries.map(entry=>({entry,center:entry.offsetTop+entry.offsetHeight/2,height:entry.offsetHeight,scale:'',opacity:''}));
+    };
     const update=()=>{
       frame=0;
-      const center=panel.scrollTop+panel.clientHeight/2;
-      const positions=entries.map(entry=>({entry,center:entry.offsetTop+entry.offsetHeight/2,height:entry.offsetHeight}));
+      if(!positions)measure();
+      const center=panel.scrollTop+measuredHeight/2;
       let nearest=0,distance=Infinity;
       positions.forEach((item,index)=>{const next=Math.abs(item.center-center);if(next<distance){nearest=index;distance=next;}});
       if(highlighted<0||reduce||document.documentElement.dataset.theme!=='dark')highlight(nearest);
       else if(nearest!==highlighted){clearTimeout(settle);settle=setTimeout(()=>highlight(nearest),140);}
       else clearTimeout(settle);
-      positions.forEach((item,index)=>{
+      positions.forEach(item=>{
         const offset=Math.min(1,Math.abs(item.center-center)/item.height);
-        item.entry.style.setProperty('--center-scale',reduce?'1':String(1-offset*.04));
-        item.entry.style.setProperty('--center-opacity',String(1-offset*.45));
+        const scale=reduce?'1':(1-offset*.04).toFixed(4),opacity=(1-offset*.45).toFixed(3);
+        // Only write what changed: cards far from the centre stay at their resting values.
+        if(scale!==item.scale){item.scale=scale;item.entry.style.setProperty('--center-scale',scale);}
+        if(opacity!==item.opacity){item.opacity=opacity;item.entry.style.setProperty('--center-opacity',opacity);}
       });
       if(nearest!==activeRef.current){activeRef.current=nearest;setActive(nearest);}
     };
     const schedule=()=>{if(!frame)frame=requestAnimationFrame(update);};
-    const resize=new ResizeObserver(schedule);resize.observe(panel);entries.forEach(entry=>resize.observe(entry));
-    const onWheel=event=>handoffAtScrollBoundary(event,panel,pageScroller());
+    const resize=new ResizeObserver(()=>{positions=null;schedule();});resize.observe(panel);entries.forEach(entry=>resize.observe(entry));
     // Touch: once a swipe or fling reaches the end of the list, the page carries on scrolling.
+    // That fling check reads layout, so it only runs while the list is being moved by touch.
+    let touchInput=false;
+    const onWheel=event=>{touchInput=false;handoffAtScrollBoundary(event,panel,pageScroller());};
     const touch=createTouchHandoff(panel,window,undefined,undefined,()=>reduce);
-    const onTouchStart=event=>touch.start(event.touches[0].clientY);
+    const onTouchStart=event=>{touchInput=true;touch.start(event.touches[0].clientY);};
     const onTouchMove=event=>touch.move(event.touches[0].clientY,event);
     const onTouchEnd=()=>touch.end();
-    const onScroll=()=>{schedule();touch.scrolled();};
+    const onScroll=()=>{schedule();if(touchInput)touch.scrolled();};
     panel.addEventListener('scroll',onScroll,{passive:true});
     panel.addEventListener('wheel',onWheel,{passive:false});
     panel.addEventListener('touchstart',onTouchStart,{passive:true});

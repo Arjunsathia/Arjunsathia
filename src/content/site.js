@@ -11,6 +11,7 @@ export const aboutCard = {
 };
 // Each project: the card shows `description` and the short `tags` (phones show the one-line `summary` instead); the dialog shows `overview`, `features`, `engineering` and the full `stack`.
 // Preview screens live in assets/project-previews as `<slug>-overview.svg`, `<slug>-detail.svg` and `<slug>-mobile.svg`.
+// `link` is the live site, shown in the project popup; leave it out when there is no public URL.
 export const projects = [
   {
     name: 'WhatsApp CRM', slug: 'whatsapp-crm', accent: '#a8ed7d',
@@ -40,12 +41,12 @@ export const projects = [
     stack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Supabase', 'PostgreSQL', 'WhatsApp Cloud API', 'React Flow', 'Vitest', 'PGlite', 'Docker', 'PM2'],
   },
   {
-    name: 'HighCRM', slug: 'highcrm', accent: '#ffdc3d',
+    name: 'MT5 Broker CRM', slug: 'highcrm', accent: '#ffdc3d', link: 'https://account.smatams.com/',
     category: 'Client project / Fintech', context: 'Wisbato · Running in production',
     title: 'Forex brokerage CRM & client portal',
     summary: 'The client lifecycle of a forex brokerage, connected to MetaTrader 5.',
     description: 'A client portal and back office for a forex brokerage: onboarding, KYC, MetaTrader 5 accounts, deposits, withdrawals and support.',
-    overview: 'HighCRM runs the client lifecycle of a forex brokerage, from sign-up and KYC to live trading accounts, funding and support, without manual work in the MT5 Manager terminal. Clients use a self-service portal, and staff use an admin panel where every action is controlled by configurable roles and permissions. The backend has 18 data models and 15 API route groups, and the React 19 frontend is organised by feature.',
+    overview: 'This CRM runs the client lifecycle of a forex brokerage, from sign-up and KYC to live trading accounts, funding and support, without manual work in the MT5 Manager terminal. Clients use a self-service portal, and staff use an admin panel where every action is controlled by configurable roles and permissions. The backend has 18 data models and 15 API route groups, and the React 19 frontend is organised by feature.',
     features: [
       'Live and demo MetaTrader 5 accounts created through the MT5 gateway API, with login details emailed to the client. Admins set the demo group, starting balance, leverage and a per-email cooldown.',
       'Deposit and withdrawal workflows that update MT5 balances, with admin approve, reject and flag steps, balance checks and per-group minimum-deposit rules.',
@@ -66,7 +67,7 @@ export const projects = [
     stack: ['React', 'Vite', 'Tailwind CSS', 'Redux Toolkit', 'TanStack Query', 'React Hook Form', 'Zod', 'Node.js', 'Express', 'PostgreSQL', 'Sequelize', 'Socket.IO', 'JWT', 'Swagger', 'Nginx', 'PM2', 'GitHub Actions', 'MetaTrader 5 API'],
   },
   {
-    name: 'NexChain', slug: 'nexchain', accent: '#9edbc9',
+    name: 'NexChain', slug: 'nexchain', accent: '#9edbc9', link: 'https://nexchain-black.vercel.app/',
     category: 'Personal project / Fintech', context: 'Personal project · Live demo',
     title: 'Crypto paper-trading platform',
     summary: 'Learn crypto trading on live prices, without risking real money.',
@@ -126,11 +127,11 @@ export const serviceItems = [
   {title:'Care & improvements',description:'Fix the frustrating parts, improve slow pages, and keep your application running well as your needs change.',outcome:'A better experience, over time.'},
 ];
 export const experienceItems = [
-  {role:'Full Stack Developer',company:'Wisbato',location:'Kozhikode, Kerala',period:'Oct 2025 — Present',duration:'1 year+',brief:'A WhatsApp CRM for 3 client companies and HighCRM, a forex CRM on MetaTrader 5.',summary:'Develop and maintain full-stack web applications for client businesses, mainly a WhatsApp CRM used by three companies and HighCRM, a forex brokerage CRM integrated with MetaTrader 5.'},
+  {role:'Full Stack Developer',company:'Wisbato',location:'Kozhikode, Kerala',period:'Oct 2025 — Present',duration:'1 year+',brief:'A WhatsApp CRM for 3 client companies and an MT5 broker CRM for a forex brokerage.',summary:'Develop and maintain full-stack web applications for client businesses, mainly a WhatsApp CRM used by three companies and an MT5 broker CRM for a forex brokerage, integrated with MetaTrader 5.'},
   {role:'Full Stack Developer Intern',company:'Luminar Technolab',location:'Kozhikode, Kerala',period:'Jan 2025 — Aug 2025',duration:'8 months',brief:'REST APIs with JWT and role-based access, plus 30+ reusable React components.',summary:'Built RESTful APIs in Node.js and Express.js with JWT authentication and role-based access, plus reusable React components with Redux and responsive Tailwind CSS layouts.'},
 ];
 export const experienceDetails = [
-  {responsibilities:['Extend an open-source WhatsApp CRM into an education platform with batches, timetables, class automations and attendance.','Build HighCRM’s client portal and back office, integrating the MetaTrader 5 gateway API for trading accounts and balances.','Design database schemas, migrations, permissions and transactional money workflows in PostgreSQL.','Write automated tests and ship releases with Docker, PM2, Nginx and GitHub Actions.'],delivered:['A cron-driven class scheduler, WhatsApp attendance check-ins, and a broadcast queue with a send governor that backs off on Meta rate limits.','MT5 account creation, deposit and withdrawal workflows kept in sync with MT5 balances, KYC checks, and a 12 × 7 roles-and-permissions matrix.','A planner payload cut from ~320 KB to ~37 KB, 60+ SQL migrations, and ~200 Vitest test files.'],skills:['Next.js','Node.js','PostgreSQL','TypeScript','Supabase','Express','Socket.IO','WhatsApp Cloud API','MetaTrader 5 API','Vitest','Docker','GitHub Actions']},
+  {responsibilities:['Extend an open-source WhatsApp CRM into an education platform with batches, timetables, class automations and attendance.','Build the MT5 broker CRM’s client portal and back office, integrating the MetaTrader 5 gateway API for trading accounts and balances.','Design database schemas, migrations, permissions and transactional money workflows in PostgreSQL.','Write automated tests and ship releases with Docker, PM2, Nginx and GitHub Actions.'],delivered:['A cron-driven class scheduler, WhatsApp attendance check-ins, and a broadcast queue with a send governor that backs off on Meta rate limits.','MT5 account creation, deposit and withdrawal workflows kept in sync with MT5 balances, KYC checks, and a 12 × 7 roles-and-permissions matrix.','A planner payload cut from ~320 KB to ~37 KB, 60+ SQL migrations, and ~200 Vitest test files.'],skills:['Next.js','Node.js','PostgreSQL','TypeScript','Supabase','Express','Socket.IO','WhatsApp Cloud API','MetaTrader 5 API','Vitest','Docker','GitHub Actions']},
   {responsibilities:['Built RESTful APIs in Node.js and Express.js.','Secured API routes with JWT authentication and role-based access control.','Built reusable React components with Redux for shared application state.','Created responsive layouts with Tailwind CSS.'],delivered:['REST APIs with JWT authentication and role-based access.','30+ reusable React components with Redux and responsive Tailwind CSS layouts.'],skills:['React','Node.js','Express','Redux','JWT','Tailwind CSS','REST APIs','Git']},
 ];
 export const processSteps = [

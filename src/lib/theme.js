@@ -1,11 +1,11 @@
 // The site's theme: 'light' or 'dark'. The small script in index.html applies it before the first paint.
-// A visitor's own choice is saved and wins; until they choose, the site follows their device setting.
+// The site opens in light mode, whatever the device setting. A visitor's own choice is saved and wins.
 
 export const THEME_KEY = 'theme';
 const BAR_COLOR = {light: '#f6f0e8', dark: '#0a0c09'};
 
 export const isTheme = value => value === 'light' || value === 'dark';
-export const resolveTheme = (saved, deviceDark) => isTheme(saved) ? saved : deviceDark ? 'dark' : 'light';
+export const resolveTheme = saved => isTheme(saved) ? saved : 'light';
 
 export const readSaved = storage => {
   try { return storage.getItem(THEME_KEY); } catch { return null; }
@@ -14,9 +14,9 @@ export const writeSaved = (storage, theme) => {
   try { storage.setItem(THEME_KEY, theme); return true; } catch { return false; }
 };
 
-export function createThemeStore({root, storage, media, addStorageListener = () => {}, barColor = () => {}}) {
+export function createThemeStore({root, storage, addStorageListener = () => {}, barColor = () => {}}) {
   const listeners = new Set();
-  let theme = resolveTheme(readSaved(storage), media?.matches);
+  let theme = resolveTheme(readSaved(storage));
   const apply = next => {
     const changed = next !== theme;
     theme = next;
@@ -25,8 +25,7 @@ export function createThemeStore({root, storage, media, addStorageListener = () 
     if (changed) listeners.forEach(listener => listener());
   };
   apply(theme);
-  media?.addEventListener?.('change', event => { if (!isTheme(readSaved(storage))) apply(event.matches ? 'dark' : 'light'); });
-  addStorageListener(event => { if (event.key === THEME_KEY) apply(resolveTheme(event.newValue, media?.matches)); });
+  addStorageListener(event => { if (event.key === THEME_KEY) apply(resolveTheme(event.newValue)); });
   return {
     get: () => theme,
     set: next => { writeSaved(storage, next); apply(next); },
@@ -39,7 +38,6 @@ let store;
 const browserStore = () => store ??= createThemeStore({
   root: document.documentElement,
   storage: window.localStorage,
-  media: window.matchMedia('(prefers-color-scheme: dark)'),
   addStorageListener: listener => window.addEventListener('storage', listener),
   barColor: color => document.querySelector('meta[name=theme-color]')?.setAttribute('content', color),
 });

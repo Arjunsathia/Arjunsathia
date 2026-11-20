@@ -777,12 +777,6 @@ body .hero .hero-portrait {
 @keyframes flow-float { from { translate: 0 14px; } to { translate: 0 -14px; } }
 @keyframes flow-turn { from { rotate: -7deg; } to { rotate: 7deg; } }
 
-/* ---- Dark mode keeps the same centre-scale motion as light mode on the project and role cards ---- */
-[data-theme=dark] .project-wheel .work-entry,
-[data-theme=dark] .experience-section .role-timeline .role-entry {
-  transition: transform .16s ease-out, background-color var(--dark-fade), border-color var(--dark-fade), opacity var(--dark-fade), --sheen var(--dark-fade);
-}
-
 /* ---- Small motion details ---- */
 /* Lazy images fade in as they arrive (classes set in App.jsx; images already loaded are untouched) */
 img.img-fade { transition: opacity .3s cubic-bezier(.16,1,.3,1); }
