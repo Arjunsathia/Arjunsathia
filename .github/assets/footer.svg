@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="200" viewBox="0 0 1200 200" role="img" aria-label="Thanks for visiting"><title>Thanks for visiting</title><style>
+  .sans{font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif} .mono{font-family:ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace}
+  .card{fill:#ffffff;stroke:#d0d7de} .inner{fill:#f6f8fa;stroke:#d0d7de} .bar{fill:#f6f8fa}
+  .fg{fill:#1f2328} .muted{fill:#59636e} .faint{fill:#818b98} .line{stroke:#d0d7de}
+  .blue{fill:#0969da} .purple{fill:#8250df} .green{fill:#1a7f37} .orange{fill:#bc4c00} .pink{fill:#bf3989}
+  .s-blue{stroke:#0969da} .s-purple{stroke:#8250df} .s-green{stroke:#1a7f37} .s-muted{stroke:#d0d7de}
+  .glow-blue{fill:#54aeff} .glow-purple{fill:#c297ff} .glow-green{fill:#4ac26b}
+  .pill{fill:#dafbe1;stroke:#4ac26b} .bubble-in{fill:#ffffff;stroke:#d0d7de} .bubble-out{fill:#1a7f37}
+  .on-accent{fill:#ffffff} .grid{stroke:#d0d7de}
+  @media (prefers-color-scheme: dark){
+    .card{fill:#0d1117;stroke:#30363d} .inner{fill:#161b22;stroke:#30363d} .bar{fill:#161b22}
+    .fg{fill:#e6edf3} .muted{fill:#9198a1} .faint{fill:#6e7681} .line{stroke:#30363d}
+    .blue{fill:#4493f8} .purple{fill:#ab7df8} .green{fill:#3fb950} .orange{fill:#f0883e} .pink{fill:#db61a2}
+    .s-blue{stroke:#4493f8} .s-purple{stroke:#ab7df8} .s-green{stroke:#3fb950} .s-muted{stroke:#30363d}
+    .glow-blue{fill:#1f6feb} .glow-purple{fill:#8957e5} .glow-green{fill:#238636}
+    .pill{fill:#0f2a1a;stroke:#238636} .bubble-in{fill:#21262d;stroke:#30363d} .bubble-out{fill:#238636}
+    .grid{stroke:#21262d}
+  }
+  
+</style>
+  <path d="M0 130 C 200 108 400 152 600 130 S 1000 108 1200 130 V 200 H 0 Z" class="glow-purple" opacity="0.18"><animate attributeName="d" values="M0 130 C 200 108 400 152 600 130 S 1000 108 1200 130 V 200 H 0 Z;M0 130 C 200 152 400 108 600 130 S 1000 152 1200 130 V 200 H 0 Z;M0 130 C 200 108 400 152 600 130 S 1000 108 1200 130 V 200 H 0 Z" dur="9s" repeatCount="indefinite"/></path><path d="M0 145 C 200 127 400 163 600 145 S 1000 127 1200 145 V 200 H 0 Z" class="glow-blue" opacity="0.25"><animate attributeName="d" values="M0 145 C 200 127 400 163 600 145 S 1000 127 1200 145 V 200 H 0 Z;M0 145 C 200 163 400 127 600 145 S 1000 163 1200 145 V 200 H 0 Z;M0 145 C 200 127 400 163 600 145 S 1000 127 1200 145 V 200 H 0 Z" dur="7s" repeatCount="indefinite"/></path><path d="M0 162 C 200 148 400 176 600 162 S 1000 148 1200 162 V 200 H 0 Z" class="blue" opacity="0.35"><animate attributeName="d" values="M0 162 C 200 148 400 176 600 162 S 1000 148 1200 162 V 200 H 0 Z;M0 162 C 200 176 400 148 600 162 S 1000 176 1200 162 V 200 H 0 Z;M0 162 C 200 148 400 176 600 162 S 1000 148 1200 162 V 200 H 0 Z" dur="11s" repeatCount="indefinite"/></path>
+  <text x="600" y="58" text-anchor="middle" class="sans fg" font-size="24" font-weight="600">Thanks for stopping by.</text>
+  <text x="600" y="88" text-anchor="middle" class="mono muted" font-size="15">Let's build something reliable together.</text></svg>
