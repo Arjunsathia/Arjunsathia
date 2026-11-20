@@ -101,14 +101,15 @@ for (const [file, num, title, note] of sections) for (const [W, suffix] of [[800
 
 // ---------- Project banners: key facts on the left, a small live animation on the right ----------
 const banner = (file, opts) => { for (const [W, suffix] of [[800, '-mobile'], [1100, '']]) bannerAt(W, file.replace('.svg', suffix + '.svg'), opts); };
-const bannerAt = (W, file, {tag, name, subtitle, fact, color, glow, art, title}) => write(file, svg(W, 280, title, `
+// `nameSize` shrinks a long project name so it stays clear of the animated panel on the right.
+const bannerAt = (W, file, {tag, name, nameSize = 60, subtitle, fact, color, glow, art, title}) => write(file, svg(W, 280, title, `
   <defs><filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="50"/></filter><clipPath id="clip"><rect x="1" y="1" width="${W - 2}" height="278" rx="24"/></clipPath></defs>
   <rect x="1" y="1" width="${W - 2}" height="278" rx="24" class="card" stroke-width="1.5"/>
   <g clip-path="url(#clip)"><circle cx="${W - 120}" cy="60" r="150" class="${glow}" opacity=".35" filter="url(#soft)"><animate attributeName="cx" values="${W - 120};${W - 60};${W - 120}" dur="12s" repeatCount="indefinite"/></circle></g>
   <g opacity="0">${enter(0, 0, -16)}
     <circle cx="46" cy="58" r="7" class="${color}"/>
     <text x="64" y="66" class="mono muted" font-size="22">${esc(tag)}</text>
-    <text x="38" y="140" class="sans fg" font-size="60" font-weight="800" letter-spacing="-1.8">${esc(name)}</text>
+    <text x="38" y="140" class="sans fg" font-size="${nameSize}" font-weight="800" letter-spacing="${(-nameSize * .03).toFixed(1)}">${esc(name)}</text>
     <text x="40" y="186" class="sans muted" font-size="26">${esc(subtitle)}</text>
     <text x="40" y="234" class="sans ${color}" font-size="24" font-weight="600">${esc(fact)}</text>
   </g>
@@ -121,11 +122,11 @@ const bannerAt = (W, file, {tag, name, subtitle, fact, color, glow, art, title})
     ${bubble(1, 616, 118, 138, 'NOTES 47', true)}
     ${bubble(2, 536, 178, 218, 'Present ✓ notes sent', false)}`});
 }
-{ // HighCRM: deposit bars that keep moving, and a live MT5 status
+{ // MT5 Broker CRM: deposit bars that keep moving, and a live MT5 status
   const base = 226, bars = [[.45, .6, .5], [.62, .48, .66], [.52, .7, .58], [.75, .6, .8], [.66, .82, .7], [.88, .72, .92]];
   const spline = Array(3).fill('.4 0 .2 1').join(';');
   const art = bars.map((v, i) => { const x = 542 + i * 37, hs = v.map(n => Math.round(n * 120)); const vals = [...hs, hs[0]]; return `<rect x="${x}" width="26" rx="6" class="purple" opacity="${(0.45 + i * 0.1).toFixed(2)}" y="${base - hs[0]}" height="${hs[0]}"><animate attributeName="height" values="${vals.join(';')}" dur="6s" repeatCount="indefinite" calcMode="spline" keySplines="${spline}" keyTimes="0;.33;.66;1"/><animate attributeName="y" values="${vals.map(h => base - h).join(';')}" dur="6s" repeatCount="indefinite" calcMode="spline" keySplines="${spline}" keyTimes="0;.33;.66;1"/></rect>`; }).join('');
-  banner('project-highcrm.svg', {tag: 'CLIENT · IN PRODUCTION', name: 'HighCRM', subtitle: 'Forex brokerage CRM & portal', fact: 'MetaTrader 5 · KYC · funding', color: 'purple', glow: 'glow-purple', title: 'HighCRM — forex brokerage CRM and client portal on MetaTrader 5', art: `
+  banner('project-mt5-broker-crm.svg', {tag: 'CLIENT · IN PRODUCTION', name: 'MT5 Broker CRM', nameSize: 52, subtitle: 'Forex brokerage CRM & portal', fact: 'MetaTrader 5 · KYC · funding', color: 'purple', glow: 'glow-purple', title: 'MT5 Broker CRM — forex brokerage CRM and client portal on MetaTrader 5', art: `
     <circle cx="546" cy="72" r="6" class="green"><animate attributeName="opacity" values="1;.3;1" dur="1.6s" repeatCount="indefinite"/></circle>
     <text x="560" y="79" class="mono green" font-size="20" font-weight="700">MT5 LIVE</text>
     ${art}`});

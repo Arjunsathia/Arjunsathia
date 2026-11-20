@@ -15,7 +15,7 @@
 <a><picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-about-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-about.svg" width="100%" alt="01 · About" /></picture></a>
 
 - **Now** · Full-Stack Developer at **Wisbato**, Kozhikode
-- **Building** · A WhatsApp CRM used by 3 client companies, and HighCRM on MetaTrader 5
+- **Building** · A WhatsApp CRM used by 3 client companies, and an MT5 Broker CRM on MetaTrader 5
 - **Focus** · Transactions, rate limits and secure auth, backed by 300+ automated tests
 - **Open to** · Full-time roles and freelance projects
 
@@ -56,7 +56,7 @@
 
 <br/>
 
-<a><picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/project-highcrm-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/project-highcrm.svg" width="100%" alt="HighCRM — forex brokerage CRM and client portal on MetaTrader 5" /></picture></a>
+<a href="https://account.smatams.com/"><picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/project-mt5-broker-crm-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/project-mt5-broker-crm.svg" width="100%" alt="MT5 Broker CRM — forex brokerage CRM and client portal on MetaTrader 5" /></picture></a>
 
 - **MetaTrader 5** · Live and demo accounts with automatic session re-login
 - **Funding** · Deposits and withdrawals in PostgreSQL transactions
@@ -64,6 +64,8 @@
 - **Compliance** · KYC approval required before any money action
 
 <a><picture><img src="https://img.shields.io/badge/React-21262d?style=flat-square&logo=react&logoColor=61dafb" alt="React" /></picture></a> <a><picture><img src="https://img.shields.io/badge/Node.js-21262d?style=flat-square&logo=nodedotjs&logoColor=5fa04e" alt="Node.js" /></picture></a> <a><picture><img src="https://img.shields.io/badge/PostgreSQL-21262d?style=flat-square&logo=postgresql&logoColor=699eca" alt="PostgreSQL" /></picture></a> <a><picture><img src="https://img.shields.io/badge/Socket.IO-21262d?style=flat-square&logo=socketdotio&logoColor=white" alt="Socket.IO" /></picture></a>
+
+<a href="https://account.smatams.com/"><img src="https://img.shields.io/badge/Live_site-1f6feb?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Live site" /></a>
 
 <br/>
 
