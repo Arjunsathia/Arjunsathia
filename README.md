@@ -53,12 +53,10 @@
 
 <img src=".github/assets/project-whatsapp-crm.svg" width="100%" alt="WhatsApp CRM — messaging and class automation, used by 3 client companies" />
 
-<table>
-  <tr><td width="130"><b>Scheduler</b></td><td>Automated class reminders and notes for every student</td></tr>
-  <tr><td><b>Attendance</b></td><td>Students check in on WhatsApp with a session code</td></tr>
-  <tr><td><b>Safe sending</b></td><td>Broadcast queue that backs off on Meta rate limits</td></tr>
-  <tr><td><b>Quality</b></td><td>Payload ~320 KB → ~37 KB · ~200 test files</td></tr>
-</table>
+- **Scheduler** · Automated class reminders and notes for every student
+- **Attendance** · Students check in on WhatsApp with a session code
+- **Safe sending** · Broadcast queue that backs off on Meta rate limits
+- **Quality** · Payload ~320 KB → ~37 KB · ~200 test files
 
 <img src="https://img.shields.io/badge/Next.js-21262d?style=flat-square&logo=nextdotjs&logoColor=white" alt="Next.js" /> <img src="https://img.shields.io/badge/TypeScript-21262d?style=flat-square&logo=typescript&logoColor=3178c6" alt="TypeScript" /> <img src="https://img.shields.io/badge/Supabase-21262d?style=flat-square&logo=supabase&logoColor=3fcf8e" alt="Supabase" /> <img src="https://img.shields.io/badge/WhatsApp_API-21262d?style=flat-square&logo=whatsapp&logoColor=25d366" alt="WhatsApp Cloud API" />
 
@@ -66,12 +64,10 @@
 
 <img src=".github/assets/project-highcrm.svg" width="100%" alt="HighCRM — forex brokerage CRM and client portal on MetaTrader 5" />
 
-<table>
-  <tr><td width="130"><b>MetaTrader 5</b></td><td>Live and demo accounts with automatic session re-login</td></tr>
-  <tr><td><b>Funding</b></td><td>Deposits and withdrawals in PostgreSQL transactions</td></tr>
-  <tr><td><b>Access</b></td><td>Permission matrix of 12 modules × 7 actions</td></tr>
-  <tr><td><b>Compliance</b></td><td>KYC approval required before any money action</td></tr>
-</table>
+- **MetaTrader 5** · Live and demo accounts with automatic session re-login
+- **Funding** · Deposits and withdrawals in PostgreSQL transactions
+- **Access** · Permission matrix of 12 modules × 7 actions
+- **Compliance** · KYC approval required before any money action
 
 <img src="https://img.shields.io/badge/React-21262d?style=flat-square&logo=react&logoColor=61dafb" alt="React" /> <img src="https://img.shields.io/badge/Node.js-21262d?style=flat-square&logo=nodedotjs&logoColor=5fa04e" alt="Node.js" /> <img src="https://img.shields.io/badge/PostgreSQL-21262d?style=flat-square&logo=postgresql&logoColor=699eca" alt="PostgreSQL" /> <img src="https://img.shields.io/badge/Socket.IO-21262d?style=flat-square&logo=socketdotio&logoColor=white" alt="Socket.IO" />
 
@@ -79,12 +75,10 @@
 
 <a href="https://nexchain-black.vercel.app"><img src=".github/assets/project-nexchain.svg" width="100%" alt="NexChain — crypto paper-trading platform on live Binance prices" /></a>
 
-<table>
-  <tr><td width="130"><b>Trading</b></td><td>Market, limit, stop and OCO orders on live prices</td></tr>
-  <tr><td><b>Engine</b></td><td>Server-side matching; MongoDB transactions stop double fills</td></tr>
-  <tr><td><b>Security</b></td><td>Rotating refresh tokens, TOTP 2FA, rate limits</td></tr>
-  <tr><td><b>Quality</b></td><td>140+ automated tests with GitHub Actions CI</td></tr>
-</table>
+- **Trading** · Market, limit, stop and OCO orders on live prices
+- **Engine** · Server-side matching; MongoDB transactions stop double fills
+- **Security** · Rotating refresh tokens, TOTP 2FA, rate limits
+- **Quality** · 140+ automated tests with GitHub Actions CI
 
 <a href="https://nexchain-black.vercel.app"><img src="https://img.shields.io/badge/Live_demo-1f6feb?style=for-the-badge&logo=vercel&logoColor=white" alt="Live demo" /></a>
 <a href="https://github.com/Arjunsathia/NexChain-FE"><img src="https://img.shields.io/badge/Frontend-21262d?style=for-the-badge&logo=github&logoColor=white" alt="Frontend source" /></a>
