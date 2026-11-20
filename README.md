@@ -12,7 +12,7 @@
 
 <br/><br/>
 
-<a href="PORTFOLIO_URL"><img src="https://img.shields.io/badge/Portfolio-1f6feb?style=flat-square&logo=googlechrome&logoColor=white" alt="Portfolio" /></a>&nbsp;
+<a href="https://arjunsathia.vercel.app"><img src="https://img.shields.io/badge/Portfolio-1f6feb?style=flat-square&logo=googlechrome&logoColor=white" alt="Portfolio" /></a>&nbsp;
 <a href="https://www.linkedin.com/in/arjunsathia/"><img src="https://img.shields.io/badge/LinkedIn-0a66c2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>&nbsp;
 <a href="mailto:arjunsathia.in@gmail.com"><img src="https://img.shields.io/badge/Email-238636?style=flat-square&logo=gmail&logoColor=white" alt="Email" /></a>&nbsp;
 <img src="https://img.shields.io/badge/Kozhikode,_India-30363d?style=flat-square&logo=googlemaps&logoColor=white" alt="Kozhikode, India" />&nbsp;
@@ -76,8 +76,9 @@ const arjun: Developer = {
       <img src="https://img.shields.io/badge/MongoDB-30363d?style=flat-square&logo=mongodb&logoColor=47a248" alt="MongoDB" />
       <img src="https://img.shields.io/badge/WebSockets-30363d?style=flat-square&logo=socketdotio&logoColor=white" alt="WebSockets" />
       <br/><br/>
-      <a href="LIVE_DEMO_URL"><img src="https://img.shields.io/badge/Live_demo-238636?style=for-the-badge&logo=vercel&logoColor=white" alt="Live demo" /></a>
-      <a href="NEXCHAIN_REPO_URL"><img src="https://img.shields.io/badge/Source-30363d?style=for-the-badge&logo=github&logoColor=white" alt="Source code" /></a>
+      <a href="https://nexchain-black.vercel.app"><img src="https://img.shields.io/badge/Live_demo-238636?style=for-the-badge&logo=vercel&logoColor=white" alt="Live demo" /></a>
+      <a href="https://github.com/Arjunsathia/NexChain-FE"><img src="https://img.shields.io/badge/Frontend-30363d?style=for-the-badge&logo=github&logoColor=white" alt="Frontend source" /></a>
+      <a href="https://github.com/Arjunsathia/NexChain-backend"><img src="https://img.shields.io/badge/Backend-30363d?style=for-the-badge&logo=github&logoColor=white" alt="Backend source" /></a>
     </td>
     <td valign="top" width="50%">
       <h4>HighCRM</h4>
