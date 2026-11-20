@@ -19,7 +19,8 @@ export function handoffAtScrollBoundary(event,panel,page=window){
 // scrolling the page. So the page is driven directly: once the edge is reached mid-swipe the rest of the
 // movement scrolls the page, and a swipe that starts at the edge and moves outward cancels the bounce and
 // scrolls the page from the first movement. Either way the page then glides on with decaying momentum.
-export function createTouchHandoff(panel,page=window,frame=callback=>requestAnimationFrame(callback),now=()=>performance.now()){
+// `reduced()` returns true when the person prefers reduced motion: the swipe still scrolls the page, but no glide follows.
+export function createTouchHandoff(panel,page=window,frame=callback=>requestAnimationFrame(callback),now=()=>performance.now(),reduced=()=>false){
   const atEnd=direction=>{
     const max=Math.max(0,panel.scrollHeight-panel.clientHeight);
     return direction>0?panel.scrollTop>=max-1:panel.scrollTop<=1;
@@ -28,6 +29,7 @@ export function createTouchHandoff(panel,page=window,frame=callback=>requestAnim
   let glide=null,lastTop=panel.scrollTop,lastScrollT=0,scrollVelocity=0;
   const stopGlide=()=>{glide=null;};
   const startGlide=initial=>{
+    if(reduced())return;
     let v=initial,t=now();
     const token={};glide=token;
     const step=()=>{

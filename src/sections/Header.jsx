@@ -40,7 +40,7 @@ export function Header() {
     <div className="header-inner"><Wordmark />
       <nav className="desktop-nav" aria-label="Main navigation">{navItems.map(([id,label])=><a key={id} href={`#${id}`} aria-current={active===id?'location':undefined}>{label}</a>)} </nav><EnquiryButton className="button primary-button header-cta">Let’s talk <Arrow direction="↗" /></EnquiryButton>
       <button ref={toggle} className="menu-toggle" aria-label={open ? 'Close navigation' : 'Open navigation'} aria-expanded={open} aria-controls="mobile-nav" onClick={() => setOpen(!open)}><span /><span /></button>
-      <AnimatePresence>{open&&<motion.nav id="mobile-nav" className="mobile-nav" aria-label="Mobile navigation" initial={{opacity:0,y:-10}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-8}} transition={{duration:reduce?0:.22,ease:motionEase}}>{navItems.map(([id,label],i)=><motion.a key={id} href={`#${id}`} onClick={()=>setOpen(false)} initial={{opacity:0,y:-8}} animate={{opacity:1,y:0}} transition={{duration:reduce?0:.24,delay:reduce?0:.04+i*.035,ease:motionEase}}>{label}<span>0{i+1}</span></motion.a>)}</motion.nav>}</AnimatePresence>
+      <AnimatePresence>{open&&<motion.nav id="mobile-nav" className="mobile-nav" data-lenis-prevent aria-label="Mobile navigation" initial={{opacity:0,y:-10}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-8}} transition={{duration:reduce?0:.22,ease:motionEase}}>{navItems.map(([id,label],i)=><motion.a key={id} href={`#${id}`} onClick={()=>setOpen(false)} initial={{opacity:0,y:-8}} animate={{opacity:1,y:0}} transition={{duration:reduce?0:.24,delay:reduce?0:.04+i*.035,ease:motionEase}}>{label}<span>0{i+1}</span></motion.a>)}</motion.nav>}</AnimatePresence>
     </div>
   </header>;
 }

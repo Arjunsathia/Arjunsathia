@@ -12,7 +12,7 @@ export function About() {
       <Sequence className="about-content" gap={.1} delay={.08}>
         <Item as="h3" variant="line" className="about-name">HI, I’M<br /><Item as="mark" variant="wipe">ARJUN.</Item></Item>
         <Item as="p" className="about-lead">I’m a software engineer who enjoys figuring out how things work — and making them work better.</Item>
-        <Item className="about-copy"><p>I build across the full stack, from React interfaces to backend services and databases. I care about clear code, useful details, and the person on the other side of the screen.</p><p>I’m looking for a team to grow with, and I’m available for freelance projects too.</p></Item>
+        <Item className="about-copy"><p>I’m a full-stack developer at Wisbato in Kozhikode, where I build CRM platforms for client businesses, integrated with the WhatsApp Cloud API and MetaTrader 5. I work across React and Next.js interfaces, Node.js APIs, and PostgreSQL and MongoDB databases, backed by automated tests.</p><p>I’m looking for a team to grow with, and I’m available for freelance projects too.</p></Item>
       </Sequence>
     </div>
   </div></section>;

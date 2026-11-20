@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {motion, useReducedMotion} from 'motion/react';
 import {handoffAtScrollBoundary, createTouchHandoff} from './scroll-boundary.js';
+import {pageScroller} from './smooth-scroll.js';
 
 export const motionEase=[.16,1,.3,1];
 export function useCompactMotion(){
@@ -9,26 +10,26 @@ export function useCompactMotion(){
   return compact;
 }
 // fadeOnly leaves transform alone, for elements whose stylesheet already transforms them.
-export function Reveal({as='div',delay=0,distance=12,axis='y',scale,fadeOnly=false,children,...props}){
+export function Reveal({as='div',delay=0,distance=20,axis='y',scale,fadeOnly=false,children,...props}){
   const reduce=useReducedMotion();
   const Element=motion[as];
   const from=fadeOnly?{opacity:0}:{opacity:0,[axis]:distance,...(scale?{scale}:{})};
   const to=fadeOnly?{opacity:1}:{opacity:1,x:0,y:0,...(scale?{scale:1}:{})};
-  return <Element initial={reduce?false:from} whileInView={to} viewport={{once:true,amount:.15}} transition={{duration:reduce?0:.5,delay:reduce?0:delay,ease:motionEase}} {...props}>{children}</Element>;
+  return <Element initial={reduce?false:from} whileInView={to} viewport={{once:true,amount:.15,margin:'0px 0px -6% 0px'}} transition={{duration:reduce?0:.8,delay:reduce?0:delay,ease:motionEase}} {...props}>{children}</Element>;
 }
 // Scroll-reveal choreography: a Sequence plays its Items in order once it scrolls into view.
 // Items only animate opacity, clip, and transform; clip-path is cleared afterwards so the resting state matches the static design.
 export const revealVariants={
-  fade:{hidden:{opacity:0},shown:{opacity:1,transition:{duration:.5,ease:motionEase}}},
-  rise:{hidden:{opacity:0,y:18},shown:{opacity:1,y:0,transition:{duration:.6,ease:motionEase}}},
-  slide:{hidden:{opacity:0,x:28},shown:{opacity:1,x:0,transition:{duration:.6,ease:motionEase}}},
-  line:{hidden:{opacity:0,y:28,clipPath:'inset(0% 0% 100% 0%)'},shown:{opacity:1,y:0,clipPath:'inset(0% 0% 0% 0%)',transition:{duration:.75,ease:motionEase},transitionEnd:{clipPath:'none'}}},
+  fade:{hidden:{opacity:0},shown:{opacity:1,transition:{duration:.7,ease:motionEase}}},
+  rise:{hidden:{opacity:0,y:24},shown:{opacity:1,y:0,transition:{duration:.8,ease:motionEase}}},
+  slide:{hidden:{opacity:0,x:28},shown:{opacity:1,x:0,transition:{duration:.75,ease:motionEase}}},
+  line:{hidden:{opacity:0,y:28,clipPath:'inset(0% 0% 100% 0%)'},shown:{opacity:1,y:0,clipPath:'inset(0% 0% 0% 0%)',transition:{duration:.85,ease:motionEase},transitionEnd:{clipPath:'none'}}},
   wipe:{hidden:{clipPath:'inset(0% 100% 0% 0%)'},shown:{clipPath:'inset(0% 0% 0% 0%)',transition:{duration:.6,delay:.3,ease:motionEase},transitionEnd:{clipPath:'none'}}},
 };
 export function Sequence({as='div',gap=.08,delay=0,amount=.2,children,...props}){
   const reduce=useReducedMotion();
   const Element=motion[as];
-  const play=reduce?{}:{initial:'hidden',whileInView:'shown',viewport:{once:true,amount},variants:{hidden:{},shown:{transition:{staggerChildren:gap,delayChildren:delay}}}};
+  const play=reduce?{}:{initial:'hidden',whileInView:'shown',viewport:{once:true,amount,margin:'0px 0px -6% 0px'},variants:{hidden:{},shown:{transition:{staggerChildren:gap,delayChildren:delay}}}};
   return <Element {...play} {...props}>{children}</Element>;
 }
 export function Item({as='div',variant='rise',children,...props}){
@@ -48,16 +49,26 @@ export function useCenteredScroll(ref,selector,count){
   useEffect(()=>{
     const panel=ref.current;
     const entries=Array.from(panel.querySelectorAll(selector));
-    let frame=0;
+    let frame=0,settle=0,highlighted=-1;
+    // The highlighted card. In dark mode the highlight is a bright green fill, so it only moves once scrolling
+    // settles; otherwise every card flashes green as it passes the middle. Scale and fade still follow live.
+    const highlight=index=>{
+      clearTimeout(settle);
+      if(index===highlighted)return;
+      highlighted=index;
+      entries.forEach((entry,i)=>{entry.dataset.active=String(i===index);});
+    };
     const update=()=>{
       frame=0;
       const center=panel.scrollTop+panel.clientHeight/2;
       const positions=entries.map(entry=>({entry,center:entry.offsetTop+entry.offsetHeight/2,height:entry.offsetHeight}));
       let nearest=0,distance=Infinity;
       positions.forEach((item,index)=>{const next=Math.abs(item.center-center);if(next<distance){nearest=index;distance=next;}});
+      if(highlighted<0||reduce||document.documentElement.dataset.theme!=='dark')highlight(nearest);
+      else if(nearest!==highlighted){clearTimeout(settle);settle=setTimeout(()=>highlight(nearest),140);}
+      else clearTimeout(settle);
       positions.forEach((item,index)=>{
         const offset=Math.min(1,Math.abs(item.center-center)/item.height);
-        item.entry.dataset.active=String(index===nearest);
         item.entry.style.setProperty('--center-scale',reduce?'1':String(1-offset*.04));
         item.entry.style.setProperty('--center-opacity',String(1-offset*.45));
       });
@@ -65,9 +76,9 @@ export function useCenteredScroll(ref,selector,count){
     };
     const schedule=()=>{if(!frame)frame=requestAnimationFrame(update);};
     const resize=new ResizeObserver(schedule);resize.observe(panel);entries.forEach(entry=>resize.observe(entry));
-    const onWheel=event=>handoffAtScrollBoundary(event,panel);
+    const onWheel=event=>handoffAtScrollBoundary(event,panel,pageScroller());
     // Touch: once a swipe or fling reaches the end of the list, the page carries on scrolling.
-    const touch=createTouchHandoff(panel);
+    const touch=createTouchHandoff(panel,window,undefined,undefined,()=>reduce);
     const onTouchStart=event=>touch.start(event.touches[0].clientY);
     const onTouchMove=event=>touch.move(event.touches[0].clientY,event);
     const onTouchEnd=()=>touch.end();
@@ -81,7 +92,7 @@ export function useCenteredScroll(ref,selector,count){
     panel.addEventListener('touchcancel',onTouchEnd,{passive:true});
     update();
     return()=>{
-      cancelAnimationFrame(frame);resize.disconnect();touch.cancel();
+      cancelAnimationFrame(frame);clearTimeout(settle);resize.disconnect();touch.cancel();
       panel.removeEventListener('scroll',onScroll);panel.removeEventListener('wheel',onWheel);
       panel.removeEventListener('touchstart',onTouchStart);panel.removeEventListener('touchmove',onTouchMove);
       panel.removeEventListener('touchend',onTouchEnd);panel.removeEventListener('touchcancel',onTouchEnd);
@@ -90,7 +101,10 @@ export function useCenteredScroll(ref,selector,count){
   const goTo=index=>{
     const panel=ref.current;
     const entry=panel.querySelectorAll(selector)[Math.max(0,Math.min(count-1,index))];
-    panel.scrollTo({top:entry.offsetTop-(panel.clientHeight-entry.offsetHeight)/2,behavior:reduce?'instant':'smooth'});
+    // Land where scroll snapping would settle: centred lists centre the item, start-aligned lists (the role timeline) put it at the top.
+    const style=getComputedStyle(entry);
+    const top=style.scrollSnapAlign.includes('start')?entry.offsetTop-(parseFloat(getComputedStyle(panel).scrollPaddingTop)||0):entry.offsetTop-(panel.clientHeight-entry.offsetHeight)/2;
+    panel.scrollTo({top,behavior:reduce?'instant':'smooth'});
   };
   const onKeyDown=event=>{
     const destinations={ArrowUp:active-1,ArrowLeft:active-1,ArrowDown:active+1,ArrowRight:active+1,Home:0,End:count-1};

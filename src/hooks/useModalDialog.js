@@ -24,5 +24,5 @@ export function useModalDialog(onClose) {
   const onClick=event=>{
     if(event.target===ref.current){const r=ref.current.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)close();}
   };
-  return {ref,closing,close,reduce,dialogProps:{ref,onClose,onCancel:event=>{event.preventDefault();close();},onKeyDown,onClick}};
+  return {ref,closing,close,reduce,dialogProps:{ref,'data-lenis-prevent':true,onClose,onCancel:event=>{event.preventDefault();close();},onKeyDown,onClick}};
 }

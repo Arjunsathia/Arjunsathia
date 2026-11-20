@@ -5,7 +5,7 @@ import {Arrow, ServiceDoodle} from '../components/icons.jsx';
 import {SectionHeading} from '../components/SectionHeading.jsx';
 
 function SkillIcon({ icon }) {
-  return icon === 'check' ? <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l4 4L19 6" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" /></svg> : icon ? <svg viewBox="0 0 24 24" aria-hidden="true"><path d={icon.path} fill="currentColor" /></svg> : <svg viewBox="0 0 32 32" aria-hidden="true"><text x="2" y="18" fill="currentColor" fontFamily="Arial, sans-serif" fontSize="15" fontWeight="600">aws</text><path d="M4 23q12 7 24-1m-4-1 5 .3-2 4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>;
+  return icon === 'check' ? <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l4 4L19 6" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" /></svg> : icon ? <svg viewBox="0 0 24 24" aria-hidden="true"><path d={icon.path} fill="currentColor" /></svg> : null;
 }
 function StackIllustration({index}) {
   return <Reveal className="stack-illustration" aria-hidden="true" fadeOnly delay={.3}><svg viewBox="0 0 100 100" fill="none">
@@ -20,9 +20,17 @@ function useSelectedRow(rows, enabled) {
     if (!enabled) return;
     const list = rows.current;
     const select = row => list.querySelectorAll('.skill-row').forEach(item => { item.dataset.selected = String(item === row); });
-    const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) select(entry.target); }), {rootMargin: '-45% 0px -45% 0px'});
+    // In dark mode the selected row turns bright green, so the selection waits until scrolling pauses;
+    // otherwise each row flashes green as it passes the middle of the screen.
+    let settle = 0;
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      clearTimeout(settle);
+      if (document.documentElement.dataset.theme === 'dark') settle = setTimeout(() => select(entry.target), 140);
+      else select(entry.target);
+    }), {rootMargin: '-45% 0px -45% 0px'});
     list.querySelectorAll('.skill-row').forEach(row => observer.observe(row));
-    return () => { observer.disconnect(); list.querySelectorAll('.skill-row').forEach(item => delete item.dataset.selected); };
+    return () => { clearTimeout(settle); observer.disconnect(); list.querySelectorAll('.skill-row').forEach(item => delete item.dataset.selected); };
   }, [rows, enabled]);
 }
 export function Skills() {

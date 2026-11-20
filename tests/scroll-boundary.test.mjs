@@ -43,11 +43,11 @@ test('overscroll bounce positions clamp safely',()=>{
 });
 
 // Touch hand-off: a fake clock and frame queue make momentum deterministic.
-function touchFixture(top){
+function touchFixture(top,reduced=false){
   const pageMoves=[],frames=[];let clock=0;
   const panel={scrollTop:top,scrollHeight:1500,clientHeight:500};
   const page={scrollBy(options){pageMoves.push(options.top);}};
-  const handoff=createTouchHandoff(panel,page,callback=>frames.push(callback),()=>clock);
+  const handoff=createTouchHandoff(panel,page,callback=>frames.push(callback),()=>clock,()=>reduced);
   return {panel,pageMoves,handoff,tick(ms=16){clock+=ms;},flushFrames(limit=500){let n=0;while(frames.length&&n++<limit){clock+=16;frames.shift()();}return n;}};
 }
 test('touch: swiping inside the list leaves the page alone',()=>{
@@ -67,6 +67,19 @@ test('touch: the page keeps gliding after release, slowing to a stop',()=>{
   assert.ok(glide.length>5,'momentum continues for several frames');
   assert.ok(glide.every(v=>v>0),'momentum keeps the swipe direction');
   assert.ok(glide.at(-1)<glide[0],'momentum decays');
+});
+test('touch: with reduced motion the swipe still scrolls the page, but no glide follows',()=>{
+  const f=touchFixture(980,true);f.handoff.start(600);f.panel.scrollTop=1000;
+  for(let y=570;y>=450;y-=30){f.tick();f.handoff.move(y);}
+  const during=f.pageMoves.length;f.handoff.end();f.flushFrames();
+  assert.ok(during>0,'the swipe itself still moves the page');
+  assert.equal(f.pageMoves.length,during,'no momentum frames after release');
+});
+test('touch: with reduced motion a fling coasting into the end does not glide the page',()=>{
+  const f=touchFixture(900,true);
+  for(const top of [940,980,1000]){f.tick(16);f.panel.scrollTop=top;f.handoff.scrolled();}
+  f.flushFrames();
+  assert.deepEqual(f.pageMoves,[]);
 });
 test('touch: a swipe that starts at the end is left to the browser (no double scroll)',()=>{
   const f=touchFixture(1000);f.handoff.start(600);f.tick();f.handoff.move(560);f.handoff.end();

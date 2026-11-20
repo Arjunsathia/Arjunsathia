@@ -2362,17 +2362,14 @@ html {
   background: var(--selection);
   border-color: var(--selection-border);
 }
-.work-entry-devnotes {
+.work-entry-whatsapp-crm {
   --project-color: var(--c-bg-d9e7d2);
 }
-.work-entry-stack {
+.work-entry-highcrm {
   --project-color: var(--c-bg-efe2b8);
 }
-.work-entry-pulse {
+.work-entry-nexchain {
   --project-color: var(--c-bg-d9e2dc);
-}
-.work-entry-draft {
-  --project-color: var(--c-bg-e8dfcc);
 }
 .work-entry-name h3 {
   margin-bottom: 0;
@@ -2839,6 +2836,37 @@ html {
   margin: 0;
   text-wrap: pretty;
 }
+.project-modal-reading>p.project-modal-credit {
+  margin-top: 12px;
+  padding-left: 10px;
+  border-left: 2px solid var(--project-accent, var(--accent));
+  font-size: 11px;
+  line-height: 1.7;
+}
+.project-modal-points {
+  list-style: none;
+  display: grid;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+}
+.project-modal-points>li {
+  position: relative;
+  padding-left: 14px;
+  font: 13px/1.8 var(--sans);
+  color: var(--c-text-5c6351);
+  text-wrap: pretty;
+}
+.project-modal-points>li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: .78em;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent-deep);
+}
 .project-modal-visual {
   height: 200px;
   flex-shrink: 0;
@@ -3186,11 +3214,6 @@ html {
 .enquiry-main input::placeholder,
 .enquiry-main textarea::placeholder {
   color: var(--c-text-77766b);
-}
-.enquiry-main .enquiry-demo {
-  margin: 0;
-  color: var(--c-text-626b4d);
-  font: 11px/1.6 var(--sans);
 }
 .enquiry-submit {
   width: 100%;
@@ -4087,7 +4110,6 @@ html {
   display: contents;
 }
 .enquiry-close-wrap>.eyebrow,
-.enquiry-contact-icon,
 .enquiry-spark {
   display: none;
 }
@@ -4176,27 +4198,6 @@ html {
   .enquiry-dialog>.enquiry-aside address>span:last-child {
     display: none;
   }
-  .enquiry-contact-row {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    min-width: 0;
-    padding-right: 0;
-  }
-  .enquiry-contact-icon {
-    display: block;
-    flex-shrink: 0;
-    width: 14px;
-    height: 14px;
-    stroke: var(--on-band);
-    stroke-width: 1.6;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-  .enquiry-contact-row>span {
-    min-width: 0;
-    overflow-wrap: anywhere;
-  }
   .enquiry-dialog>.enquiry-aside>small {
     font-size: 9px;
     line-height: 1.5;
@@ -4257,10 +4258,6 @@ html {
     height: 82px;
     max-height: 240px;
     resize: vertical;
-  }
-  .enquiry-dialog .enquiry-main .enquiry-demo {
-    font-size: 10px;
-    line-height: 1.6;
   }
   .enquiry-dialog .enquiry-submit {
     min-height: 46px;
@@ -4396,7 +4393,8 @@ html {
     line-height: 1.5;
     margin-bottom: 8px;
   }
-  .project-modal-reading>p {
+  .project-modal-reading>p,
+  .project-modal-points>li {
     font-size: 12px;
     line-height: 1.75;
   }
@@ -4859,8 +4857,7 @@ html {
   font-size: 6px;
 }
 .services-heading-note,
-.service-top-note,
-.service-card-ending .service-outcome {
+.service-top-note {
   font-family: 'Comic Sans MS','Comic Neue',cursive;
   font-style: italic;
   font-weight: 400;
@@ -4902,27 +4899,6 @@ html {
   width: 35px;
   rotate: 125deg;
 }
-.service-card-ending {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 8px 0;
-  border-top: 1px dashed #13170d45;
-}
-.service-card-ending>.service-doodle {
-  width: 48px;
-  height: 37px;
-  rotate: -12deg;
-}
-.service-card-ending .service-outcome {
-  font-size: 13px;
-  line-height: 1.35;
-  max-width: 135px;
-  margin: 0;
-  rotate: -9deg;
-  color: var(--on-accent);
-}
 @media (hover:hover) and (pointer:fine) {
   .services-section article.service-card:hover {
     box-shadow: 0 8px 22px #0002;
@@ -4960,9 +4936,6 @@ html {
   }
   .service-performance span {
     font-size: 4px;
-  }
-  .service-card-ending {
-    padding-right: 2px;
   }
 }
 @media (max-width:360px) {
@@ -5014,10 +4987,6 @@ html {
 }
 .service-code {
   top: 35px;
-}
-.service-card-ending {
-  min-height: 56px;
-  padding-top: 10px;
 }
 @media (hover:hover) and (pointer:fine) {
   .service-card:hover .service-laptop-real {
@@ -5174,24 +5143,6 @@ html {
     width: 27px;
     rotate: 7deg;
   }
-  .service-card-ending {
-    border: 0;
-    padding: 8px 0 0;
-    gap: 6px;
-    position: relative;
-    z-index: 3;
-  }
-  .service-card-ending .service-outcome {
-    font-size: 10px;
-    max-width: 125px;
-  }
-  .service-card-ending>.service-doodle {
-    width: 30px;
-    height: 25px;
-  }
-  .service-card-2 .service-card-ending {
-    visibility: hidden;
-  }
 }
 @media (max-width:360px) {
   .service-card-body {
@@ -5221,18 +5172,6 @@ html {
 @media (max-width:700px) and (prefers-reduced-motion:reduce) {
   .service-card:hover .service-laptop-real {
     transform: rotate(5deg);
-  }
-}
-@media (max-width:700px) {
-  .service-card-1 .service-card-ending {
-    justify-content: flex-start;
-  }
-  .service-card-1 .service-card-ending .service-outcome {
-    font-size: 9px;
-    max-width: 96px;
-  }
-  .service-card-1 .service-card-ending>.service-doodle {
-    width: 23px;
   }
 }
 
@@ -5275,13 +5214,6 @@ html {
   }
   .service-performance {
     top: 4px;
-  }
-  .service-card-ending {
-    padding-top: 5px;
-    min-height: 31px;
-  }
-  .service-card-2 .service-card-ending {
-    min-height: 31px;
   }
 }
 @media (max-width:360px) {
@@ -8003,9 +7935,6 @@ html {
 .service-phone-task>span {
   margin-left: auto;
 }
-.service-card-1 .service-card-ending {
-  position: relative;
-}
 @media (min-width:701px) and (max-width:1000px) {
   .service-card-1 .service-card-body {
     grid-template-columns: minmax(0,1.1fr) minmax(0,1fr);
@@ -8015,9 +7944,6 @@ html {
   .service-card-1 .service-card-body {
     grid-template-columns: minmax(0,1.1fr) minmax(0,1fr);
     gap: 8px;
-  }
-  .service-card-1 .service-card-ending {
-    max-width: none;
   }
 }
 
@@ -10852,5 +10778,21 @@ body .experience-section .role-timeline .role-entry .role-card-link {
 @media (max-width:700px) {
   body .process-section {
     padding-top: 20px;
+  }
+}
+
+/* Phones: cards show a short line (the full text is in the details popup), never more than two lines,
+   so the fixed-height project and role cards keep their preview and button inside the card. */
+@media (max-width:700px) {
+  body .project-wheel .project-card-summary,
+  body .experience-section .role-card-summary {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+  }
+  body .project-wheel .project-card-summary {
+    align-self: start;
   }
 }

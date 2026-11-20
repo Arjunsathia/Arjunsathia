@@ -260,8 +260,7 @@
 [data-theme=dark] .skill-pill svg {
   color: color-mix(in oklab, var(--skill-brand, var(--text-strong)) 62%, white);
 }
-[data-theme=dark] .skill-pill[data-tool='Next.js'] svg,
-[data-theme=dark] .skill-pill[data-tool='Django'] svg {
+[data-theme=dark] .skill-pill:is([data-tool='Next.js'], [data-tool=Express], [data-tool='Socket.IO'], [data-tool=Vercel]) svg {
   color: var(--text-strong);
 }
 
@@ -514,4 +513,321 @@
 /* ---- Dark mode: the Contact arrow's hover uses the green hover colour ---- */
 [data-theme=dark] .contact:hover .contact-long-arrow {
   color: #b7ec78;
+}
+
+/* ---- Project popup: stack pills with brand-coloured icons and a matching soft background and border ----
+   The icon colour is darkened on light panels and lifted on dark ones, so it always stands out. */
+body .project-modal li:has(>.tech-icon) {
+  --tech-icon: color-mix(in srgb, var(--tech, currentColor) 60%, #000);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid color-mix(in srgb, var(--tech, currentColor) 42%, transparent);
+  background-color: color-mix(in srgb, var(--tech, currentColor) 12%, transparent);
+}
+[data-theme=dark] body .project-modal li:has(>.tech-icon),
+body .project-modal .project-detail-toolset li:has(>.tech-icon) {
+  --tech-icon: color-mix(in oklab, var(--tech, currentColor) 72%, #fff);
+}
+.project-modal .tech-icon {
+  flex: none;
+  width: 15px;
+  height: 15px;
+  color: var(--tech-icon);
+}
+
+/* ---- Hero photo flip card: hover (mouse) or tap/click to show the details on the back ----
+   The frame stays still and only the card inside turns, so the hover never flickers at the edge. */
+body .hero .hero-portrait {
+  border: 0;
+  background: none;
+  overflow: visible;
+  perspective: 1600px;
+}
+.hero-portrait::after { display: none; }
+.portrait-card {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  transform-style: preserve-3d;
+  transition: transform .7s cubic-bezier(.45,0,.2,1);
+}
+.hero-portrait.is-flipped .portrait-card { transform: rotateY(180deg); }
+@media (hover:hover) and (pointer:fine) {
+  .hero-portrait:hover .portrait-card { transform: rotateY(180deg); }
+}
+.hero-portrait:has(.portrait-flip-toggle:focus-visible) .portrait-card { transform: rotateY(180deg); }
+.hero-portrait:has(.portrait-flip-toggle:focus-visible) .portrait-face { outline: 2px solid var(--focus-ring, #b7ec78); outline-offset: 3px; }
+.portrait-face {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.portrait-front {
+  background: radial-gradient(ellipse at 52% 40%,var(--c-bg-c8a37d) 0%,var(--c-bg-bd956e) 62%,var(--c-bg-ac815a) 100%);
+}
+@media (min-width:701px) {
+  .portrait-face { border: 1.5px solid var(--line-strong); }
+}
+.portrait-flip-toggle {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: inherit;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.portrait-flip-toggle:focus { outline: none; }
+
+/* Back of the card: a lime panel on top (the site's own button gradient) with the title,
+   and the three key lines below on the card surface. */
+.portrait-back {
+  transform: rotateY(180deg);
+  container-type: size;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  color: var(--text-strong);
+  font-family: var(--sans);
+  background: var(--bg-card);
+}
+[data-theme=dark] .portrait-back { background: linear-gradient(180deg, #181d14 0%, #11150e 100%); box-shadow: inset 0 0 0 1px #ffffff14; }
+/* One shared margin (--m) and inner padding (--p), so the title, sentence and rows all start on the same line */
+.card-panel, .card-list { --m: clamp(8px, 2.6cqw, 12px); --p: clamp(18px, 6.5cqw, 30px); }
+.card-panel {
+  position: relative;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: var(--m) var(--m) 0;
+  border-radius: 12px;
+  box-shadow: inset 0 0 0 1px #13170d14;
+  padding: var(--p);
+  background: linear-gradient(115deg, #e5ee83 0%, #d4e62d 52%, #ecd953 100%);
+  color: #13170d;
+}
+[data-theme=dark] .card-panel { background: linear-gradient(115deg, #b7ec78 0%, #9fe05a 55%, #7fc63f 100%); }
+.card-top { display: flex; justify-content: flex-end; }
+/* Slowly turning asterisk (the same one as the top ticker); it only turns while the details side is showing */
+.card-spark { display: grid; place-items: center; width: clamp(30px, 9cqw, 40px); aspect-ratio: 1; margin: -2px -2px 0 0; color: #13170d; }
+.card-spark .glyph { display: block; width: 100%; height: 100%; }
+.card-spark svg { display: block; width: 100%; height: 100%; stroke-width: 1.8; animation: card-spark-turn 24s linear infinite; animation-play-state: paused; }
+.hero-portrait.is-flipped .card-spark svg,
+.hero-portrait:has(.portrait-flip-toggle:focus-visible) .card-spark svg { animation-play-state: running; }
+@media (hover:hover) and (pointer:fine) { .hero-portrait:hover .card-spark svg { animation-play-state: running; } }
+@keyframes card-spark-turn { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion:reduce) { .card-spark svg { animation: none; } }
+.portrait-back-title {
+  margin: 0;
+  font: clamp(34px, 12.5cqw, 60px)/.94 var(--display);
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  color: #13170d;
+}
+.portrait-back-title span { display: block; }
+.card-lede { margin: clamp(10px, 3cqh, 16px) 0 0; font-size: 14px; font-weight: 600; line-height: 1.4; color: #13170dc2; }
+
+.card-list { margin: 0; padding: clamp(6px, 2cqh, 12px) calc(var(--m) + var(--p)) clamp(10px, 3cqh, 18px); list-style: none; }
+.card-list li {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 10px;
+  padding: clamp(8px, 2.2cqh, 12px) 0;
+}
+.card-list li + li { border-top: 1px solid var(--line-strong); }
+.card-list li > span { font: 700 10px/1 var(--mono); color: var(--text-muted); }
+.card-list b { font-size: 13.5px; font-weight: 700; line-height: 1.3; color: var(--text-strong); }
+.card-list small { font-size: 11.5px; color: var(--text-muted); }
+
+/* Narrow cards: no numbers; value first, small label at the end of the row */
+@container (max-width: 380px) {
+  .card-panel, .card-list { --p: 16px; }
+  .card-list li { grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
+  .card-list li > span { display: none; }
+  .card-list small { font-size: 10px; text-align: right; }
+  .card-list b { font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+}
+@container (max-width: 330px) {
+  .card-panel, .card-list { --p: 14px; }
+  .card-list li { gap: 6px; }
+  .card-list b { font-size: 11.5px; }
+}
+@container (max-width: 300px) {
+  .card-list b { white-space: normal; }
+}
+@container (max-height: 430px) {
+  .portrait-back-title { font-size: clamp(30px, 10.5cqw, 44px); }
+  .card-list li { padding: 7px 0; }
+  .card-list b { font-size: 13px; }
+}
+@container (max-height: 300px) {
+  .card-top, .card-lede { display: none; }
+  .card-panel { justify-content: flex-end; padding-block: 14px; }
+  .portrait-back-title { font-size: 22px; line-height: 1; }
+  .portrait-back-title span { display: inline; }
+  .portrait-back-title span + span::before { content: ' '; }
+  .card-list { padding-block: 2px 6px; }
+  .card-list li { padding: 5px 0; }
+  .card-list li:nth-child(3) { display: none; }
+}
+
+/* The name overlaps the photo; bring the card forward while it shows the details */
+.hero-portrait.is-flipped { z-index: 5; }
+@media (hover:hover) and (pointer:fine) { .hero-portrait:hover { z-index: 5; } }
+@media (prefers-reduced-motion:reduce) {
+  .portrait-card { transition: none; }
+}
+
+/* ---- Stack chips: brand-coloured icon on a soft brand tint with a matching border, in every size and theme.
+   Solid (not see-through) tint, so the chips stay clean on the lime hover row too.
+   Icons are darkened on light surfaces and lifted on dark ones; near-black brands use the text colour. ---- */
+:root body .skills-section .skill-row .skill-pill {
+  --chip: var(--skill-brand, var(--text-strong));
+  --chip-icon: color-mix(in srgb, var(--chip) 62%, #000);
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid color-mix(in srgb, var(--chip) 45%, transparent);
+  background: color-mix(in srgb, var(--chip) 12%, var(--bg-card));
+  color: var(--text-strong);
+  box-shadow: none;
+  transform: none;
+  transition: background-color .16s ease, border-color .16s ease, transform .16s cubic-bezier(.16,1,.3,1);
+}
+:root body .skills-section .skill-row .skill-pill svg { color: var(--chip-icon); }
+:root body .skills-section .skill-row .skill-pill span { color: var(--text-strong); }
+[data-theme=dark] body .skills-section .skill-row .skill-pill {
+  --chip-icon: color-mix(in oklab, var(--chip) 70%, #fff);
+  background: color-mix(in srgb, var(--chip) 14%, var(--bg-page));
+}
+[data-theme=dark] body .skills-section .skill-row .skill-pill:is([data-tool='Next.js'], [data-tool=Express], [data-tool='Socket.IO'], [data-tool=Vercel]) { --chip: var(--text-strong); }
+@media (hover:hover) and (pointer:fine) {
+  :root body .skills-section .skill-row .skill-pill:hover {
+    background: color-mix(in srgb, var(--chip) 24%, var(--bg-card));
+    border-color: color-mix(in srgb, var(--chip) 75%, transparent);
+    transform: translateY(-2px);
+  }
+  [data-theme=dark] body .skills-section .skill-row .skill-pill:hover { background: color-mix(in srgb, var(--chip) 26%, var(--bg-page)); }
+}
+@media (prefers-reduced-motion:reduce) {
+  :root body .skills-section .skill-row .skill-pill:hover { transform: none; }
+}
+
+/* ---- Scroll flow ----
+   Endless loops pause while off screen (class set in App.jsx). */
+.is-offscreen,
+.is-offscreen * { animation-play-state: paused !important; }
+@media (prefers-reduced-motion:reduce) { html { scroll-behavior: auto; } }
+
+/* Scroll-linked depth. Runs on the compositor (no JavaScript per frame); browsers without
+   scroll-driven animations, and people who prefer reduced motion, simply get the still layout.
+   Only images and decorations move, never text. Uses the separate translate/rotate/scale
+   properties so it adds to, and never fights, the existing transforms and entrance animations. */
+@media (prefers-reduced-motion:no-preference) {
+  @supports (animation-timeline: view()) {
+
+    /* Images ease up into place as they enter (all screen sizes) */
+    .about-photo {
+      animation: flow-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 80%;
+    }
+
+    @media (min-width:701px) {
+      /* Hero photo drifts down slightly as the page scrolls away from it */
+      .hero-portrait .portrait-front .portrait {
+        scale: 1.06;
+        animation: flow-hero linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 100vh;
+      }
+      /* About photo moves gently inside its frame */
+      .about-photo img {
+        scale: 1.1;
+        animation: flow-drift linear both;
+        animation-timeline: view();
+        animation-range: cover;
+      }
+      /* Illustrations float, hand-drawn marks turn a little */
+      .stack-illustration svg,
+      .service-laptop-real {
+        animation: flow-float linear both;
+        animation-timeline: view();
+        animation-range: cover;
+      }
+      .service-doodle {
+        animation: flow-turn linear both;
+        animation-timeline: view();
+        animation-range: cover;
+      }
+    }
+  }
+}
+@keyframes flow-in { from { opacity: .35; translate: 0 36px; scale: .97; } to { opacity: 1; translate: 0 0; scale: 1; } }
+@keyframes flow-hero { to { translate: 0 3%; } }
+@keyframes flow-drift { from { translate: 0 -4%; } to { translate: 0 4%; } }
+@keyframes flow-float { from { translate: 0 14px; } to { translate: 0 -14px; } }
+@keyframes flow-turn { from { rotate: -7deg; } to { rotate: 7deg; } }
+
+/* ---- Dark mode keeps the same centre-scale motion as light mode on the project and role cards ---- */
+[data-theme=dark] .project-wheel .work-entry,
+[data-theme=dark] .experience-section .role-timeline .role-entry {
+  transition: transform .16s ease-out, background-color var(--dark-fade), border-color var(--dark-fade), opacity var(--dark-fade), --sheen var(--dark-fade);
+}
+
+/* ---- Small motion details ---- */
+/* Lazy images fade in as they arrive (classes set in App.jsx; images already loaded are untouched) */
+img.img-fade { transition: opacity .3s cubic-bezier(.16,1,.3,1); }
+img.img-pending { opacity: 0; }
+
+/* Screen viewer: each screen crossfades in; it opens over the project popup, so it skips a second blur */
+.preview-viewer-image img { animation: preview-in .24s cubic-bezier(.16,1,.3,1); }
+@keyframes preview-in { from { opacity: 0; scale: .985; } }
+.project-preview-dialog::backdrop { -webkit-backdrop-filter: none; backdrop-filter: none; background: #0b0d09d9; }
+
+/* Hero card: a one-time tilt hint that it flips (desktop, once per visit; set in Hero.jsx) */
+.hero-portrait.is-peeking .portrait-card { animation: card-peek .9s cubic-bezier(.65,0,.35,1); }
+@keyframes card-peek { 0%, 100% { transform: rotateY(0); } 45% { transform: rotateY(-16deg); } }
+
+
+
+@media (prefers-reduced-motion:reduce) {
+  img.img-fade { transition: none; }
+  .preview-viewer-image img { animation: none; }
+}
+
+/* ---- Dark mode: the green highlight on the open project, the open role and the Stack row fades in and out smoothly ----
+   One slightly longer, eased fade for the surface and everything on it, so they change together. */
+[data-theme=dark] { --highlight-fade: .32s cubic-bezier(.4, 0, .2, 1); }
+[data-theme=dark] .project-wheel .work-entry,
+[data-theme=dark] .experience-section .role-timeline .role-entry {
+  transition: transform .16s ease-out, background-color var(--highlight-fade), border-color var(--highlight-fade), opacity var(--highlight-fade), --sheen var(--highlight-fade);
+}
+[data-theme=dark] .skills-section .skill-row {
+  transition: background-color var(--highlight-fade), border-color var(--highlight-fade), opacity var(--highlight-fade), --sheen var(--highlight-fade);
+}
+[data-theme=dark] .project-wheel .work-entry .project-card-copy *:not(.work-entry-link, .work-entry-link *),
+[data-theme=dark] .project-wheel .work-entry .project-preview-paper,
+[data-theme=dark] .project-wheel .work-entry .project-preview-burst,
+[data-theme=dark] .project-wheel .work-entry .work-entry-link *,
+[data-theme=dark] .role-timeline .role-entry>*,
+[data-theme=dark] .role-timeline .role-entry>* *,
+[data-theme=dark] .skills-section .skill-row-number,
+[data-theme=dark] .skills-section .skill-row-copy h3,
+[data-theme=dark] .skills-section .skill-row-copy>p,
+[data-theme=dark] .skills-section .skill-row-dash {
+  transition: color var(--highlight-fade), background-color var(--highlight-fade), border-color var(--highlight-fade);
+}
+/* Desktop: while the page scrolls, Stack rows ignore the pointer, so rows sliding under a still mouse don't flash
+   green one after another. The row under the pointer lights up once scrolling stops. */
+@media (hover:hover) and (pointer:fine) {
+  html[data-theme=dark].is-scrolling .skills-section .skill-row { pointer-events: none; }
 }
