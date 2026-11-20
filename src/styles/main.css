@@ -11221,3 +11221,37 @@ body .experience-section .role-timeline .role-entry .role-card-link {
     margin: 8px 0 2px;
   }
 }
+
+/* ---- Popups: key phrases (**marked** in the content) in bold ----
+   A heavier weight and the strongest text colour, so they stand out from the muted body text in both themes. */
+.project-modal :is(.project-modal-reading p, .project-modal-points li, .project-modal-credit) strong,
+.experience-dialog :is(.role-details-summary, .role-details-section li) strong {
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+/* ---- Experience popup: tools as pills with brand-coloured icons, like the project popup's stack ---- */
+.experience-dialog .role-details-tools>li:has(>.tech-icon) {
+  --tech-icon: color-mix(in srgb, var(--tech, currentColor) 60%, #000);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid color-mix(in srgb, var(--tech, currentColor) 42%, transparent);
+  background-color: color-mix(in srgb, var(--tech, currentColor) 12%, transparent);
+}
+[data-theme=dark] .experience-dialog .role-details-tools>li:has(>.tech-icon) {
+  --tech-icon: color-mix(in oklab, var(--tech, currentColor) 72%, #fff);
+}
+.experience-dialog .role-details-tools .tech-icon {
+  flex: none;
+  width: 13px;
+  height: 13px;
+  color: var(--tech-icon);
+}
+@media (min-width:701px) {
+  /* Same size as the project popup's stack pills. */
+  .experience-dialog .role-details-tools>li {
+    padding: 7px 11px;
+    font-size: 11px;
+  }
+}

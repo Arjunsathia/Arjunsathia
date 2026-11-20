@@ -5,6 +5,9 @@ import {experienceItems, experienceDetails} from '../content/site.js';
 import {Arrow, ServiceDoodle} from '../components/icons.jsx';
 import {SectionHeading} from '../components/SectionHeading.jsx';
 import {useModalDialog} from '../hooks/useModalDialog.js';
+import {TechIcon, techStyle} from '../components/TechIcon.jsx';
+import {Rich} from '../components/Rich.jsx';
+import {plainText} from '../lib/rich-text.js';
 
 function ExperienceDialog({ item, index, onClose }) {
   const {ref,closing,close,reduce,dialogProps}=useModalDialog(onClose);
@@ -30,10 +33,10 @@ function ExperienceDialog({ item, index, onClose }) {
       {compact&&<div className="role-details-tabs" role="tablist" aria-label="Experience details" onKeyDown={tabKey}>{tabs.map((label,i)=><button key={label} type="button" role="tab" id={`role-tab-${i}`} aria-selected={tab===i} aria-controls="role-details-panel" tabIndex={tab===i?0:-1} onClick={()=>setTab(i)}>{label}</button>)}</div>}
       {/* On phones each tab change fades in, matching the project popup */}
       <motion.div key={compact?tab:'all'} className="role-details-panel" {...(compact?{role:'tabpanel',id:'role-details-panel','aria-labelledby':`role-tab-${tab}`,tabIndex:0}:{})} initial={compact&&!reduce?{opacity:0,y:6}:false} animate={{opacity:1,y:0}} transition={{duration:reduce?0:.18,ease:motionEase}}>
-        {(!compact||tab===0)&&<p className="role-details-summary" id="experience-dialog-summary">{item.summary}</p>}
-        {(!compact||tab===1)&&<section className="role-details-section" aria-labelledby="role-responsibilities"><h3 id="role-responsibilities">Responsibilities</h3><ul>{details.responsibilities.map(text=><li key={text}>{text}</li>)}</ul></section>}
-        {(!compact||tab===0)&&<section className="role-details-section" aria-labelledby="role-deliverables"><h3 id="role-deliverables">Work delivered</h3><ul>{details.delivered.map(text=><li key={text}>{text}</li>)}</ul></section>}
-        {(!compact||tab===2)&&<section className="role-details-section" aria-labelledby="role-skills"><h3 id="role-skills">Skills &amp; tools</h3><ul className="role-details-tools">{details.skills.map(skill=><li key={skill}>{skill}</li>)}</ul></section>}
+        {(!compact||tab===0)&&<p className="role-details-summary" id="experience-dialog-summary"><Rich text={item.summary}/></p>}
+        {(!compact||tab===1)&&<section className="role-details-section" aria-labelledby="role-responsibilities"><h3 id="role-responsibilities">Responsibilities</h3><ul>{details.responsibilities.map(text=><li key={text}><Rich text={text}/></li>)}</ul></section>}
+        {(!compact||tab===0)&&<section className="role-details-section" aria-labelledby="role-deliverables"><h3 id="role-deliverables">Work delivered</h3><ul>{details.delivered.map(text=><li key={text}><Rich text={text}/></li>)}</ul></section>}
+        {(!compact||tab===2)&&<section className="role-details-section" aria-labelledby="role-skills"><h3 id="role-skills">Skills &amp; tools</h3><ul className="role-details-tools">{details.skills.map(skill=><li key={skill} style={techStyle(skill)}><TechIcon tag={skill}/>{skill}</li>)}</ul></section>}
       </motion.div>
     </div>
   </dialog>;
@@ -58,7 +61,7 @@ export function Experience() {
           <RoleIcon index={i}/>
           <div className="role-card-top"><span className="eyebrow">0{i+1} / {/present/i.test(item.period)?'CURRENT ROLE':'PREVIOUSLY'}</span><span className="role-card-period">{item.period}<small>{item.duration}</small></span></div>
           <div className="role-card-heading"><h3>{item.role}</h3><p>{item.company}</p></div>
-          <p className="role-card-summary">{compact&&item.brief?item.brief:item.summary}</p>
+          <p className="role-card-summary">{compact&&item.brief?item.brief:plainText(item.summary)}</p>
           <div className="role-card-footer"><span className="role-card-tools">{experienceDetails[i].skills.slice(0,3).map((skill,j)=><React.Fragment key={skill}>{j>0&&<i> / </i>}<span>{skill}</span></React.Fragment>)}</span><span className="role-card-link" aria-hidden="true">View role <Arrow /></span></div>
           <button className="role-entry-open" aria-label={`View experience: ${item.role} at ${item.company}`} aria-haspopup="dialog" onClick={event=>setSelected({item,index:i,trigger:event.currentTarget})} />
         </article>)}</div>

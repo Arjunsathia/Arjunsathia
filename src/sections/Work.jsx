@@ -1,12 +1,13 @@
 import React, {useRef, useState} from 'react';
 import {motion} from 'motion/react';
 import {Reveal, Sequence, Item, motionEase, useCompactMotion, useCenteredScroll} from '../lib/motion.jsx';
-import {projects, projectPreviewList, techIcons, techColors} from '../content/site.js';
+import {projects, projectPreviewList} from '../content/site.js';
 import {Arrow, ServiceDoodle} from '../components/icons.jsx';
 import {SectionHeading} from '../components/SectionHeading.jsx';
 import {useModalDialog} from '../hooks/useModalDialog.js';
+import {TechIcon, techStyle} from '../components/TechIcon.jsx';
+import {Rich} from '../components/Rich.jsx';
 
-const TechIcon = ({tag}) => techIcons[tag] ? <svg className="tech-icon" viewBox="0 0 24 24" aria-hidden="true"><path d={techIcons[tag]} fill="currentColor"/></svg> : null;
 
 function ProjectPreviewDialog({project, previews, initialIndex, onClose}) {
   const {closing,close,dialogProps} = useModalDialog(onClose);
@@ -41,14 +42,14 @@ function ProjectDialog({project,index,onClose}) {
       <p className="project-detail-category">{project.title}</p>
       <p id="case-summary">{project.summary}</p>
       {project.link&&<a className="project-detail-live" href={project.link} target="_blank" rel="noopener noreferrer"><span className="project-detail-live-dot" aria-hidden="true"/><span className="project-detail-live-text"><strong>Visit live site</strong><small>{new URL(project.link).host}</small></span><Arrow /><span className="sr-only"> (opens in a new tab)</span></a>}
-      <div className="project-detail-toolset"><span className="eyebrow">CORE STACK</span><ul>{project.tags.map(tag=><li key={tag} style={techColors[tag]?{'--tech':techColors[tag]}:undefined}><TechIcon tag={tag}/>{tag}</li>)}</ul></div>
+      <div className="project-detail-toolset"><span className="eyebrow">CORE STACK</span><ul>{project.tags.map(tag=><li key={tag} style={techStyle(tag)}><TechIcon tag={tag}/>{tag}</li>)}</ul></div>
       <small>{project.context}</small>
     </aside>
     <div className="project-detail-main">
       <div className="project-detail-heading"><span className="eyebrow">A CLOSER LOOK</span><h3>Project details.</h3></div>
       <div className="project-modal-tabs" role="tablist" aria-label="Project details" onKeyDown={tabKey}>{tabs.map((label,i)=><button type="button" key={label} role="tab" id={`project-tab-${i}`} aria-selected={tab===i} aria-controls="project-detail-panel" tabIndex={tab===i?0:-1} onClick={()=>setTab(i)}>{label}</button>)}</div>
       <motion.div key={tab} className="project-modal-page" role="tabpanel" id="project-detail-panel" aria-labelledby={`project-tab-${tab}`} tabIndex={0} initial={reduce?false:{opacity:0,y:6}} animate={{opacity:1,y:0}} transition={{duration:reduce?0:.18,ease:motionEase}}>
-        {tab===0?<><button type="button" className="project-modal-visual" onClick={event=>openPreview(0,event)} aria-label={`Open ${project.name} workspace preview`}><img src={previews[0].src} alt={`${project.name} overview screen, illustrative`} width="1200" height="800" /><span>View screen <Arrow /></span></button><div className="project-modal-reading"><h4>{project.summary}</h4><p>{project.overview}</p>{project.note&&<p className="project-modal-credit">{project.note}</p>}<button type="button" className="project-browse-previews" onClick={()=>{setTab(1);ref.current.querySelector('#project-tab-1').focus();}}>Browse all 3 previews <Arrow direction="→" /></button></div></>:tab===1?<div className="project-preview-gallery"><div className="project-modal-reading"><h4>A look around the interface.</h4><p>Illustrative desktop, detail, and mobile screens. Select a screen to view it larger.</p></div>{previews.map((preview,i)=><button type="button" className="project-preview-thumb" key={preview.title} onClick={event=>openPreview(i,event)} aria-label={`Open ${project.name} ${preview.title.toLowerCase()} preview`}><img src={preview.src} alt={`${project.name} ${preview.title.toLowerCase()}, illustrative`} width="1200" height="800" loading="lazy" /><span><strong>{preview.title}</strong><Arrow /></span></button>)}</div>:<div className="project-modal-reading"><h4>{['','','What I built.','Under the hood.','The toolset.'][tab]}</h4>{tab===4?<><p>Technologies used to build {project.name}.</p><ul className="project-modal-stack">{project.stack.map(tag=><li key={tag} style={techColors[tag]?{'--tech':techColors[tag]}:undefined}><TechIcon tag={tag}/>{tag}</li>)}</ul></>:<ul className="project-modal-points">{(tab===2?project.features:project.engineering).map(point=><li key={point}>{point}</li>)}</ul>}</div>}
+        {tab===0?<><button type="button" className="project-modal-visual" onClick={event=>openPreview(0,event)} aria-label={`Open ${project.name} workspace preview`}><img src={previews[0].src} alt={`${project.name} overview screen, illustrative`} width="1200" height="800" /><span>View screen <Arrow /></span></button><div className="project-modal-reading"><h4>{project.summary}</h4><p><Rich text={project.overview}/></p>{project.note&&<p className="project-modal-credit"><Rich text={project.note}/></p>}<button type="button" className="project-browse-previews" onClick={()=>{setTab(1);ref.current.querySelector('#project-tab-1').focus();}}>Browse all 3 previews <Arrow direction="→" /></button></div></>:tab===1?<div className="project-preview-gallery"><div className="project-modal-reading"><h4>A look around the interface.</h4><p>Illustrative desktop, detail, and mobile screens. Select a screen to view it larger.</p></div>{previews.map((preview,i)=><button type="button" className="project-preview-thumb" key={preview.title} onClick={event=>openPreview(i,event)} aria-label={`Open ${project.name} ${preview.title.toLowerCase()} preview`}><img src={preview.src} alt={`${project.name} ${preview.title.toLowerCase()}, illustrative`} width="1200" height="800" loading="lazy" /><span><strong>{preview.title}</strong><Arrow /></span></button>)}</div>:<div className="project-modal-reading"><h4>{['','','What I built.','Under the hood.','The toolset.'][tab]}</h4>{tab===4?<><p>Technologies used to build {project.name}.</p><ul className="project-modal-stack">{project.stack.map(tag=><li key={tag} style={techStyle(tag)}><TechIcon tag={tag}/>{tag}</li>)}</ul></>:<ul className="project-modal-points">{(tab===2?project.features:project.engineering).map(point=><li key={point}><Rich text={point}/></li>)}</ul>}</div>}
       </motion.div>
       <div className="project-detail-note"><span>{project.context}</span><span>0{tab+1} / 0{tabs.length}</span></div>
     </div>
@@ -62,7 +63,7 @@ function ProjectEntry({project,index,onOpen,compact}) {
       <div className="project-card-category"><strong>0{index+1}</strong><span aria-hidden="true"/><span className="eyebrow">{project.category}</span></div>
       <div className="work-entry-name"><h3 id={`work-entry-title-${index}`}><button onClick={open} aria-haspopup="dialog" aria-label={`View ${project.name} project`}>{project.name}</button></h3><p className="project-card-subtitle">{project.title}</p></div>
       <p className="project-card-summary">{compact?project.summary:project.description}</p>
-      {!compact&&<ul className="project-card-tags" aria-label="Technologies">{project.tags.map(tag=><li key={tag} style={techColors[tag]?{'--tech':techColors[tag]}:undefined}><TechIcon tag={tag}/>{tag}</li>)}</ul>}
+      {!compact&&<ul className="project-card-tags" aria-label="Technologies">{project.tags.map(tag=><li key={tag} style={techStyle(tag)}><TechIcon tag={tag}/>{tag}</li>)}</ul>}
       <div className="project-card-footer"><button className="work-entry-link" onClick={open} aria-haspopup="dialog" aria-label={`Read ${project.name} details`}>View project <Arrow/></button></div>
     </div>
     {compact
