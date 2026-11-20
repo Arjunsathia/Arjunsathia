@@ -1,34 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="230" viewBox="0 0 1000 230" role="img" aria-label="WhatsApp CRM — business messaging and class automation"><title>WhatsApp CRM — business messaging and class automation</title><style>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="280" viewBox="0 0 800 280" role="img" aria-label="WhatsApp CRM — messaging and class automation, used by 3 client companies"><title>WhatsApp CRM — messaging and class automation, used by 3 client companies</title><style>
   .sans{font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif} .mono{font-family:ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace}
-  .card{fill:#ffffff;stroke:#d0d7de} .inner{fill:#f6f8fa;stroke:#d0d7de} .bar{fill:#f6f8fa}
-  .fg{fill:#1f2328} .muted{fill:#59636e} .faint{fill:#818b98} .line{stroke:#d0d7de}
-  .blue{fill:#0969da} .purple{fill:#8250df} .green{fill:#1a7f37} .orange{fill:#bc4c00} .pink{fill:#bf3989}
-  .s-blue{stroke:#0969da} .s-purple{stroke:#8250df} .s-green{stroke:#1a7f37} .s-muted{stroke:#d0d7de}
+  .card{fill:#ffffff;stroke:#d0d7de} .inner{fill:#f6f8fa;stroke:#d0d7de}
+  .fg{fill:#1f2328} .muted{fill:#59636e} .faint{fill:#818b98}
+  .blue{fill:#0969da} .purple{fill:#8250df} .green{fill:#1a7f37}
+  .s-blue{stroke:#0969da} .s-muted{stroke:#d0d7de} .dot{fill:#d0d7de}
   .glow-blue{fill:#54aeff} .glow-purple{fill:#c297ff} .glow-green{fill:#4ac26b}
-  .pill{fill:#dafbe1;stroke:#4ac26b} .bubble-in{fill:#ffffff;stroke:#d0d7de} .bubble-out{fill:#1a7f37}
-  .on-accent{fill:#ffffff} .grid{stroke:#d0d7de}
+  .pill{fill:#dafbe1;stroke:#4ac26b} .bubble-in{fill:#ffffff;stroke:#d0d7de} .bubble-out{fill:#1a7f37} .on-accent{fill:#ffffff}
+  .stop-a{stop-color:#0969da} .stop-b{stop-color:#8250df}
   @media (prefers-color-scheme: dark){
-    .card{fill:#0d1117;stroke:#30363d} .inner{fill:#161b22;stroke:#30363d} .bar{fill:#161b22}
-    .fg{fill:#e6edf3} .muted{fill:#9198a1} .faint{fill:#6e7681} .line{stroke:#30363d}
-    .blue{fill:#4493f8} .purple{fill:#ab7df8} .green{fill:#3fb950} .orange{fill:#f0883e} .pink{fill:#db61a2}
-    .s-blue{stroke:#4493f8} .s-purple{stroke:#ab7df8} .s-green{stroke:#3fb950} .s-muted{stroke:#30363d}
+    .card{fill:#0d1117;stroke:#30363d} .inner{fill:#161b22;stroke:#30363d}
+    .fg{fill:#e6edf3} .muted{fill:#9198a1} .faint{fill:#6e7681}
+    .blue{fill:#4493f8} .purple{fill:#ab7df8} .green{fill:#3fb950}
+    .s-blue{stroke:#4493f8} .s-muted{stroke:#30363d} .dot{fill:#30363d}
     .glow-blue{fill:#1f6feb} .glow-purple{fill:#8957e5} .glow-green{fill:#238636}
     .pill{fill:#0f2a1a;stroke:#238636} .bubble-in{fill:#21262d;stroke:#30363d} .bubble-out{fill:#238636}
-    .grid{stroke:#21262d}
+    .stop-a{stop-color:#4493f8} .stop-b{stop-color:#ab7df8}
   }
-  
 </style>
-  <defs><filter id="blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="50"/></filter><clipPath id="clip"><rect x="1" y="1" width="998" height="228" rx="18"/></clipPath></defs>
-  <rect x="1" y="1" width="998" height="228" rx="18" class="card" stroke-width="1.5"/>
-  <g clip-path="url(#clip)"><circle cx="820" cy="40" r="140" class="glow-green" opacity=".35" filter="url(#blur)"><animate attributeName="cx" values="820;900;820" dur="12s" repeatCount="indefinite"/></circle></g>
-  <g opacity="0"><animate attributeName="opacity" from="0" to="1" begin="0s" dur=".6s" fill="freeze"/><animateTransform attributeName="transform" type="translate" from="0 10" to="0 0" begin="0s" dur=".6s" fill="freeze" calcMode="spline" keySplines=".2 .8 .2 1" keyTimes="0;1"/>
-    <circle cx="44" cy="54" r="5" class="green"/>
-    <text x="58" y="59" class="mono muted" font-size="14" letter-spacing="1">CLIENT PROJECT · WISBATO · 3 COMPANIES</text>
-    <text x="38" y="124" class="sans fg" font-size="54" font-weight="700" letter-spacing="-1.5">WhatsApp CRM</text>
-    <text x="40" y="160" class="sans muted" font-size="20">Business messaging &amp; class automation platform</text>
-    <text x="40" y="198" class="mono green" font-size="14">Next.js 16 · TypeScript · Supabase · WhatsApp Cloud API</text>
+  <defs><filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="50"/></filter><clipPath id="clip"><rect x="1" y="1" width="798" height="278" rx="24"/></clipPath></defs>
+  <rect x="1" y="1" width="798" height="278" rx="24" class="card" stroke-width="1.5"/>
+  <g clip-path="url(#clip)"><circle cx="680" cy="60" r="150" class="glow-green" opacity=".35" filter="url(#soft)"><animate attributeName="cx" values="680;740;680" dur="12s" repeatCount="indefinite"/></circle></g>
+  <g opacity="0"><animate attributeName="opacity" from="0" to="1" begin="0s" dur="0.8s" fill="freeze"/><animateTransform attributeName="transform" type="translate" from="-16 0" to="0 0" begin="0s" dur="0.8s" fill="freeze" calcMode="spline" keySplines=".16 1 .3 1" keyTimes="0;1"/>
+    <circle cx="46" cy="58" r="7" class="green"/>
+    <text x="64" y="66" class="mono muted" font-size="22">CLIENT · WISBATO</text>
+    <text x="38" y="140" class="sans fg" font-size="60" font-weight="800" letter-spacing="-1.8">WhatsApp CRM</text>
+    <text x="40" y="186" class="sans muted" font-size="26">Messaging &amp; class automation</text>
+    <text x="40" y="234" class="sans green" font-size="24" font-weight="600">Used by 3 client companies</text>
   </g>
-  <g opacity="0"><animate attributeName="opacity" from="0" to="1" begin="0.25s" dur=".6s" fill="freeze"/><animateTransform attributeName="transform" type="translate" from="0 0" to="0 0" begin="0.25s" dur=".6s" fill="freeze" calcMode="spline" keySplines=".2 .8 .2 1" keyTimes="0;1"/><rect x="640" y="30" width="330" height="170" rx="14" class="inner" stroke-width="1.5"/>
-    <g opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.08;0.13;.9;1" dur="7s" repeatCount="indefinite"/><rect x="660" y="46" width="200" height="32" rx="12" class="bubble-in" stroke-width="1"/><text x="674" y="67" class="sans fg" font-size="14">Class starts at 7:00 PM</text></g>
-    <g opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.24;0.29;.9;1" dur="7s" repeatCount="indefinite"/><rect x="838" y="92" width="112" height="32" rx="12" class="bubble-out" stroke-width="1"/><text x="852" y="113" class="sans on-accent" font-size="14" font-weight="600">NOTES 47</text></g>
-    <g opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.40;0.45;.9;1" dur="7s" repeatCount="indefinite"/><rect x="660" y="138" width="250" height="32" rx="12" class="bubble-in" stroke-width="1"/><text x="674" y="159" class="sans fg" font-size="14">Marked present ✓ Notes sent</text></g></g></svg>
+  <g opacity="0"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.8s" fill="freeze"/><animateTransform attributeName="transform" type="translate" from="16 0" to="0 0" begin="0.3s" dur="0.8s" fill="freeze" calcMode="spline" keySplines=".16 1 .3 1" keyTimes="0;1"/><rect x="520" y="36" width="250" height="208" rx="18" class="inner" stroke-width="1.5"/>
+    <g opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.08;0.13;.9;1" dur="7s" repeatCount="indefinite"/><rect x="536" y="58" width="196" height="44" rx="16" class="bubble-in" stroke-width="1.2"/><text x="552" y="87" class="sans fg" font-size="20">Class at 7:00 PM</text></g>
+    <g opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.24;0.29;.9;1" dur="7s" repeatCount="indefinite"/><rect x="616" y="118" width="138" height="44" rx="16" class="bubble-out" stroke-width="1.2"/><text x="632" y="147" class="sans on-accent" font-size="20" font-weight="700">NOTES 47</text></g>
+    <g opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.40;0.45;.9;1" dur="7s" repeatCount="indefinite"/><rect x="536" y="178" width="218" height="44" rx="16" class="bubble-in" stroke-width="1.2"/><text x="552" y="207" class="sans fg" font-size="20">Present ✓ notes sent</text></g></g></svg>
