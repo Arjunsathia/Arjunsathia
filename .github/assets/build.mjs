@@ -182,7 +182,8 @@ for (const [layout, perLine, cell, nameSize, labelSize, suffix] of [['desktop', 
   for (const [file, label, items] of stackGroups) {
     const rows = Math.ceil(items.length / perLine), top = labelSize * 2.6, cellH = cell + nameSize * 2.6;
     const labelW = 18 + label.length * (labelSize * .72 + 1.6) + labelSize * 2; // room for the title and its count
-    const W = Math.ceil(Math.max(Math.min(items.length, perLine) * cell, labelW)), H = top + rows * cellH;
+    // On phones every group uses the full row width, so all groups shrink by the same amount.
+    const W = Math.ceil(Math.max(layout === 'mobile' ? perLine * cell : Math.min(items.length, perLine) * cell, labelW)), H = top + rows * cellH;
     const colours = [];
     const tiles = items.map(([slug, name], i) => {
       const icon = icons[slug], c = iconColours(icon.hex), cls = `c${i}`;
