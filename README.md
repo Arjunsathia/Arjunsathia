@@ -23,29 +23,33 @@
 
 <picture><source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-stack-mobile.svg" /><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/title-stack.svg" width="100%" alt="02 · Tech stack" /></picture>
 
-<table>
-  <tr>
-    <td width="96"><code>frontend</code></td>
-    <td><img src="https://skillicons.dev/icons?i=ts,react,nextjs,redux,tailwind&theme=dark" height="40" alt="TypeScript, React, Next.js, Redux, Tailwind CSS" /></td>
-  </tr>
-  <tr>
-    <td><code>backend</code></td>
-    <td><img src="https://skillicons.dev/icons?i=nodejs,express,postgres,mongodb,supabase&theme=dark" height="40" alt="Node.js, Express, PostgreSQL, MongoDB, Supabase" /></td>
-  </tr>
-  <tr>
-    <td><code>tooling</code></td>
-    <td><img src="https://skillicons.dev/icons?i=docker,nginx,githubactions,vitest,jest&theme=dark" height="40" alt="Docker, Nginx, GitHub Actions, Vitest, Jest" /></td>
-  </tr>
-  <tr>
-    <td><code>also</code></td>
-    <td>
-      <img src="https://img.shields.io/badge/Socket.IO-21262d?style=flat-square&logo=socketdotio&logoColor=white" alt="Socket.IO" />
-      <img src="https://img.shields.io/badge/WhatsApp_Cloud_API-21262d?style=flat-square&logo=whatsapp&logoColor=25d366" alt="WhatsApp Cloud API" />
-      <img src="https://img.shields.io/badge/MetaTrader_5-21262d?style=flat-square&logo=chartdotjs&logoColor=ff6384" alt="MetaTrader 5 API" />
-      <img src="https://img.shields.io/badge/JWT_·_OAuth_·_RBAC-21262d?style=flat-square&logo=jsonwebtokens&logoColor=white" alt="JWT, OAuth, RBAC" />
-    </td>
-  </tr>
-</table>
+<code>languages</code><br/>
+<img src="https://skillicons.dev/icons?i=js,ts,html,css&theme=dark" alt="JavaScript, TypeScript, HTML, CSS" /> <img src="https://img.shields.io/badge/SQL-21262d?style=flat-square&logo=postgresql&logoColor=699eca" alt="SQL" />
+
+<code>frontend</code><br/>
+<img src="https://skillicons.dev/icons?i=react,nextjs,redux,tailwind,bootstrap,vite,threejs&theme=dark" alt="React, Next.js, Redux, Tailwind CSS, Bootstrap, Vite, Three.js" />
+
+<code>backend</code><br/>
+<img src="https://skillicons.dev/icons?i=nodejs,express&theme=dark" alt="Node.js, Express" /><br/>
+<img src="https://img.shields.io/badge/Socket.IO-21262d?style=flat-square&logo=socketdotio&logoColor=white" alt="Socket.IO" /> <img src="https://img.shields.io/badge/REST_APIs-21262d?style=flat-square&logo=openapiinitiative&logoColor=white" alt="REST APIs" /> <img src="https://img.shields.io/badge/Webhooks-21262d?style=flat-square" alt="Webhooks" /> <img src="https://img.shields.io/badge/WhatsApp_Cloud_API-21262d?style=flat-square&logo=whatsapp&logoColor=25d366" alt="WhatsApp Cloud API" /> <img src="https://img.shields.io/badge/MetaTrader_5_API-21262d?style=flat-square" alt="MetaTrader 5 API" /> <img src="https://img.shields.io/badge/Google_Gemini-21262d?style=flat-square&logo=googlegemini&logoColor=8e75b2" alt="Google Gemini" />
+
+<code>databases</code><br/>
+<img src="https://skillicons.dev/icons?i=postgres,mongodb,supabase,sequelize&theme=dark" alt="PostgreSQL, MongoDB, Supabase, Sequelize" /><br/>
+<img src="https://img.shields.io/badge/Mongoose-21262d?style=flat-square&logo=mongoose&logoColor=f04d35" alt="Mongoose" /> <img src="https://img.shields.io/badge/PGlite-21262d?style=flat-square&logo=postgresql&logoColor=699eca" alt="PGlite" /> <img src="https://img.shields.io/badge/Row_Level_Security-21262d?style=flat-square&logo=supabase&logoColor=3fcf8e" alt="Row Level Security" />
+
+<code>libraries</code><br/>
+<img src="https://img.shields.io/badge/TanStack_Query-21262d?style=flat-square&logo=reactquery&logoColor=ff4154" alt="TanStack Query" /> <img src="https://img.shields.io/badge/React_Hook_Form-21262d?style=flat-square&logo=reacthookform&logoColor=ec5990" alt="React Hook Form" /> <img src="https://img.shields.io/badge/Zod-21262d?style=flat-square&logo=zod&logoColor=408aff" alt="Zod" /> <img src="https://img.shields.io/badge/React_Flow-21262d?style=flat-square&logo=xyflow&logoColor=white" alt="React Flow" /> <img src="https://img.shields.io/badge/Recharts-21262d?style=flat-square" alt="Recharts" /> <img src="https://img.shields.io/badge/Framer_Motion-21262d?style=flat-square&logo=framer&logoColor=white" alt="Framer Motion" /> <img src="https://img.shields.io/badge/Cloudinary-21262d?style=flat-square&logo=cloudinary&logoColor=3448c5" alt="Cloudinary" />
+
+<code>auth &amp; security</code><br/>
+<img src="https://img.shields.io/badge/JWT-21262d?style=flat-square&logo=jsonwebtokens&logoColor=white" alt="JWT" /> <img src="https://img.shields.io/badge/OAuth-21262d?style=flat-square&logo=google&logoColor=4285f4" alt="OAuth" /> <img src="https://img.shields.io/badge/RBAC-21262d?style=flat-square" alt="RBAC" /> <img src="https://img.shields.io/badge/TOTP_2FA-21262d?style=flat-square" alt="TOTP 2FA" /> <img src="https://img.shields.io/badge/bcrypt-21262d?style=flat-square&logo=letsencrypt&logoColor=white" alt="bcrypt" />
+
+<code>testing</code><br/>
+<img src="https://skillicons.dev/icons?i=jest,vitest,postman&theme=dark" alt="Jest, Vitest, Postman" /><br/>
+<img src="https://img.shields.io/badge/Swagger-21262d?style=flat-square&logo=swagger&logoColor=85ea2d" alt="Swagger" />
+
+<code>devops &amp; tools</code><br/>
+<img src="https://skillicons.dev/icons?i=docker,nginx,githubactions,git,github,vercel,linux,vscode&theme=dark" alt="Docker, Nginx, GitHub Actions, Git, GitHub, Vercel, Linux, VS Code" /><br/>
+<img src="https://img.shields.io/badge/PM2-21262d?style=flat-square&logo=pm2&logoColor=white" alt="PM2" /> <img src="https://img.shields.io/badge/Render-21262d?style=flat-square&logo=render&logoColor=white" alt="Render" />
 
 <br/>
 
