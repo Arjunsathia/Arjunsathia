@@ -1,6 +1,6 @@
-import React, {useEffect, useRef} from 'react';
-import {useReducedMotion} from 'motion/react';
-import {Entrance} from '../lib/motion.jsx';
+import React, {useContext, useEffect, useRef, useState} from 'react';
+import {motion, useReducedMotion} from 'motion/react';
+import {IntroContext} from './SiteIntro.jsx';
 import {switchTheme} from '../lib/theme.js';
 import {createPullSwitch, maxReach} from '../lib/tag-switch.js';
 import {useTheme, SunIcon, MoonIcon, TAG_PULL_EVENT} from './ThemeSwitch.jsx';
@@ -28,6 +28,9 @@ const SWAY_TILT = 1.5; // degrees either side
 const SWAY_START = 1400; // ms, after the hero's entrance animation
 const CHAIN_LENGTH = LINK.reduce((sum, l) => sum + l, 0);
 const HINT_KEY = 'tag-hint-seen';
+// The tag waits for the name: ARJUN draws in over about 2s once the opening screen clears, then the chain appears
+// on the N and the tag drops onto it with a small bounce.
+const SHOW_AFTER = 2000;
 
 // A smooth curve through the simulated points (Catmull-Rom converted to cubic Béziers).
 function smoothPath(points) {
@@ -45,8 +48,17 @@ export function DogTag() {
   const svg = useRef(null), tag = useRef(null), links = useRef(null), beads = useRef(null), grab = useRef(null);
   const reduce = useReducedMotion();
   const dark = useTheme() === 'dark';
-
+  const revealed = useContext(IntroContext);
+  const [shown, setShown] = useState(false);
   useEffect(() => {
+    if (!revealed) return undefined;
+    const timer = setTimeout(() => setShown(true), reduce ? 0 : SHOW_AFTER);
+    return () => clearTimeout(timer);
+  }, [revealed, reduce]);
+
+  // The chain physics, the sway and the pull start once the tag is showing.
+  useEffect(() => {
+    if (!shown) return undefined;
     // Kept for the whole effect: React can clear the refs before the cleanup below runs (StrictMode does at startup).
     const svgEl = svg.current, tagEl = tag.current, linksEl = links.current, beadsEl = beads.current, grabEl = grab.current;
     const pos = REST.map(p => [...p]), prev = REST.map(p => [...p]);
@@ -55,7 +67,12 @@ export function DogTag() {
     const pull = createPullSwitch();
     let pullTimer = 0, hintOn = 0, hintOff = 0;
 
-    const unit = () => svgEl.getBoundingClientRect().width / 16;
+    // The chain's scale (its width / 16), kept up to date by a ResizeObserver: reading it from the layout on every
+    // sway frame forced a fresh layout each frame and made scrolling stutter.
+    let width = 0;
+    const sizer = new ResizeObserver(([entry]) => { width = entry.contentRect.width; });
+    sizer.observe(svgEl);
+    const unit = () => (width || svgEl.getBoundingClientRect().width) / 16;
     const toUnits = (x, y) => {
       const r = svgEl.getBoundingClientRect(), u = r.width / 16;
       return [(x - r.left) / u, (y - r.top) / u];
@@ -270,6 +287,7 @@ export function DogTag() {
     window.addEventListener('pointercancel', onCancel);
     return () => {
       cancelAnimationFrame(frame);
+      sizer.disconnect();
       clearTimeout(startTimer);
       clearTimeout(pullTimer);
       clearTimeout(hintOn);
@@ -290,16 +308,20 @@ export function DogTag() {
       window.removeEventListener('pointercancel', onCancel);
       renderRest();
     };
-  }, [reduce]);
+  }, [reduce, shown]);
 
+  const hidden = {pointerEvents: 'none'};
   return <>
-    <Entrance as="svg" ref={svg} className="hero-tag-chain" delay={.43} viewBox="0 0 16 32" aria-hidden="true">
+    <motion.svg ref={svg} className="hero-tag-chain" viewBox="0 0 16 32" aria-hidden="true" style={shown ? undefined : hidden}
+      initial={false} animate={shown ? {opacity: 1} : {opacity: 0}} transition={{duration: reduce ? 0 : .35, ease: "easeOut"}}>
       <defs><linearGradient id="hero-tag-metal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#f4f5ef"/><stop offset=".45" stopColor="#a9ae9e"/><stop offset=".7" stopColor="#dfe2d8"/><stop offset="1" stopColor="#7d8274"/></linearGradient></defs>
       <path ref={links} className="hero-tag-links" d={REST_PATH}/>
       <path ref={beads} className="hero-tag-beads" d={REST_PATH}/>
       <path ref={grab} className="hero-tag-grab" d={REST_PATH}/>
       <circle className="hero-tag-ring" cx="3" cy="3.5" r="1.7"/>
-    </Entrance>
-    <Entrance as="span" ref={tag} className="hero-badge" delay={.43} aria-hidden="true"><span className="hero-badge-top">FULL STACK</span><strong>DEVELOPER</strong><span className="hero-tag-mode">{dark ? <MoonIcon/> : <SunIcon/>}</span><span className="hero-tag-hint"><span className="hero-tag-hint-pull">Pull for {dark ? 'light' : 'dark'}</span><span className="hero-tag-hint-release">Release</span></span></Entrance>
+    </motion.svg>
+    <motion.span ref={tag} className="hero-badge" aria-hidden="true" style={shown ? undefined : hidden}
+      initial={false} animate={shown ? {opacity: 1, y: 0} : {opacity: 0, y: -22}}
+      transition={reduce ? {duration: 0} : {y: {type: "spring", stiffness: 260, damping: 13, delay: .12}, opacity: {duration: .25, delay: .12}}}><span className="hero-badge-top">FULL STACK</span><strong>DEVELOPER</strong><span className="hero-tag-mode">{dark ? <MoonIcon/> : <SunIcon/>}</span><span className="hero-tag-hint"><span className="hero-tag-hint-pull">Pull for {dark ? 'light' : 'dark'}</span><span className="hero-tag-hint-release">Release</span></span></motion.span>
   </>;
 }

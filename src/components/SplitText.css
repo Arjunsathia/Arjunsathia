@@ -1,0 +1,8 @@
+/* SplitText: each word stays in one piece (so lines still break only between words), and each letter can move. */
+.split-parent .split-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+.split-parent .split-char {
+  display: inline-block;
+}

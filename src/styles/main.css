@@ -149,10 +149,6 @@ p {
   background: var(--accent);
   border-color: var(--line-strong);
 }
-.menu-toggle,
-.mobile-nav {
-  display: none;
-}
 .hero {
   padding: 75px var(--gutter) 65px;
   max-width: 1680px;
@@ -212,29 +208,6 @@ h1>span:last-child {
   border-radius: 17px;
   overflow: hidden;
   animation: none;
-}
-.portrait {
-  position: absolute;
-  bottom: -25%;
-  left: -16%;
-  width: 132%;
-  height: 140%;
-  object-fit: contain;
-  object-position: center bottom;
-  filter: sepia(.1);
-}
-.portrait-caption {
-  position: absolute;
-  bottom: 13px;
-  left: 13px;
-  right: 13px;
-  background: var(--bg-page);
-  border: 1px solid var(--line-strong);
-  border-radius: 30px;
-  font: 9px/1.6 var(--mono);
-  padding: 8px 13px;
-  z-index: 4;
-  white-space: nowrap;
 }
 .hero-bottom {
   display: flex;
@@ -340,41 +313,6 @@ h1>span:last-child {
 }
 .skills-section {
   padding: var(--space) 0;
-}
-.skill-row {
-  display: grid;
-  align-items: center;
-  border-bottom: 1px dashed var(--c-line-70802c70);
-}
-.skill-row-number {
-  font: 400 29px var(--display);
-  color: var(--c-text-c1c0b4);
-}
-.skill-row h3 {
-  font: 400 clamp(24px,2.4vw,37px)/1.2 var(--display);
-  text-transform: uppercase;
-  margin: 0;
-}
-.skill-pills {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.skill-pill {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  border: 1px solid var(--line-strong);
-  border-radius: 30px;
-  padding: 8px 12px;
-  font: 10px/1.4 var(--mono);
-  text-transform: uppercase;
-}
-.skill-pill svg {
-  width: 17px;
-  height: 17px;
-  flex-shrink: 0;
 }
 .work {
   padding: var(--space) 0;
@@ -498,15 +436,6 @@ footer p {
   .hero-actions {
     gap: 9px;
   }
-  .portrait-caption {
-    left: 8px;
-    right: 8px;
-    padding: 7px 9px;
-  }
-  .skill-pill svg {
-    width: 14px;
-    height: 14px;
-  }
   .heading-note {
     font-size: 8px;
   }
@@ -527,52 +456,6 @@ footer p {
   .wordmark {
     font-size: 21px;
   }
-  .menu-toggle {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    width: 42px;
-    height: 42px;
-    margin-right: -10px;
-  }
-  .menu-toggle span {
-    display: block;
-    width: 23px;
-    height: 1px;
-    background: var(--bg-chip);
-    transition: transform .2s;
-  }
-  .menu-toggle[aria-expanded=true] span:first-child {
-    transform: translateY(3px) rotate(45deg);
-  }
-  .menu-toggle[aria-expanded=true] span:last-child {
-    transform: translateY(-3px) rotate(-45deg);
-  }
-  .mobile-nav:not([hidden]) {
-    position: absolute;
-    left: 0;
-    right: 0;
-    background: var(--bg-page);
-    display: flex;
-    flex-direction: column;
-    padding: 18px var(--gutter) 25px;
-  }
-  .mobile-nav a {
-    font: 400 29px/1.7 var(--display);
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .mobile-nav a>span {
-    font: 10px var(--mono);
-    color: var(--accent-text);
-  }
-  .mobile-nav a:hover {
-    color: var(--accent-text);
-  }
   .hero-meta .status-dot {
     width: 4px;
     height: 4px;
@@ -588,18 +471,6 @@ footer p {
   .hero-portrait {
     right: auto;
     top: auto;
-  }
-  .portrait {
-    height: 140%;
-    bottom: -25%;
-    width: 132%;
-    left: -16%;
-  }
-  .portrait-caption {
-    bottom: 10px;
-    left: 9px;
-    right: 9px;
-    padding: 7px 9px;
   }
   .hero-bottom {
     flex-direction: column;
@@ -647,25 +518,6 @@ footer p {
   }
   .heading-note {
     display: none;
-  }
-  .skill-row-number {
-    font-size: 22px;
-    align-self: start;
-    line-height: 1.5;
-  }
-  .skill-row h3 {
-    font-size: 26px;
-    line-height: 1.4;
-  }
-  .skill-pills {
-    gap: 6px;
-  }
-  .skill-pill {
-    gap: 6px;
-  }
-  .skill-pill svg {
-    width: 14px;
-    height: 14px;
   }
   .sample-note {
     font-size: 8px;
@@ -814,28 +666,6 @@ footer p {
 .hero-bottom {
   flex-wrap: wrap;
 }
-.skill-row {
-  grid-template-columns: 50px minmax(220px,1fr) minmax(0,1.3fr);
-  gap: 25px;
-  padding: 31px 10px;
-}
-.skill-row-number {
-  align-self: start;
-  line-height: 1.4;
-}
-.skill-row-copy h3 {
-  font-size: clamp(28px,2.6vw,39px);
-}
-.skill-row-copy>p {
-  font: 11px/1.85 var(--mono);
-  color: var(--c-text-77766b);
-  max-width: 370px;
-  margin: 9px 0 0;
-}
-.skill-pills {
-  align-self: center;
-  max-width: 100%;
-}
 .skills-section .section-heading {
   margin-bottom: 0;
 }
@@ -857,27 +687,10 @@ footer p {
   .desktop-nav>a {
     padding: 7px 9px;
   }
-  .skill-row {
-    grid-template-columns: 28px minmax(190px,1fr) minmax(0,1.1fr);
-    gap: 18px;
-  }
-  .skill-row-copy h3 {
-    font-size: 30px;
-  }
-  .skill-row-copy>p {
-    font-size: 10px;
-  }
-  .skill-pill {
-    font-size: 8px;
-    padding: 7px 9px;
-  }
 }
 @media (max-width:700px) {
   .header-inner {
     display: flex;
-  }
-  .menu-toggle {
-    margin-left: 0;
   }
   .desktop-nav {
     display: none;
@@ -892,38 +705,10 @@ footer p {
   .social-link.pending small {
     font-size: 6px;
   }
-  .skill-row {
-    grid-template-columns: 25px minmax(0,1fr);
-    gap: 12px;
-    padding: 26px 0;
-  }
-  .skill-row-copy h3 {
-    font-size: 29px;
-  }
-  .skill-row-copy>p {
-    font-size: 10px;
-    max-width: 100%;
-    margin-top: 7px;
-  }
-  .skill-pills {
-    grid-column: 2;
-    justify-content: flex-start;
-    margin-top: 3px;
-  }
-  .skill-pill {
-    font-size: 8px;
-    padding: 6px 9px;
-  }
 }
 @media (max-width:370px) {
   .header-inner>.wordmark {
     font-size: 19px;
-  }
-  .skill-row-copy h3 {
-    font-size: 25px;
-  }
-  .skill-row-copy>p {
-    font-size: 9px;
   }
   .social-link {
     font-size: 7px;
@@ -932,10 +717,6 @@ footer p {
 }
 
 /* Focused hero fit, restrained labels, and shared interaction states. */
-.portrait-caption {
-  font-size: 8px;
-  letter-spacing: .025em;
-}
 .social-links {
   position: relative;
 }
@@ -986,27 +767,6 @@ footer p {
   transform: translate(1px,1px);
   box-shadow: 0 0 0 transparent;
 }
-.skill-row {
-  transition: background .22s,border-color .22s;
-}
-.skill-row-number,
-.skill-row-copy h3 {
-  transition: color .22s;
-}
-.skill-row:hover .skill-row-number,
-.skill-row:hover .skill-row-copy h3 {
-  color: var(--accent-text);
-}
-.skill-pill {
-  transition: background .2s,color .2s,border-color .2s,box-shadow .2s,transform .2s;
-}
-.skill-pill:hover {
-  background: var(--accent);
-  color: var(--on-accent);
-  border-color: var(--line-strong);
-  box-shadow: 2px 2px 0 var(--shadow-ink);
-  transform: translate(-1px,-2px);
-}
 @media (min-width:701px) {
   .hero {
     padding-top: clamp(28px,5.5svh,65px);
@@ -1037,9 +797,6 @@ footer p {
     padding-inline: 20px;
     gap: 22px;
   }
-  .portrait-caption {
-    font-size: 6px;
-  }
 }
 @media (max-width:700px) {
   .hero-bottom {
@@ -1047,9 +804,6 @@ footer p {
   }
   .hero .button {
     justify-content: space-between;
-  }
-  .portrait-caption {
-    font-size: 6px;
   }
   .social-notice {
     font-size: 9px;
@@ -1083,26 +837,6 @@ footer p {
 }
 .intro-section h2 .test-mark {
   background: #ffdc3d;
-}
-.skill-row:hover .skill-row-copy h3 {
-  color: var(--text-strong);
-}
-.skill-row:hover .skill-row-copy>p {
-  color: var(--c-text-5a642b);
-}
-.skill-pill {
-  background: var(--bg-page);
-}
-.skill-row:hover .skill-pill {
-  background: var(--bg-page);
-  color: var(--text-strong);
-  border-color: var(--line-strong);
-}
-.skill-row .skill-pill:hover {
-  background: var(--bg-chip);
-  color: var(--on-dark);
-  box-shadow: 2px 2px 0 var(--c-shadow-7e8f1e);
-  transform: translateY(-2px);
 }
 @media (max-width:700px) {
   .intro-section h2 {
@@ -1271,48 +1005,6 @@ footer p {
   color: var(--on-accent);
   box-shadow: 3px 4px 0 #758239;
 }
-.process-step {
-  border-top: 1px dashed var(--c-band-d8e85b50);
-}
-.process-step:last-child {
-  border-bottom: 1px dashed var(--c-band-d8e85b50);
-}
-.process-step h4 {
-  font: 400 clamp(24px,2.7vw,38px)/1.2 var(--display);
-  text-transform: uppercase;
-  margin: 0;
-}
-.process-plus {
-  font: 28px/1 var(--sans);
-  color: var(--accent-on-dark);
-  margin-left: auto;
-  transition: transform .25s;
-}
-.process-step-body {
-  padding: 0 0 28px 44px;
-}
-.process-step-body>p {
-  font-size: 13px;
-  line-height: 1.9;
-  color: #c0c6af;
-  margin: 0 0 21px;
-}
-.process-step-body>span {
-  display: block;
-  font: 11px/1.8 var(--mono);
-  color: #d8ddcb;
-}
-.process-step-body b {
-  display: block;
-  font-size: 8px;
-  letter-spacing: .08em;
-  color: var(--accent-on-dark);
-  margin-bottom: 6px;
-  font-weight: 400;
-}
-.testimonials-section {
-  padding: var(--space) 0;
-}
 .contact {
   border-top: 1px solid #252a1930;
 }
@@ -1353,57 +1045,6 @@ footer p {
   .desktop-nav {
     display: none;
   }
-  .menu-toggle {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    width: 42px;
-    height: 42px;
-    margin-right: -10px;
-  }
-  .menu-toggle span {
-    display: block;
-    width: 23px;
-    height: 1px;
-    background: var(--bg-chip);
-    transition: transform .2s;
-  }
-  .menu-toggle[aria-expanded=true] span:first-child {
-    transform: translateY(3px) rotate(45deg);
-  }
-  .menu-toggle[aria-expanded=true] span:last-child {
-    transform: translateY(-3px) rotate(-45deg);
-  }
-  .mobile-nav:not([hidden]) {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--bg-page);
-    border-bottom: 1px solid var(--line-strong);
-    display: flex;
-    flex-direction: column;
-    padding: 18px var(--gutter) 25px;
-    box-shadow: 0 15px 25px var(--c-shadow-13170d12);
-    max-height: calc(100svh - 100px);
-    overflow-y: auto;
-  }
-  .mobile-nav a {
-    font: 400 27px/1.6 var(--display);
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .mobile-nav a>span {
-    font: 10px var(--mono);
-    color: var(--accent-text);
-  }
-  .mobile-nav a:hover {
-    color: var(--accent-text);
-  }
 }
 @media (max-width:700px) {
   .service-grid {
@@ -1425,16 +1066,6 @@ footer p {
     gap: 35px;
     padding-top: 8px;
   }
-  .process-plus {
-    font-size: 25px;
-  }
-  .process-step-body {
-    padding-left: 35px;
-    padding-bottom: 24px;
-  }
-  .process-step-body>span {
-    font-size: 10px;
-  }
 }
 @media (max-width:370px) {
   .service-card {
@@ -1446,37 +1077,11 @@ footer p {
   .process-intro h3 {
     font-size: 37px;
   }
-  .process-step h4 {
-    font-size: 26px;
-  }
 }
 @media (min-width:701px) {
   .service-card h3 {
     min-height: 2.28em;
   }
-}
-.process-plus {
-  position: relative;
-  display: block;
-  flex: 0 0 18px;
-  width: 18px;
-  height: 18px;
-  font-size: 0;
-  transform: none;
-}
-.process-plus::before,
-.process-plus::after {
-  content: '';
-  position: absolute;
-  width: 14px;
-  height: 1px;
-  left: 2px;
-  top: 8px;
-  background: currentColor;
-  transition: transform .25s;
-}
-.process-plus::after {
-  transform: rotate(90deg);
 }
 
 /* Consistent editorial spacing and interactions. */
@@ -1916,88 +1521,7 @@ footer.contact-footer {
   width: 0;
   height: 0;
 }
-.process-trigger {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  width: 100%;
-  text-align: left;
-  padding: 23px 0;
-  font: inherit;
-  line-height: 1.2;
-  transition: color .2s;
-}
-.process-trigger>span:first-child {
-  font: 11px var(--mono);
-  color: #aeb98b;
-  min-width: 24px;
-}
-.process-trigger:hover,
-.process-step[data-open=true] .process-trigger {
-  color: var(--accent-on-dark);
-}
-.process-trigger:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 4px;
-  border-radius: 3px;
-}
-.process-trigger .process-plus {
-  display: grid;
-  place-items: center;
-  flex: 0 0 30px;
-  width: 30px;
-  height: 30px;
-  margin-left: auto;
-  border: 1px solid #b3bc8f70;
-  border-radius: 50%;
-  transition: background .25s,border-color .25s,color .25s,transform .25s;
-}
-.process-trigger .process-plus::before,
-.process-trigger .process-plus::after {
-  width: 12px;
-  left: 8px;
-  top: 14px;
-  height: 1px;
-  transition: transform .35s cubic-bezier(.2,.8,.2,1);
-}
-.process-step[data-open=true] .process-plus {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--on-accent);
-}
-.process-step[data-open=true] .process-plus::after {
-  transform: rotate(0);
-}
-.process-trigger:hover .process-plus {
-  border-color: var(--accent);
-}
-.process-trigger:active .process-plus {
-  transform: scale(.92);
-}
-.process-panel {
-  display: grid;
-  grid-template-rows: 0fr;
-  opacity: 0;
-}
-.process-panel-inner {
-  min-height: 0;
-  overflow: hidden;
-}
-.process-panel .process-step-body {
-  transform: translateY(-8px);
-  margin: 0;
-}
-.process-step[data-open=true] .process-panel {
-  grid-template-rows: 1fr;
-  opacity: 1;
-}
-.process-step[data-open=true] .process-step-body {
-  transform: translateY(0);
-}
 @media (max-width:700px) {
-  .process-trigger>span:first-child {
-    font-size: 10px;
-  }
   .experience-metric {
     grid-row: 1;
   }
@@ -2005,34 +1529,12 @@ footer.contact-footer {
     grid-row: 1;
   }
 }
-@media (prefers-reduced-motion:reduce) {
-  .process-panel,
-  .process-panel .process-step-body,
-  .process-trigger,
-  .process-trigger .process-plus,
-  .process-trigger .process-plus::before,
-  .process-trigger .process-plus::after {
-    transition: none;
-  }
-}
-.process-trigger {
-  text-transform: uppercase;
-}
 
 /* Finished About composition: statement, portrait, and a continuous biography. */
 
 /* Neutral stone complements the monochrome portrait; deep olive anchors white type. */
 
 /* A small code signature anchors the introduction instead of a floating ornament. */
-
-/* Original bright Stack hover palette. */
-.skill-row:hover {
-  background: var(--c-bg-d4e62d);
-  border-bottom-color: var(--c-line-a9b92d);
-}
-.skill-row:hover .skill-row-number {
-  color: var(--c-text-a2b323);
-}
 
 /* Hero polish: larger portrait, overlapping developer stamp, concise actions. */
 @media (min-width:701px) {
@@ -2062,10 +1564,6 @@ footer.contact-footer {
     width: 62%;
   }
 }
-.hero-portrait .portrait {
-  left: -19%;
-  bottom: -27%;
-}
 
 /* Stronger role, statement and actions; central navigation keeps its existing weight. */
 .hero-meta>span:first-child {
@@ -2082,9 +1580,6 @@ footer.contact-footer {
     justify-content: space-between;
     gap: 25px;
   }
-}
-.hero .portrait-caption {
-  font-weight: 700;
 }
 
 /* Shared gradient button palette. */
@@ -2107,9 +1602,6 @@ footer.contact-footer {
 /* Developer seal: curved lettering, a clear centerpiece and a precise inner ring. */
 
 /* Portrait backdrop: neutral olive tones and a soft edge vignette. */
-.hero-portrait .portrait {
-  z-index: 1;
-}
 .hero-portrait::after {
   content: '';
   position: absolute;
@@ -2118,9 +1610,6 @@ footer.contact-footer {
   pointer-events: none;
   border-radius: inherit;
 }
-.hero-portrait .portrait-caption {
-  z-index: 4;
-}
 
 /* Reference portrait palette: warm caramel with a quiet studio falloff. */
 .hero-portrait {
@@ -2128,14 +1617,6 @@ footer.contact-footer {
 }
 
 /* The finished studio portrait includes its own background and lighting. */
-.hero-portrait .portrait {
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 44%;
-  filter: none;
-}
 .hero-portrait::after {
   background: none;
 }
@@ -2270,8 +1751,6 @@ html {
   }
 }
 .hero h1>span,
-.hero-portrait .portrait,
-.hero .portrait-caption,
 .hero-actions>a {
   animation: none;
 }
@@ -2281,13 +1760,6 @@ html {
   translate: none;
   transition: none;
   will-change: auto;
-}
-.skills-section .skill-row {
-  animation: none;
-  transition: background var(--motion-interaction),border-color var(--motion-interaction);
-}
-.skills-section .skill-row:hover .skill-pill {
-  transition-delay: 0s;
 }
 .services-section .service-card {
   transition: background var(--motion-interaction),border-color var(--motion-interaction),box-shadow var(--motion-interaction);
@@ -2307,17 +1779,6 @@ html {
 .button:active {
   transform: translateY(0);
   box-shadow: none;
-}
-.process-panel {
-  transition: grid-template-rows .3s cubic-bezier(.16,1,.3,1),opacity .22s;
-}
-.process-panel .process-step-body {
-  transition: transform .3s cubic-bezier(.16,1,.3,1);
-}
-.process-trigger .process-plus,
-.process-trigger .process-plus::before,
-.process-trigger .process-plus::after {
-  transition: background .18s,border-color .18s,color .18s,transform .22s;
 }
 
 /* Final project rows: stable copy, isolated preview motion, natural page flow. */
@@ -2421,102 +1882,6 @@ html {
 }
 
 /* Centered feedback cards use the site's paper, lime, and violet palette. */
-.testimonials-intro {
-  font: 14px/1.8 var(--sans);
-  color: var(--c-text-5c6351);
-  margin: 0 0 24px;
-}
-.testimonials-carousel {
-  max-width: 1040px;
-  margin-inline: auto;
-}
-.testimonial-track {
-  --feedback-width: min(320px,calc(100vw - 88px));
-  position: relative;
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  padding: 20px max(0px,calc((100% - var(--feedback-width))/2)) 24px;
-  outline-offset: 4px;
-}
-.testimonial-track::-webkit-scrollbar {
-  display: none;
-}
-.testimonial-slide {
-  position: relative;
-  flex: 0 0 var(--feedback-width);
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  min-height: 355px;
-  margin: 0;
-  padding: 28px;
-  border: 1px solid var(--c-line-707e2538);
-  border-radius: 16px;
-  background: var(--c-bg-e6edbb);
-  scroll-snap-align: center;
-  transform: scale(.94);
-  opacity: .42;
-  transition: transform .25s ease,opacity .25s ease,border-color .25s ease,box-shadow .25s ease;
-}
-.testimonial-slide[data-tone="2"] {
-  background: var(--c-bg-efe1bf);
-  border-color: var(--c-line-96722c30);
-}
-.testimonial-slide[data-tone="3"] {
-  background: var(--c-bg-dce8dc);
-  border-color: var(--c-line-50705530);
-}
-.testimonial-slide[data-active=true] {
-  transform: scale(1);
-  opacity: 1;
-  border-color: var(--c-line-57466b70);
-  box-shadow: 0 8px 22px var(--c-shadow-13170d12);
-}
-.testimonial-slide figcaption {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.testimonial-initials {
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--c-line-13170d25);
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  font: 600 11px/1 var(--sans);
-}
-.testimonial-slide figcaption>div {
-  display: grid;
-  gap: 2px;
-}
-.testimonial-slide figcaption strong {
-  font: 600 13px/1.5 var(--sans);
-}
-.testimonial-slide figcaption div>span {
-  font: 11px/1.6 var(--sans);
-  color: var(--c-text-525748);
-}
-.testimonial-slide blockquote {
-  margin: 0;
-  font: 400 19px/1.65 var(--sans);
-  letter-spacing: -.02em;
-  text-wrap: pretty;
-}
-.testimonial-slide blockquote p {
-  margin: 0;
-}
-@media (prefers-reduced-motion:reduce) {
-  .testimonial-slide {
-    transition: none;
-  }
-}
 @media (min-width:701px) and (max-width:1100px) {
   .role-timeline {
     --wheel-item-height: 300px;
@@ -2614,37 +1979,6 @@ html {
 }
 .project-wheel .work-entry[data-active=true] {
   background: var(--project-highlight,var(--accent));
-}
-.project-wheel-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 22px;
-  padding-top: 18px;
-}
-.project-wheel-controls>button {
-  width: 40px;
-  height: 40px;
-  display: grid;
-  place-items: center;
-  border: 1px solid var(--line-strong);
-  border-radius: 50%;
-  font: 22px/1 var(--sans);
-  background: var(--bg-page);
-  transition: background .18s,translate .18s;
-}
-.project-wheel-controls>button:hover:not(:disabled) {
-  background: var(--accent);
-  translate: 0 -2px;
-}
-.project-wheel-controls>button:disabled {
-  opacity: .3;
-  cursor: default;
-}
-.project-wheel-controls>span {
-  font: 10px/1.5 var(--mono);
-  color: var(--c-text-626750);
-  font-variant-numeric: tabular-nums;
 }
 .role-timeline {
   display: flex;
@@ -2982,35 +2316,6 @@ html {
   background: var(--c-bg-e6ee9e);
   transform: translate(14px,16px);
 }
-.about-photo {
-  position: relative;
-  z-index: 1;
-  margin: 0;
-  border: 1.5px solid var(--line-strong);
-  border-radius: 17px;
-  overflow: hidden;
-  background: var(--c-bg-efeeeb);
-}
-.about-photo img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 1173 / 1536;
-  object-fit: cover;
-}
-.about-photo-caption {
-  position: absolute;
-  left: 13px;
-  right: 13px;
-  bottom: 13px;
-  background: var(--bg-page);
-  border: 1px solid var(--line-strong);
-  border-radius: 30px;
-  padding: 8px 13px;
-  font: 700 8px/1.6 var(--mono);
-  letter-spacing: .025em;
-  white-space: nowrap;
-}
 .about-content {
   min-width: 0;
 }
@@ -3058,9 +2363,6 @@ html {
 @media (max-width:700px) {
   .about-portrait {
     margin-right: 16px;
-  }
-  .about-photo-caption {
-    font-size: 7px;
   }
   .about-name {
     margin-bottom: 22px;
@@ -3832,6 +3134,13 @@ html {
 .project-preview-thumb:nth-child(2)>img {
   height: 190px;
 }
+/* An odd screen left over at the end takes the full row too, so the grid never ends on a half-empty row. */
+.project-preview-thumb:last-child:nth-child(odd):not(:nth-child(2)) {
+  grid-column: 1 / -1;
+}
+.project-preview-thumb:last-child:nth-child(odd):not(:nth-child(2))>img {
+  height: 190px;
+}
 .project-preview-thumb>span {
   display: flex;
   justify-content: space-between;
@@ -4026,9 +3335,6 @@ html {
   .header-cta>span {
     font-size: 20px;
   }
-  .mobile-nav:not([hidden]) {
-    top: 100%;
-  }
   .hero {
     padding: 20px var(--gutter) 36px;
   }
@@ -4062,22 +3368,6 @@ html {
     inset: auto;
     margin: 14px 0 0;
     border-radius: 14px;
-  }
-  .hero-portrait .portrait {
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 44%;
-  }
-  .hero .portrait-caption {
-    left: 9px;
-    right: 9px;
-    bottom: 9px;
-    padding: 8px 11px;
-    font-size: clamp(7px,2vw,9px);
-    line-height: 1.5;
-    letter-spacing: 0;
   }
   .hero-bottom {
     display: block;
@@ -4299,9 +3589,6 @@ html {
     width: 28px;
     height: 28px;
   }
-  .project-wheel-controls {
-    padding-top: 12px;
-  }
   .project-modal {
     width: calc(100% - 24px);
     max-width: 460px;
@@ -4423,7 +3710,8 @@ html {
   .project-preview-thumb>img {
     height: 95px;
   }
-  .project-preview-thumb:nth-child(2)>img {
+  .project-preview-thumb:nth-child(2)>img,
+  .project-preview-thumb:last-child:nth-child(odd):not(:nth-child(2))>img {
     height: 140px;
   }
   .project-preview-thumb>span {
@@ -5435,6 +4723,16 @@ html {
   max-width: none;
   display: block;
 }
+/* A real screenshot has no mockup window frame to crop away: fill the screen, anchored at the top centre
+   (so a centred screen, like a sign-in page, stays in view). */
+.project-card-screen>img.is-screenshot {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
 .project-preview-burst {
   position: absolute;
   top: -12px;
@@ -6021,56 +5319,6 @@ html {
   }
 }
 
-/* A plain mobile cover image, ready for an official project screenshot. */
-@media (max-width:700px) {
-  .project-card-demo-art {
-    padding: 0;
-    display: flex;
-    min-height: 0;
-    isolation: auto;
-  }
-  .project-card-demo-image {
-    display: block;
-    min-height: 0;
-    padding: 0;
-    overflow: hidden;
-  }
-  .project-card-demo-image>img {
-    display: block;
-  }
-  .project-card-demo-image:focus-visible {
-    outline: 2px solid var(--focus-ring);
-    outline-offset: 3px;
-  }
-}
-
-/* Keep the phone card preview horizontal and show the whole interface. */
-@media (max-width:700px) {
-  .project-card-demo-art {
-    align-items: center;
-    overflow: visible;
-  }
-  .project-card-demo-image {
-    position: relative;
-    flex-shrink: 0;
-    width: calc(100% + 20px);
-    height: auto;
-    aspect-ratio: 3/2;
-    margin-left: -6px;
-    border: 1px solid var(--c-line-13170d25);
-    border-radius: 8px;
-    background: var(--c-bg-edf0e6);
-    box-shadow: 0 7px 16px var(--c-shadow-13170d12);
-  }
-  .project-card-demo-image>img {
-    position: static;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-  }
-}
-
 /* Mobile services heading follows the Selected work composition. */
 @media (max-width:700px) {
   .services-section>.section-wrap {
@@ -6162,11 +5410,7 @@ html {
 }
 
 /* The mobile stack becomes a set of illustrated, outlined cards. */
-.stack-mobile-intro,
-.skill-row-dash,
-.skill-row-arrow,
-.stack-illustration,
-.skill-mobile-only {
+.stack-mobile-intro {
   display: none;
 }
 @media (max-width:700px) {
@@ -6243,138 +5487,6 @@ html {
     width: 27px;
     height: 25px;
   }
-  .skills-rows {
-    display: grid;
-  }
-  .skills-section .skill-row {
-    position: relative;
-    display: grid;
-    grid-template-columns: 27px 18px minmax(0,1fr) 62px;
-    align-items: start;
-    border: 1px solid var(--c-line-70802c35);
-    border-radius: 12px;
-    background: var(--c-bg-f5f3e9);
-    transition: background .25s,border-color .25s,box-shadow .25s;
-  }
-  .skill-row:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    left: 3px;
-    right: 3px;
-    border-bottom: 1px dashed var(--c-line-70802c50);
-    pointer-events: none;
-  }
-  .skills-section .skill-row-number {
-    grid-column: 1;
-    grid-row: 1;
-    font: 400 26px/1.1 var(--display);
-    color: var(--c-text-a1a58e);
-    align-self: center;
-  }
-  .skill-row-dash {
-    display: block;
-    grid-column: 2;
-    grid-row: 1;
-    height: 1px;
-    background: var(--c-bg-697052);
-    align-self: center;
-  }
-  .skills-section .skill-row-copy {
-    display: contents;
-  }
-  .skills-section .skill-row-copy h3 {
-    grid-column: 3/5;
-    grid-row: 1;
-    line-height: 1.15;
-    min-width: 0;
-    margin: 0;
-    color: var(--text-strong);
-  }
-  .skills-section .skill-row-copy>p {
-    grid-column: 1/4;
-    grid-row: 2;
-    font: 11px/1.65 var(--sans);
-    color: var(--c-text-737767);
-    max-width: none;
-    margin: 0;
-    text-wrap: pretty;
-  }
-  .skill-row-arrow {
-    display: block;
-    position: absolute;
-    right: 16px;
-    top: 17px;
-    font: 25px/1 var(--sans);
-    color: var(--text-strong);
-    transition: translate .25s;
-  }
-  .stack-illustration {
-    display: block;
-    position: relative;
-    grid-column: 4;
-    grid-row: 2;
-    align-self: center;
-    justify-self: end;
-    transition: transform .35s cubic-bezier(.2,.7,.2,1);
-  }
-  .stack-illustration>svg:first-child {
-    width: 100%;
-    height: 100%;
-    filter: drop-shadow(0 4px 4px var(--c-shadow-13170d0b));
-  }
-  .stack-illustration>.service-doodle {
-    position: absolute;
-    top: -8px;
-    right: -5px;
-    width: 22px;
-    height: 23px;
-    rotate: 14deg;
-    stroke-width: 2;
-  }
-  .skills-section .skill-pills {
-    grid-column: 1/-1;
-    grid-row: 3;
-    display: flex;
-    justify-content: flex-start;
-    align-self: start;
-    max-width: none;
-    margin: 0;
-  }
-  .skills-section .skill-pill {
-    gap: 7px;
-    border: 1px solid var(--c-line-3d4637aa);
-    border-radius: 99px;
-    font: 8px/1.5 var(--mono);
-    background: transparent;
-    color: var(--text-strong);
-    box-shadow: none;
-    transition: background .2s,color .2s,box-shadow .2s,transform .2s;
-  }
-  .skills-section .skill-pill svg {
-    width: 15px;
-    height: 15px;
-    color: var(--skill-brand,var(--text-strong));
-  }
-  .skill-pill[data-tool=Tailwind]>span::after {
-    content: ' CSS';
-  }
-  .skill-mobile-only {
-    display: flex;
-  }
-  .skills-section .skill-row:hover {
-    background: var(--c-bg-f5f3e9);
-    border-color: var(--c-line-70802c35);
-  }
-  .skills-section .skill-row:hover .skill-row-number {
-    color: var(--c-text-a1a58e);
-  }
-  .skills-section .skill-row:hover .skill-row-copy>p {
-    color: var(--c-text-737767);
-  }
-  .skills-section .skill-row:hover .skill-pill {
-    background: transparent;
-    border-color: var(--c-line-3d4637aa);
-  }
 }
 @media (max-width:360px) {
   .skills-section .section-heading h2 {
@@ -6386,67 +5498,11 @@ html {
     font-size: 8px;
     right: 0;
   }
-  .skills-section .skill-row {
-    grid-template-columns: 25px 16px minmax(0,1fr) 56px;
-  }
-  .skills-section .skill-row-copy h3 {
-    padding-right: 22px;
-  }
-  .skills-section .skill-row-copy>p {
-    line-height: 1.65;
-  }
-  .skill-row-arrow {
-    right: 13px;
-    top: 16px;
-    font-size: 23px;
-  }
-  .skills-section .skill-pill {
-    gap: 6px;
-  }
-}
-@media (max-width:700px) and (hover:hover) and (pointer:fine) {
-  .skills-section .skill-row:hover {
-    background: var(--c-bg-edf2d5);
-    border-color: var(--c-line-9aa94e);
-    box-shadow: 0 5px 15px var(--c-shadow-13170d0a);
-  }
-  .skills-section .skill-row:hover .stack-illustration {
-    transform: translateY(-4px) rotate(-3deg);
-  }
-  .skills-section .skill-row:hover .skill-row-arrow {
-    translate: 2px -2px;
-  }
-  .skills-section .skill-row .skill-pill:hover {
-    background: var(--bg-chip);
-    color: var(--on-dark);
-    border-color: var(--line-strong);
-    box-shadow: 2px 2px 0 var(--c-shadow-8d994f);
-    transform: translateY(-2px);
-  }
-  .skills-section .skill-row .skill-pill:hover svg {
-    color: var(--on-dark);
-  }
-}
-@media (max-width:700px) and (prefers-reduced-motion:reduce) {
-  .skills-section .skill-row,
-  .skills-section .skill-pill,
-  .stack-illustration,
-  .skill-row-arrow {
-    transition: none;
-  }
-  .skills-section .skill-row:hover .stack-illustration,
-  .skills-section .skill-row .skill-pill:hover {
-    transform: none;
-  }
-  .skills-section .skill-row:hover .skill-row-arrow {
-    translate: none;
-  }
 }
 
 /* A tighter mobile stack, without card arrows or the introductory paragraph. */
 @media (max-width:700px) {
-  .stack-mobile-intro>p,
-  .skill-row-arrow {
+  .stack-mobile-intro>p {
     display: none;
   }
   .stack-mobile-intro {
@@ -6455,55 +5511,6 @@ html {
   }
   .skills-section .section-heading {
     margin-bottom: 24px;
-  }
-  .skills-rows {
-    gap: 23px;
-  }
-  .skills-section .skill-row {
-    padding: 15px 14px;
-    gap: 10px 8px;
-  }
-  .skill-row:not(:last-child)::after {
-    bottom: -13px;
-  }
-  .skills-section .skill-row-copy h3 {
-    padding-right: 0;
-    font-size: 24px;
-  }
-  .skills-section .skill-row-copy>p {
-    font-size: 10.5px;
-    line-height: 1.6;
-  }
-  .stack-illustration {
-    width: 58px;
-    height: 64px;
-  }
-  .skills-section .skill-pills {
-    gap: 6px;
-  }
-  .skills-section .skill-pill {
-    min-height: 30px;
-    padding: 5px 9px;
-  }
-}
-@media (max-width:360px) {
-  .skills-section .skill-row {
-    padding: 14px 12px;
-    gap: 9px 7px;
-  }
-  .skills-section .skill-row-copy h3 {
-    font-size: 22px;
-  }
-  .skills-section .skill-row-copy>p {
-    font-size: 10px;
-  }
-  .stack-illustration {
-    width: 53px;
-    height: 60px;
-  }
-  .skills-section .skill-pill {
-    font-size: 7.5px;
-    padding: 5px 8px;
   }
 }
 @media (max-width:700px) {
@@ -6993,83 +6000,6 @@ html {
   .process-intro .button>span {
     font-size: 19px;
   }
-  .process-steps {
-    display: grid;
-    gap: 10px;
-  }
-  .process-step {
-    min-width: 0;
-    border: 1px solid #c4ce9a35;
-    border-radius: 10px;
-    background: #1b2114;
-    overflow: hidden;
-    transition: border-color .2s,background .2s;
-  }
-  .process-step:last-child {
-    border-bottom: 1px solid #c4ce9a35;
-  }
-  .process-step[data-open=true] {
-    border-color: #afbf5270;
-    background: #202817;
-  }
-  .process-step h4 {
-    font-size: 24px;
-    line-height: 1.15;
-  }
-  .process-trigger {
-    min-height: 58px;
-    gap: 12px;
-    padding: 13px 14px;
-  }
-  .process-trigger>span:first-child {
-    font: 9px/1.5 var(--mono);
-    min-width: 24px;
-    color: #9ea98a;
-  }
-  .process-trigger>span:nth-child(2) {
-    min-width: 0;
-  }
-  .process-trigger .process-plus {
-    flex-basis: 26px;
-    width: 26px;
-    height: 26px;
-    flex-shrink: 0;
-    margin-left: auto;
-  }
-  .process-trigger .process-plus::before,
-  .process-trigger .process-plus::after {
-    width: 10px;
-    height: 1px;
-    left: 7px;
-    top: 12px;
-  }
-  .process-panel .process-step-body {
-    padding: 0 14px 15px 50px;
-  }
-  .process-step-body>p {
-    font-size: 11px;
-    line-height: 1.7;
-    color: #bfc7b0;
-    margin: 0 0 12px;
-  }
-  .process-step-body>span {
-    font: 9px/1.7 var(--sans);
-    color: #e0e5d4;
-    padding: 8px 10px;
-    background: var(--c-band-d4e62d09);
-    border: 1px solid #b4c95720;
-    border-radius: 6px;
-  }
-  .process-step-body b {
-    font: 7px/1.5 var(--mono);
-    letter-spacing: .06em;
-    color: #b8cb61;
-    margin-bottom: 4px;
-  }
-  .process-trigger:focus-visible {
-    outline-offset: -4px;
-    border-radius: 10px;
-  }
 }
 @media (max-width:360px) {
   .process-section .section-heading h2 {
@@ -7080,37 +6010,6 @@ html {
   }
   .process-intro>p {
     font-size: 9px;
-  }
-  .process-step h4 {
-    font-size: 22px;
-  }
-  .process-trigger {
-    padding-inline: 12px;
-    gap: 10px;
-  }
-  .process-trigger>span:first-child {
-    min-width: 22px;
-  }
-  .process-panel .process-step-body {
-    padding-left: 44px;
-    padding-right: 12px;
-  }
-  .process-step-body>p {
-    font-size: 10.5px;
-  }
-}
-@media (max-width:700px) and (hover:hover) and (pointer:fine) {
-  .process-step:hover {
-    border-color: #b8cb6180;
-    background: #242c19;
-  }
-  .process-trigger:hover {
-    color: var(--accent-on-dark);
-  }
-}
-@media (max-width:700px) and (prefers-reduced-motion:reduce) {
-  .process-step {
-    transition: none;
   }
 }
 
@@ -7189,9 +6088,6 @@ html {
   .contact-bottom>.button {
     display: none;
   }
-  .header-inner .menu-toggle {
-    margin-left: auto;
-  }
 }
 @media (max-width:360px) {
   .experience-heading-note {
@@ -7230,81 +6126,11 @@ html {
     right: 217px;
     top: 30px;
   }
-  .header-inner .menu-toggle {
-    position: relative;
-    display: flex;
-    width: 42px;
-    height: 42px;
-    flex: 0 0 42px;
-    margin: 0 0 0 auto;
-    padding: 0;
-    gap: 0;
-    border: 1px solid var(--c-line-70802c60);
-    border-radius: 50%;
-    background: var(--bg-page);
-    box-shadow: 0 2px 0 var(--c-shadow-aab55c20);
-    transition: background .2s,border-color .2s,transform .2s;
-  }
-  .header-inner .menu-toggle span {
-    position: absolute;
-    height: 1.5px;
-    border-radius: 2px;
-    background: var(--bg-chip);
-    transition: width .2s,transform .2s,top .2s,background .2s;
-  }
-  .header-inner .menu-toggle span:first-child {
-    width: 19px;
-    top: 16px;
-    left: 10px;
-    transform: none;
-  }
-  .header-inner .menu-toggle span:last-child {
-    width: 12px;
-    top: 23px;
-    left: 17px;
-    transform: none;
-  }
-  .header-inner .menu-toggle[aria-expanded=true] {
-    background: var(--bg-chip);
-    border-color: var(--line-strong);
-    box-shadow: none;
-  }
-  .header-inner .menu-toggle[aria-expanded=true] span {
-    width: 19px;
-    top: 19px;
-    left: 10px;
-    background: var(--accent);
-  }
-  .header-inner .menu-toggle[aria-expanded=true] span:first-child {
-    transform: rotate(45deg);
-  }
-  .header-inner .menu-toggle[aria-expanded=true] span:last-child {
-    transform: rotate(-45deg);
-  }
-  .header-inner .menu-toggle:focus-visible {
-    outline: 2px solid var(--focus-ring);
-    outline-offset: 3px;
-  }
 }
 @media (max-width:360px) {
   .process-statement-doodle {
     right: 198px;
     top: 26px;
-  }
-}
-@media (max-width:700px) and (hover:hover) and (pointer:fine) {
-  .header-inner .menu-toggle:hover {
-    background: var(--accent);
-    border-color: var(--line-strong);
-  }
-  .header-inner .menu-toggle[aria-expanded=true]:hover {
-    background: var(--bg-chip);
-  }
-}
-@media (max-width:700px) and (prefers-reduced-motion:reduce) {
-  .header-inner .menu-toggle,
-  .header-inner .menu-toggle span {
-    transition: none;
   }
 }
 @media (max-width:700px) {
@@ -7370,43 +6196,6 @@ html {
     background: var(--c-bg-dce8a4);
     transform: rotate(1deg);
   }
-  .about-photo {
-    border: 1px solid var(--c-line-59634455);
-    border-radius: 13px;
-    background: var(--c-bg-efeeeb);
-  }
-  .about-photo img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4/3;
-    object-fit: cover;
-    object-position: center 32%;
-  }
-  .about-photo-caption {
-    position: static;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    white-space: normal;
-    border: 0;
-    border-top: 1px solid var(--c-line-59634435);
-    border-radius: 0;
-    background: var(--c-bg-f9f6ee);
-    padding: 11px 14px;
-    font-weight: 400;
-    letter-spacing: 0;
-  }
-  .about-caption-name {
-    font: 600 10px/1.5 var(--mono);
-    color: var(--text-strong);
-  }
-  .about-caption-divider {
-    display: none;
-  }
-  .about-caption-role {
-    font: 10px/1.5 var(--sans);
-    color: var(--c-text-717760);
-  }
   .about-content {
     padding: 0 1px;
   }
@@ -7466,94 +6255,6 @@ html {
   }
   .about-copy>p {
     font-size: 11.5px;
-  }
-  .about-photo-caption {
-    padding: 10px 12px;
-  }
-}
-
-/* Phone feedback: a clear heading and compact, swipeable quote cards. */
-@media (max-width:700px) {
-  .testimonials-section {
-    padding-block: 44px 40px;
-  }
-  .testimonials-section .section-heading {
-    display: block;
-    border: 0;
-    padding: 0;
-    margin-bottom: 18px;
-  }
-  .testimonials-section .section-heading>.eyebrow {
-    display: block;
-    font-size: 9px;
-    line-height: 1.5;
-    color: var(--c-text-777b6b);
-    margin-bottom: 7px;
-  }
-  .testimonials-section .section-heading h2 {
-    font-size: clamp(38px,10.5vw,66px);
-    line-height: 1.02;
-    letter-spacing: -.025em;
-    margin: 0;
-  }
-  .testimonials-title-lead {
-    display: block;
-  }
-  .testimonials-title-mark {
-    display: inline-block;
-    background: var(--accent);
-    color: var(--on-accent);
-    padding: 0 .12em .035em;
-    margin-top: .08em;
-    rotate: -1deg;
-  }
-  .testimonials-section .heading-note {
-    display: none;
-  }
-  .testimonials-intro {
-    font-size: 11px;
-    line-height: 1.8;
-    margin: 0 0 12px;
-    color: var(--c-text-747966);
-    max-width: 31ch;
-  }
-  .testimonials-carousel {
-    max-width: none;
-  }
-  .testimonial-track {
-    width: calc(100% + var(--gutter)*2);
-    margin-left: calc(var(--gutter)*-1);
-    padding: 15px max(24px,calc((100% - var(--feedback-width))/2)) 20px;
-    scroll-snap-type: x mandatory;
-    overscroll-behavior-x: contain;
-  }
-  .testimonial-slide {
-    opacity: .4;
-    transform: scale(.95);
-  }
-  .testimonial-slide[data-active=true] {
-    opacity: 1;
-    transform: scale(1);
-    border-color: var(--c-line-68764b70);
-    box-shadow: 0 7px 18px var(--c-shadow-13170d0d);
-  }
-  .testimonial-slide figcaption {
-    gap: 10px;
-  }
-  .testimonial-initials {
-    font-size: 9px;
-    background: var(--c-bg-f6f0e833);
-  }
-  .testimonial-slide figcaption strong {
-    font-size: 11px;
-    line-height: 1.5;
-  }
-  .testimonial-slide figcaption div>span {
-    font-size: 9px;
-    line-height: 1.6;
-  }
-  .testimonial-slide blockquote {
-    letter-spacing: -.015em;
   }
 }
 
@@ -7668,9 +6369,6 @@ html {
   }
 }
 @media (max-width:360px) {
-  .testimonials-section .section-heading h2 {
-    font-size: 35px;
-  }
   .contact .contact-headline {
     font-size: 46px;
   }
@@ -7733,38 +6431,12 @@ html {
     color: var(--accent-on-dark);
     transition: none;
   }
-  .testimonial-track {
-    --feedback-width: min(296px,calc(100vw - 72px));
-    gap: 10px;
-  }
-  .testimonial-slide {
-    min-height: 232px;
-    padding: 18px;
-    gap: 16px;
-    border-radius: 12px;
-  }
-  .testimonial-slide blockquote {
-    font-size: 15px;
-    line-height: 1.65;
-  }
-  .testimonial-initials {
-    width: 30px;
-    height: 30px;
-  }
 }
 @media (max-width:360px) {
   .contact .contact-long-arrow,
   .contact:hover .contact-long-arrow {
     width: 60px;
     height: 60px;
-  }
-  .testimonial-slide {
-    min-height: 232px;
-    padding: 17px;
-  }
-  .testimonial-slide blockquote {
-    font-size: 14px;
-    line-height: 1.7;
   }
 }
 
@@ -8436,9 +7108,6 @@ html {
 }
 
 /* Clear action labels and a role marker consistent with the editorial layout. */
-:is(.button,.work-entry-link,.social-link,.project-modal-tabs>button,.role-details-tabs>button,.preview-viewer-controls>button,.project-wheel-controls>button) {
-  font-weight: 700;
-}
 .hero-meta>span:first-child {
   display: inline-flex;
   align-items: center;
@@ -8491,16 +7160,6 @@ html {
   .social-link {
     font-size: 10px;
     font-weight: 700;
-  }
-  .mobile-nav:not([hidden]) {
-    border-top: 1px solid var(--c-line-70802c25);
-    border-bottom: 1px solid var(--c-line-70802c40);
-    box-shadow: 0 14px 22px var(--c-shadow-13170d12);
-    padding-block: 12px 20px;
-    transform-origin: top;
-  }
-  .mobile-nav a {
-    padding-block: 5px;
   }
   .hero-meta {
     gap: 8px;
@@ -8732,12 +7391,6 @@ html {
   }
 }
 
-/* Testimonial card: a light green in place of the earlier lavender. */
-.testimonial-slide[data-tone="1"] {
-  background: var(--c-bg-e4f1d2);
-  border-color: var(--c-line-50702530);
-}
-
 /* Section titles carry the same lime stamp on desktop that they already have on phones. */
 @media (min-width:701px) {
   .work-title-mark,
@@ -8745,8 +7398,7 @@ html {
   .stack-title-mark,
   .experience-title-mark,
   .process-title-mark,
-  .about-title-mark,
-  .testimonials-title-mark {
+  .about-title-mark {
     display: inline-block;
     background: var(--accent);
     color: var(--on-accent);
@@ -8764,9 +7416,6 @@ html {
   body .hero .hero-meta>span:is(:first-child,:last-child) {
     font-size: 9px;
   }
-  body .hero .portrait-caption {
-    font-size: 9px;
-  }
   body .intro-section .eyebrow,
   body .sample-note {
     font-size: 9px;
@@ -8774,10 +7423,6 @@ html {
   body .project-card-category>.eyebrow,
   body .services-section .service-card-top>span.eyebrow:last-child {
     font-size: 8.5px;
-  }
-  body .skills-section .skill-pill,
-  body .skills-section .skill-pill span {
-    font-size: 9px;
   }
   body .experience-section .experience-metric>span {
     font-size: 9px;
@@ -8797,7 +7442,6 @@ body .contact-socials .social-link.pending small {
   body .contact .contact-top>.eyebrow,
   body .contact .contact-footer>span,
   body .contact .contact-footer>p,
-  body .process-section .process-step-body b,
   body .experience-section ~ .sample-note,
   body .experience-section .sample-note {
     font-size: 9px;
@@ -8861,10 +7505,6 @@ body .contact-socials .social-link.pending small {
   .hero .hero-portrait {
     width: 100%;
     margin-left: 0;
-  }
-  /* Shorter frames keep the head in view. */
-  .hero .hero-portrait .portrait {
-    object-position: center 30%;
   }
 }
 
@@ -8985,8 +7625,7 @@ body .contact-socials .social-link.pending small {
 
 /* Buttons: a whisper at rest, a little more on hover (they also rise 2px), none when pressed. */
 .button,
-.project-card-footer .work-entry-link,
-.header-inner .menu-toggle {
+.project-card-footer .work-entry-link {
   box-shadow: var(--elev-1);
 }
 .button:hover,
@@ -9006,11 +7645,8 @@ body .contact-socials .social-link.pending small {
 
 /* Clickable cards and screens. */
 .project-card-screen,
-.project-card-demo-image,
 .project-wheel .work-entry[data-active=true],
-.role-timeline .role-entry[data-active=true],
-.testimonial-slide[data-active=true],
-body .testimonial-slide[data-active=true] {
+.role-timeline .role-entry[data-active=true] {
   box-shadow: var(--elev-1);
 }
 
@@ -9018,20 +7654,10 @@ body .testimonial-slide[data-active=true] {
 :is(.project-modal,.enquiry-dialog,.experience-dialog,.project-preview-dialog) {
   box-shadow: var(--elev-3);
 }
-.mobile-nav:not([hidden]),
-body .mobile-nav:not([hidden]) {
-  box-shadow: 0 18px 30px -22px var(--c-shadow-13170d66);
-}
 
 /* Flat: photos, caption, static pills and cards. */
 .hero-portrait,
-.about-photo,
-.hero .portrait-caption,
 .desktop-nav>a[aria-current=location],
-.skill-pill:hover,
-.skill-row .skill-pill:hover,
-.skills-section .skill-row .skill-pill:hover,
-.skills-section .skill-row:hover,
 .service-card:hover,
 .services-section .service-card:hover,
 .services-section article.service-card:hover {
@@ -9068,26 +7694,6 @@ body .mobile-nav:not([hidden]) {
     left: calc(100% + 6px);
   }
 
-  /* Stack: the selected row (scrolled to the middle or tapped) gets the hover look. */
-  .skills-section .skill-row {
-    transition: background .3s ease, border-color .3s ease, box-shadow .3s ease;
-  }
-  .skills-section .skill-row[data-selected=true] {
-    border-color: var(--c-line-9aa94e);
-    background: var(--c-bg-edf2d5);
-    box-shadow: 0 5px 15px var(--c-shadow-13170d0a);
-  }
-  .skills-section .skill-row[data-selected=true] .skill-row-number {
-    color: var(--accent-text);
-  }
-  .skills-section .skill-row[data-selected=true] .stack-illustration {
-    transform: translateY(-4px) rotate(-3deg);
-  }
-
-  /* About: the lead sentence is left to the larger screens. */
-  body .about-content .about-lead {
-    display: none;
-  }
 }
 @media (max-width:360px) {
   /* Hero: on the narrowest phones the two labels stack neatly instead of wrapping unevenly. */
@@ -9098,14 +7704,6 @@ body .mobile-nav:not([hidden]) {
   }
   .hero .hero-meta>span:last-child {
     margin-left: 0;
-  }
-}
-@media (max-width:700px) and (prefers-reduced-motion:reduce) {
-  .skills-section .skill-row {
-    transition: none;
-  }
-  .skills-section .skill-row[data-selected=true] .stack-illustration {
-    transform: none;
   }
 }
 
@@ -9387,33 +7985,6 @@ body .mobile-nav:not([hidden]) {
     margin-top: 2px;
     rotate: 0deg;
   }
-
-  /* Steps: no boxes, just dashed separators like on large screens. */
-  body .process-section .process-steps {
-    gap: 0;
-  }
-  body .process-section .process-step,
-  body .process-section .process-step[data-open=true],
-  body .process-section .process-step:hover {
-    border: 0;
-    border-top: 1px dashed var(--c-band-d8e85b50);
-    border-radius: 0;
-    background: transparent;
-    overflow: visible;
-  }
-  body .process-section .process-step:last-child {
-    border-bottom: 1px dashed var(--c-band-d8e85b50);
-  }
-  body .process-section .process-trigger {
-    min-height: 0;
-    padding: 16px 0;
-  }
-  body .process-section .process-panel .process-step-body {
-    padding: 0 0 18px 36px;
-  }
-  body .process-section .process-trigger:focus-visible {
-    outline-offset: 2px;
-  }
 }
 @media (max-width:700px) {
   body .process-section .section-heading {
@@ -9558,8 +8129,7 @@ body .mobile-nav:not([hidden]) {
       0 2px 4px -2px var(--c-shadow-13170d40),
       0 12px 22px -14px var(--c-shadow-13170d99);
   }
-  body .hero .hero-actions>.secondary-button,
-  body .header-inner .menu-toggle {
+  body .hero .hero-actions>.secondary-button {
     border: 0;
     background: var(--c-bg-fffdf8);
     box-shadow:
@@ -9570,29 +8140,17 @@ body .mobile-nav:not([hidden]) {
   body .header-inner>.header-cta {
     min-height: 44px;
   }
-  body .header-inner .menu-toggle {
-    width: 44px;
-    height: 44px;
-  }
   /* Press: the button settles into the page. */
   body .header-inner>.header-cta:active,
-  body .hero .hero-actions>.button:active,
-  body .header-inner .menu-toggle:active {
+  body .hero .hero-actions>.button:active {
     transform: translateY(1px);
     box-shadow: inset 0 0 0 1px var(--c-shadow-13170d14), 0 4px 10px -8px var(--c-shadow-13170d80);
   }
 }
 @media (max-width:700px) and (prefers-reduced-motion:reduce) {
   body .header-inner>.header-cta:active,
-  body .hero .hero-actions>.button:active,
-  body .header-inner .menu-toggle:active {
+  body .hero .hero-actions>.button:active {
     transform: none;
-  }
-}
-@media (max-width:700px) {
-  body .header-inner .menu-toggle {
-    flex: 0 0 44px;
-    min-width: 44px;
   }
 }
 
@@ -9602,24 +8160,15 @@ body .mobile-nav:not([hidden]) {
   body .hero .hero-actions>.primary-button {
     box-shadow: 0 1px 2px var(--c-shadow-13170d1f), 0 3px 8px -5px var(--c-shadow-13170d40);
   }
-  body .hero .hero-actions>.secondary-button,
-  body .header-inner .menu-toggle {
+  body .hero .hero-actions>.secondary-button {
     box-shadow: inset 0 0 0 1px var(--c-shadow-13170d0f), 0 1px 2px var(--c-shadow-13170d14), 0 3px 8px -5px var(--c-shadow-13170d2e);
   }
   body .header-inner>.header-cta:active,
-  body .hero .hero-actions>.button:active,
-  body .header-inner .menu-toggle:active {
+  body .hero .hero-actions>.button:active {
     box-shadow: inset 0 0 0 1px var(--c-shadow-13170d14);
   }
   body .hero .hero-portrait {
     border: 0;
-  }
-}
-@media (max-width:700px) {
-  /* The caption pill on the photo matches the borderless style. */
-  body .hero .portrait-caption {
-    border: 0;
-    box-shadow: 0 1px 2px var(--c-shadow-13170d1f), 0 3px 8px -5px var(--c-shadow-13170d40);
   }
 }
 
@@ -9629,49 +8178,9 @@ body .mobile-nav:not([hidden]) {
   body .hero .hero-actions>.primary-button {
     border: 1px solid var(--c-line-13170d2e);
   }
-  body .hero .hero-actions>.secondary-button,
-  body .header-inner .menu-toggle {
+  body .hero .hero-actions>.secondary-button {
     border: 1px solid var(--c-line-13170d24);
     box-shadow: 0 1px 2px var(--c-shadow-13170d14), 0 3px 8px -5px var(--c-shadow-13170d2e);
-  }
-  body .header-inner .menu-toggle[aria-expanded=true] {
-    border-color: var(--line-strong);
-    background: var(--bg-chip);
-  }
-
-  /* Menu icon: both lines are placed from the exact centre of the circle, so the
-     two-line icon and the X stay centred whatever the button's size or border. */
-  body .header-inner .menu-toggle span {
-    top: 50%;
-    left: 50%;
-    height: 1.5px;
-    transition: width .2s, margin .2s, transform .2s, background .2s;
-  }
-  body .header-inner .menu-toggle span:first-child {
-    width: 19px;
-    margin: -4.25px 0 0 -9.5px;
-  }
-  body .header-inner .menu-toggle span:last-child {
-    width: 12px;
-    margin: 2.75px 0 0 -2.5px;
-  }
-  body .header-inner .menu-toggle[aria-expanded=true] span {
-    top: 50%;
-    left: 50%;
-    width: 18px;
-    margin: -.75px 0 0 -9px;
-  }
-}
-@media (max-width:700px) and (prefers-reduced-motion:reduce) {
-  body .header-inner .menu-toggle span {
-    transition: none;
-  }
-}
-@media (max-width:700px) {
-  body .header-inner .menu-toggle span:first-child,
-  body .header-inner .menu-toggle span:last-child {
-    top: 50%;
-    left: 50%;
   }
 }
 
@@ -9700,16 +8209,10 @@ body .project-card-footer .work-entry-link {
 
 /* Surface buttons: View projects, the menu button, and the round arrow buttons. */
 body .hero .secondary-button,
-body .header-inner .menu-toggle,
-body .project-wheel-controls>button,
 body .preview-viewer-controls>button {
   border: 1px solid var(--btn-border-soft);
   background-color: var(--btn-surface);
   box-shadow: var(--btn-shadow-soft);
-}
-body .header-inner .menu-toggle[aria-expanded=true] {
-  border-color: var(--line-strong);
-  background-color: var(--bg-chip);
 }
 /* Popup close buttons: surface style on larger screens (on phones they stay dark on the dark popup header). */
 @media (min-width:701px) {
@@ -9727,7 +8230,6 @@ body .header-inner .menu-toggle[aria-expanded=true] {
   body .process-intro .button:hover,
   body .contact-bottom>.primary-button:hover,
   body .project-card-footer .work-entry-link:hover,
-  body .project-wheel-controls>button:hover:not(:disabled),
   body .preview-viewer-controls>button:hover {
     box-shadow: var(--btn-shadow-hover);
   }
@@ -9736,7 +8238,6 @@ body .header-inner .menu-toggle[aria-expanded=true] {
 /* Press: settle flat. */
 body .button:active,
 body .project-card-footer .work-entry-link:active,
-body .project-wheel-controls>button:active,
 body .preview-viewer-controls>button:active {
   box-shadow: var(--btn-shadow-press);
 }
@@ -9769,26 +8270,6 @@ body .preview-viewer-close {
 @media (max-width:700px) {
   .hero-tag-grab {
     stroke-width: 12;
-  }
-}
-
-/* Stack is display only: rows and skills respond to hover (or, on phones, to scrolling), never to a click or tap. */
-.skills-section .skill-row,
-.skills-section .skill-pill {
-  user-select: none;
-  -webkit-user-select: none;
-}
-html:not(.premium-cursor-enabled) .skills-section .skill-row,
-html:not(.premium-cursor-enabled) .skills-section .skill-row * {
-  cursor: default;
-}
-body .skills-section .skill-row .skill-row-arrow {
-  display: none;
-}
-/* Touch screens: no tap target at all, so a tap can't leave the hover look stuck. Swipes still scroll the page. */
-@media (hover:none) {
-  .skills-section .skill-row {
-    pointer-events: none;
   }
 }
 
@@ -9909,35 +8390,6 @@ body .skills-section .skill-row .skill-row-arrow {
     overflow: visible;
     transform: none;
     rotate: none;
-  }
-  body .project-wheel .project-card-demo-image {
-    position: static;
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 2 / 1;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    border-radius: 14px;
-    overflow: hidden;
-    background: #171f1b;
-    box-shadow: 0 10px 18px -10px #0b100680;
-    transform: none;
-    rotate: none;
-  }
-  body .project-wheel .project-card-demo-image img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    aspect-ratio: auto;
-    object-fit: cover;
-    object-position: top;
-    margin: 0;
-    border: 0;
-    border-radius: 0;
-    background-color: #171f1b;
-    transform: none;
   }
 
   /* Button */
@@ -10173,6 +8625,7 @@ body .skills-section .skill-row .skill-row-arrow {
     border: 0;
     border-radius: 0;
     object-fit: cover;
+    object-position: center top;
     background-color: #171f1b;
     transform: none;
     rotate: none;
@@ -10579,12 +9032,11 @@ body .experience-section .role-timeline .role-entry .role-card-link {
 }
 
 
-/* Phones, How I Work: the heading sits lower, beside the lead-in and just above "CLEAR PLAN", which is a little smaller. */
+/* Phones, How I Work: the heading sits beside the lead-in and just above "CLEAR PLAN", which is a little smaller. */
 @media (max-width:700px) {
   body .process-section .section-wrap>.section-heading {
     position: relative;
     z-index: 1;
-    margin-top: 24px;
   }
   body .process-section .process-intro h3 {
     margin-top: -24px;
@@ -11253,5 +9705,1630 @@ body .experience-section .role-timeline .role-entry .role-card-link {
   .experience-dialog .role-details-tools>li {
     padding: 7px 11px;
     font-size: 11px;
+  }
+}
+
+/* Screen previews you can swipe through.
+   The viewer is a sideways strip that snaps to each screen; the arrows and arrow keys scroll it too.
+   In the project popup, phones get the same strip under the overview image, with dots for the position. */
+.preview-viewer-image {
+  padding: 0;
+  display: block;
+}
+.preview-viewer-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.preview-viewer-track::-webkit-scrollbar {
+  display: none;
+}
+.preview-viewer-slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
+.project-modal-visual-wrap {
+  flex-shrink: 0;
+  min-width: 0;
+}
+.project-modal-visual-strip>.project-modal-visual:not(:first-child),
+.project-modal-visual-dots {
+  display: none;
+}
+@media (max-width:700px) {
+  .preview-viewer-slide {
+    padding: 6px;
+  }
+  .project-modal-visual-strip {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+  .project-modal-visual-strip::-webkit-scrollbar {
+    display: none;
+  }
+  .project-modal-visual-strip>.project-modal-visual,
+  .project-modal-visual-strip>.project-modal-visual:not(:first-child) {
+    display: block;
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
+  .project-modal-visual-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .project-modal-visual-dots>span {
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--line-strong);
+    transition: width .2s ease,background .2s ease;
+  }
+  .project-modal-visual-dots>span[data-active=true] {
+    width: 18px;
+    background: var(--text-strong);
+  }
+}
+
+/* ---- Selected work: the scroll stack ----
+   The projects pin below the header one after another as the page scrolls. Each new card slides over the last,
+   and the ones underneath shrink a little and dim (ScrollStack writes their transform and --scroll-stack-dim).
+   The cards keep their usual layout; the old boxed, inner-scrolling wheel around them is switched off here. */
+body .work .project-stack {
+  --scroll-stack-inline: 0;
+  display: block;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  scroll-snap-type: none;
+}
+body .work .project-stack-card {
+  --scroll-stack-height: 0;
+  --scroll-stack-padding: 0;
+  --scroll-stack-radius: 24px;
+  --scroll-stack-bg: transparent;
+  /* A soft shadow above each card, so the edge of the one on top reads clearly against the one below. */
+  --scroll-stack-shadow: 0 -14px 34px -20px #13170d47, 0 26px 50px -30px #13170d59;
+}
+/* Every card is shown in full, at full size and opacity; the stack does the depth instead of the old centre fade. */
+body .work .project-stack .work-entry {
+  flex: none;
+  margin: 0;
+  transform: none;
+  opacity: 1;
+  scroll-snap-align: none;
+}
+
+/* Light: each card is a soft tint of its own project colour, with a matching edge and screen rim. */
+body .work .project-stack .work-entry[data-active=true] {
+  --card-rim: color-mix(in srgb, var(--project-highlight) 70%, #13170d);
+  background-color: color-mix(in srgb, var(--project-highlight) 20%, var(--bg-page));
+  border-color: color-mix(in srgb, var(--project-highlight) 55%, #13170d1f);
+}
+/* Dark: each card is filled with its own project colour (green, yellow, mint), turned down a touch so it
+   doesn't glare on black. Text and the button on it are dark, as on the other highlighted cards. */
+[data-theme=dark] body .work .project-stack .work-entry[data-active=true] {
+  --card-rim: #0b100680;
+  background-color: color-mix(in srgb, var(--project-highlight) 88%, var(--bg-page));
+  border-color: #ffffff2e;
+}
+[data-theme=dark] body .work .project-stack-card {
+  --scroll-stack-shadow: 0 -16px 36px -18px #000000b3, 0 26px 50px -28px #000000cc;
+}
+
+@media (max-width:700px) {
+  body .work .project-stack-card {
+    --scroll-stack-radius: 22px;
+    --scroll-stack-shadow: 0 -10px 26px -16px #13170d4d, 0 18px 34px -24px #13170d59;
+  }
+  [data-theme=dark] body .work .project-stack-card {
+    --scroll-stack-shadow: 0 -12px 28px -14px #000000b3, 0 18px 34px -22px #000000cc;
+  }
+}
+
+/* ---- Header navigation: the liquid (gooey) pill ----
+   A soft glass bar in the middle of the header. The current section's item sits on a lime pill (green in dark
+   mode); choosing another item bursts the pill into droplets that flow across and merge there.
+   Colours come from Header.jsx (NAV_COLOURS); here, the site's type: mono capitals, as before.
+   Hovering another item puts a dark pill under it, so its text turns light. The pill has no shadow. */
+.header-inner>.gooey-desktop-nav {
+  --gn-font: 11.5px;
+  --gn-x: 17px;
+  --gn-y: 11px;
+  --gn-gap: 3px;
+  --gn-pad: 5px;
+  justify-self: center;
+  gap: 0;
+  font-family: var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.gooey-desktop-nav .gooey-nav__link {
+  font-weight: 600;
+  line-height: 1.5;
+}
+.gooey-desktop-nav .gooey-nav__link:focus-visible {
+  outline-color: var(--focus-ring);
+}
+@media (hover:hover) {
+  .gooey-desktop-nav .gooey-nav__item:not([data-active]) .gooey-nav__link:hover {
+    color: #f6f0e8;
+  }
+}
+/* Mid-size screens: a little tighter, so the bar still fits between the name and "Let's talk". */
+@media (min-width:1001px) and (max-width:1279px) {
+  .header-inner>.gooey-desktop-nav {
+    --gn-font: 10.5px;
+    --gn-x: 12px;
+    --gn-y: 10px;
+    --gn-gap: 1px;
+  }
+}
+
+/* ---- Buttons: the specular light ----
+   Every main button (Let's talk, Discuss a project, View projects, View project, Visit live site, View role,
+   Start a conversation, Send) carries a thin streak of light on its edge that turns towards the pointer.
+   Its colour follows the button's fill: dark ink on lime or light buttons, the accent on dark ones.
+   Some button rules style their direct <span> children (the arrow); the light layer is kept clear of them. */
+body .specular-light {
+  position: absolute !important;
+  inset: -24px !important;
+  z-index: -1 !important;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+  translate: none !important;
+  rotate: none !important;
+  scale: none !important;
+  opacity: 1 !important;
+  pointer-events: none !important;
+}
+:root {
+  --spec-ink: #55640e;
+  --spec-glow: #d4e62d;
+}
+:root[data-theme=dark] {
+  --spec-ink: #0b1006e6;
+  --spec-glow: #b7ec78;
+}
+
+/* ---- Experience: the scroll stack (the same scrolling as Selected work) ----
+   The roles pin one after another as the page scrolls; the one underneath shrinks a little and dims.
+   The layout stays: the overview on the left (it stays in view beside the stack on larger screens), the role
+   cards on the right, the current role in the accent colour. The old boxed, inner-scrolling list is switched off. */
+body .experience-section .role-stack {
+  --scroll-stack-inline: 0;
+  display: block;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  scroll-snap-type: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+/* Every role is in the accent colour (lime, or green in dark mode), at full size and strength (no centre fade).
+   The edge is a soft line instead of the dark outline; the shadow above each card separates the stacked ones.
+   (The [data-theme] keeps these ahead of the older role rules in both themes.) */
+:root[data-theme] body .experience-section .role-stack .role-entry {
+  margin: 0;
+  transform: none;
+  opacity: 1;
+  scroll-snap-align: none;
+  border-color: #13170d1f;
+}
+:root[data-theme=dark] body .experience-section .role-stack .role-entry {
+  border-color: #ffffff24;
+}
+@media (min-width:701px) {
+  body .experience-section .experience-layout {
+    align-items: start;
+  }
+  /* The overview stays beside the cards while they stack. */
+  body .experience-section .experience-overview {
+    position: sticky;
+    top: calc(var(--site-header-height, 82px) + 24px);
+  }
+}
+
+/* ---- About: the photo as a profile card ----
+   It tilts with the pointer, with a soft foil and glare, and carries a footer: a small portrait, the handle, an
+   "Open to work" status and a lime Contact button (it opens the enquiry popup). Colours come from About.jsx.
+   The lime block behind it stays, rounded to the card's outer corners. */
+body .about .about-portrait::before {
+  border-radius: 26px;
+}
+.about .about-profile-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+.about .about-profile-card .profile-card__photo {
+  object-position: center 30%;
+}
+[data-theme=dark] .about .about-profile-card .profile-card__photo {
+  filter: brightness(.92);
+}
+.about .about-profile-card .profile-card__name {
+  font: 400 30px/1.05 var(--display);
+  letter-spacing: .01em;
+  text-transform: uppercase;
+}
+.about .about-profile-card .profile-card__title {
+  font: 600 10px/1.6 var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: #ffffffd9;
+}
+.about .about-profile-card .profile-card__handle {
+  font: 700 12px/1.3 var(--mono);
+  letter-spacing: .02em;
+}
+.about .about-profile-card .profile-card__status {
+  font: 500 11px/1.3 var(--mono);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.about .about-profile-card .profile-card__avatar img {
+  object-position: center 18%;
+}
+.about .about-profile-card .profile-card__contact {
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 99px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font: 700 11px/1 var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  box-shadow: inset 0 0 0 1px #13170d1f, 0 6px 14px -8px #13170d66;
+}
+@media (hover:hover) {
+  .about .about-profile-card .profile-card__contact:hover {
+    filter: none;
+    background: var(--bg-chip);
+    color: var(--on-dark);
+  }
+  [data-theme=dark] .about .about-profile-card .profile-card__contact:hover {
+    background: #b7ec78;
+    color: var(--on-accent);
+  }
+}
+.about .about-profile-card .profile-card__contact:focus-visible {
+  outline-color: var(--focus-ring);
+}
+@media (max-width:700px) {
+  .about .about-profile-card .profile-card__tile {
+    aspect-ratio: 1 / 1;
+  }
+  .about .about-profile-card .profile-card__name {
+    font-size: 26px;
+  }
+  .about .about-profile-card .profile-card__footer {
+    padding: 4px 8px 6px;
+    gap: 10px;
+  }
+}
+
+/* ---- Phones: soft, different colours for the role cards ----
+   Each role gets its own quiet tint (sage, sky, peach), easy on the eyes; text and buttons stay dark.
+   Dark mode uses deeper, muted versions of the same tints, so they don't glare on black. */
+@media (max-width:700px) {
+  :root[data-theme] body .experience-section .role-stack .role-entry {
+    border-color: #13170d14;
+    background-image: none;
+  }
+  :root[data-theme] body .experience-section .role-stack .role-entry.role-tone-0 { background-color: #e4edd6; }
+  :root[data-theme] body .experience-section .role-stack .role-entry.role-tone-1 { background-color: #dfeaf1; }
+  :root[data-theme] body .experience-section .role-stack .role-entry.role-tone-2 { background-color: #f4e6d8; }
+  :root[data-theme=dark] body .experience-section .role-stack .role-entry { border-color: #ffffff1a; }
+  :root[data-theme=dark] body .experience-section .role-stack .role-entry.role-tone-0 { background-color: #a3b78f; }
+  :root[data-theme=dark] body .experience-section .role-stack .role-entry.role-tone-1 { background-color: #97b1c0; }
+  :root[data-theme=dark] body .experience-section .role-stack .role-entry.role-tone-2 { background-color: #c5b098; }
+}
+
+/* ---- Phones and tablets: the menu button and its full-screen panel (StaggeredMenu) ----
+   The button is the round menu button: two lines on cream that cross into a lime × on ink when open.
+   Opening it sweeps a lime layer, then an ink one, then the panel in the page colour; each section rises into place
+   in the display type, numbered in the accent text colour, with the section in view stamped in lime (like the
+   section headings). Everything follows the theme's colours. */
+.header-inner>.mobile-menu {
+  flex: none;
+  margin-left: auto;
+  z-index: 41;
+}
+.mobile-menu .sm-toggle--lines {
+  position: relative;
+  display: block;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  padding: 0;
+  border: 1px solid var(--c-line-70802c60);
+  border-radius: 50%;
+  background: var(--bg-page);
+  box-shadow: 0 2px 0 var(--c-shadow-aab55c20);
+  transition: background-color .2s, border-color .2s;
+}
+.mobile-menu .sm-lines>span {
+  position: absolute;
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--bg-chip);
+  transition: width .2s, transform .25s, top .2s, left .2s, background-color .2s;
+}
+.mobile-menu .sm-lines>span:first-child {
+  width: 19px;
+  top: 16px;
+  left: 10px;
+}
+.mobile-menu .sm-lines>span:last-child {
+  width: 12px;
+  top: 23px;
+  left: 17px;
+}
+.mobile-menu[data-open] .sm-toggle--lines {
+  border-color: var(--line-strong);
+  background: var(--bg-chip);
+  box-shadow: none;
+}
+.mobile-menu[data-open] .sm-lines>span {
+  width: 19px;
+  top: 19px;
+  left: 10px;
+  background: var(--accent);
+}
+.mobile-menu[data-open] .sm-lines>span:first-child {
+  transform: rotate(45deg);
+}
+.mobile-menu[data-open] .sm-lines>span:last-child {
+  transform: rotate(-45deg);
+}
+[data-theme=dark] .mobile-menu .sm-lines>span {
+  background: var(--text-strong);
+}
+[data-theme=dark] .mobile-menu[data-open] .sm-toggle--lines {
+  background: var(--bg-raised);
+}
+[data-theme=dark] .mobile-menu[data-open] .sm-lines>span {
+  background: var(--accent);
+}
+@media (hover:hover) and (pointer:fine) {
+  .mobile-menu .sm-toggle--lines:hover {
+    background: var(--accent);
+    border-color: var(--line-strong);
+  }
+  [data-theme=dark] .mobile-menu .sm-toggle--lines:hover .sm-lines>span {
+    background: var(--on-accent);
+  }
+  .mobile-menu[data-open] .sm-toggle--lines:hover {
+    background: var(--bg-chip);
+  }
+  [data-theme=dark] .mobile-menu[data-open] .sm-toggle--lines:hover .sm-lines>span {
+    background: var(--accent);
+  }
+}
+.mobile-menu .sm-toggle--lines:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: 50%;
+}
+@media (prefers-reduced-motion:reduce) {
+  .mobile-menu .sm-toggle--lines,
+  .mobile-menu .sm-lines>span {
+    transition: none;
+  }
+}
+.mobile-menu-overlay .staggered-menu-panel {
+  padding: calc(var(--site-header-height, 111px) + 28px) var(--gutter) 32px;
+  background: var(--bg-page);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.mobile-menu-overlay .sm-panel-inner {
+  gap: 8px;
+}
+.mobile-menu-overlay .sm-panel-list {
+  gap: 6px;
+}
+/* Each link spans the full width, so the numbers line up in one column on the right. */
+.mobile-menu-overlay .sm-panel-item {
+  display: block;
+  padding-right: 2.2em;
+  color: var(--text-strong);
+  font: 400 clamp(46px, 13vw, 68px)/1.02 var(--display);
+  letter-spacing: -.01em;
+}
+.mobile-menu-overlay .sm-panel-itemLabel {
+  padding: 0 .1em;
+  margin-left: -.1em;
+}
+.mobile-menu-overlay .sm-panel-item[aria-current] .sm-panel-itemLabel {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.mobile-menu-overlay .sm-panel-list[data-numbering] .sm-panel-item::after {
+  top: .35em;
+  right: 0;
+  font: 700 11px/1 var(--mono);
+  letter-spacing: .06em;
+}
+.mobile-menu-overlay .sm-socials {
+  padding-top: 28px;
+  border-top: 1px dashed var(--line);
+  margin-top: auto;
+}
+.mobile-menu-overlay .sm-socials-title {
+  font: 700 10px/1.4 var(--mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.mobile-menu-overlay .sm-socials-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-strong);
+  font: 600 16px/1.3 var(--sans);
+}
+.mobile-menu-overlay .sm-social-icon {
+  --social-cutout: var(--bg-page);
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+@media (hover:hover) and (pointer:fine) {
+  .mobile-menu-overlay .sm-panel-item:hover {
+    color: var(--accent-text);
+  }
+  .mobile-menu-overlay .sm-panel-item[aria-current]:hover {
+    color: var(--text-strong);
+  }
+}
+
+/* ---- Phones: even, roomier spacing between sections ----
+   Each section gets the same generous space at its top and bottom, inside its own colour band. */
+@media (max-width:700px) {
+  body #home ~ .intro-section { padding-block: 76px; }
+  body #work { padding-block: 72px; }
+  body #services { padding-block: 68px; }
+  body #skills { padding-block: 68px; }
+  body #experience { padding-block: 68px; }
+  body #process { padding-block: 52px 68px; }
+  body #about { padding-block: 68px; }
+  body #contact { padding-top: 72px; }
+}
+
+/* ---- How I work: the steps as a flowing list (FlowingMenu) ----
+   Four tall rows in the display type, numbered in lime. Pointing at a row (or tapping it) fills it with a lime band
+   that runs the step's outcome and a drawing of the step; the band flows between rows as the pointer moves.
+   Clicking a step opens its description and outcome under it, one step at a time (clicking it again closes it). */
+.process-flow {
+  min-width: 0;
+  align-self: start;
+}
+.process-flow-list {
+  --flowing-menu-row-height: 112px;
+  border-top: 1px solid color-mix(in srgb, var(--accent) 32%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 32%, transparent);
+}
+.process-flowing-menu .flowing-menu__link {
+  gap: 22px;
+  padding: 0 6px;
+}
+.process-flowing-menu .flowing-menu__index {
+  min-width: 2.2em;
+  font: 700 11px/1 var(--mono);
+  letter-spacing: .06em;
+  color: var(--accent);
+  opacity: 1;
+}
+.process-flowing-menu .flowing-menu__label {
+  font: 400 clamp(30px, 44cqh, 60px)/1.05 var(--display);
+  letter-spacing: -.005em;
+  text-transform: uppercase;
+}
+.process-flowing-menu .flowing-menu__part-text {
+  padding: 0 .5em;
+  font: 400 clamp(18px, calc(30cqh * var(--flowing-menu-band, 1)), 44px)/1.05 var(--display);
+  letter-spacing: .01em;
+  text-transform: uppercase;
+}
+.process-flowing-menu .flowing-menu__image {
+  box-shadow: inset 0 0 0 2px #13170d26;
+}
+.process-flowing-menu .flowing-menu__link:focus-visible {
+  outline-color: var(--accent);
+}
+/* The opened step: its description and outcome, lined up under the step name. */
+.process-flow-panel {
+  display: grid;
+  gap: 12px;
+  padding: 2px 6px 28px 52px;
+  color: var(--on-band);
+}
+.process-flow-panel>p {
+  margin: 0;
+  max-width: 52ch;
+  font: 400 15px/1.6 var(--sans);
+  opacity: .86;
+}
+.flowing-menu__item[data-open] .process-flow-panel {
+  animation: process-detail-in .4s ease .08s both;
+}
+.process-flow-outcome {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  font: 400 11px/1.6 var(--mono);
+  opacity: .9;
+}
+.process-flow-outcome>b {
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: .06em;
+}
+@keyframes process-detail-in {
+  from { opacity: 0; transform: translateY(6px); }
+}
+@media (max-width:700px) {
+  .process-flow-list {
+    --flowing-menu-row-height: 80px;
+  }
+  .process-flowing-menu .flowing-menu__link {
+    gap: 14px;
+    padding: 0 2px;
+  }
+  .process-flowing-menu .flowing-menu__label {
+    font-size: clamp(26px, 42cqh, 40px);
+  }
+  .process-flow-panel {
+    padding: 0 2px 22px 40px;
+  }
+  .process-flow-panel>p {
+    font-size: 13.5px;
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  .flowing-menu__item[data-open] .process-flow-panel {
+    animation: none;
+  }
+}
+
+/* ---- Hero: the photo as an ID card on a lanyard (3D, three.js) ----
+   The card hangs from a lime strap (green in dark mode) printed with the name, and swings with real physics: drag it
+   with a mouse to swing it, click or tap it to turn it over to the details on the back. On larger screens the strap
+   comes down from the top of the page; on phones it hangs inside the photo's space. Until the 3D card has loaded,
+   the photo shows in the card's place. */
+body .hero .hero-portrait {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  overflow: visible;
+}
+/* Room around the card for it to swing: above (up to the top of the page) and well out to the left, over the name,
+   so the card swings in front of it. The canvas lets the mouse through except over the card (Lanyard passThrough), so
+   the "DEVELOPER" dog tag beneath it stays draggable. The card sits at 75.15% across this area (Hero.jsx anchor); the area reaches the page's edges, so the card is never cut off however far it swings. */
+.hero-lanyard {
+  position: absolute;
+  inset: -160px -30% -150px -200%;
+  z-index: 4;
+}
+.hero-lanyard .lanyard {
+  overflow: visible;
+}
+/* Only the canvas takes the pointer (and on large screens only over the card itself), not the empty area around it. */
+.hero-lanyard,
+.hero-lanyard .lanyard {
+  pointer-events: none;
+}
+.hero-lanyard .lanyard-canvas {
+  pointer-events: auto;
+}
+/* The photo in the card's place while the 3D card loads (or if WebGL is unavailable). */
+.hero-lanyard-still {
+  position: absolute;
+  top: 30.6%;
+  left: 75.15%;
+  height: 64%;
+  width: auto;
+  aspect-ratio: 1.78 / 2.4;
+  translate: -50% 0;
+  border-radius: 6% / 4.3%;
+  object-fit: cover;
+  object-position: center 36%;
+  box-shadow: 0 24px 50px -26px #13170d80;
+}
+@media (max-width:700px) {
+  .hero-lanyard {
+    inset: -10px -4% -12px;
+    z-index: 1;
+  }
+  .hero-lanyard-still {
+    left: 50%;
+    top: 17%;
+    height: 74%;
+  }
+}
+
+/* "How I can help" on phones: the services as a swipeable, fanned stack of cards (Stack). The stack is as tall as
+   the tallest card (set from Services.jsx); the cards behind fan out above and to the right, so there is room on top. */
+.service-stack {
+  margin-top: 34px;
+}
+.service-stack-deck:not([style]) {
+  position: relative;
+  min-height: 420px;
+}
+.services-section .service-stack .stack-card-content>.service-card {
+  min-height: 100%;
+  margin: 0;
+  border-radius: 14px;
+}
+.service-stack .stack-card[data-top] {
+  cursor: grab;
+}
+.service-stack-deck {
+  position: relative;
+}
+
+/* "What I work with": the tools as a curved gallery of cards, edge to edge across the screen (CircularGallery). */
+.stack-gallery {
+  position: relative;
+  width: 100vw;
+  height: 600px;
+  margin: -36px 0 -30px calc(50% - 50vw);
+}
+.stack-gallery .circular-gallery {
+  outline: none;
+}
+/* The open card's caption (what the group is for) in the body face, not the display face. */
+.stack-gallery .circular-gallery-caption {
+  font-family: var(--font-body, Manrope, Arial, sans-serif) !important;
+  font-weight: 600 !important;
+  line-height: 1.5;
+}
+.stack-gallery .circular-gallery-caption-text {
+  opacity: .78;
+}
+@media (max-width:1000px) {
+  .stack-gallery {
+    height: 540px;
+  }
+}
+@media (max-width:700px) {
+  .stack-gallery {
+    height: 420px;
+    margin-top: -62px;
+    margin-bottom: -58px;
+  }
+}
+/* Without WebGL2 the gallery's tools show as a plain list instead. */
+.stack-fallback {
+  display: grid;
+  gap: 18px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+  font: 13px/1.7 var(--mono);
+}
+.stack-fallback strong {
+  display: block;
+  font: 400 30px/1.1 Anton, Impact, sans-serif;
+  text-transform: uppercase;
+}
+.stack-fallback span {
+  display: block;
+  color: var(--accent-text);
+}
+
+/* Under the gallery's arch: the group switch (JellyRadio), in the site's mono type; the group in the middle is filled. */
+.stack-filters {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  margin-top: -66px;
+  --jelly-chip: color-mix(in srgb, var(--text-strong) 8%, var(--bg-page));
+}
+.stack-filters .jelly-radio__skin {
+  font-family: var(--mono);
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--text-strong) 14%, transparent);
+}
+.stack-filters .jelly-radio__chip[data-on='true'] .jelly-radio__skin {
+  box-shadow: 0 6px 18px -8px color-mix(in srgb, var(--accent) 80%, transparent);
+}
+.stack-filters .jelly-radio__chip:focus-visible .jelly-radio__skin {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 2px;
+}
+@media (max-width:700px) {
+  .stack-filters {
+    margin-top: 0;
+  }
+  .stack-filters .jelly-radio__skin {
+    letter-spacing: .04em;
+  }
+}
+/* The narrowest phones: tighter chips so all four groups fit on one line. */
+@media (max-width:400px) {
+  .stack-filters .jelly-radio {
+    --jr-gap: 4px !important;
+  }
+  .stack-filters .jelly-radio__skin {
+    padding: 0 9px;
+    font-size: 10.5px;
+    letter-spacing: .02em;
+  }
+}
+
+/* The manifesto's rotating words (RotatingText) sit inside the coloured marks: the mark keeps its colour and padding,
+   springs to each word's width, and the letters slide up within it. */
+.intro-section h2 mark .manifesto-rotate {
+  display: inline-flex;
+  vertical-align: top;
+  padding: 0;
+  border-radius: 0;
+  line-height: inherit;
+}
+.intro-section h2 mark .manifesto-rotate .text-rotate {
+  flex-wrap: nowrap;
+}
+
+/* The intro's spinning badge (CircularText): on the right, across from the line of copy; the manifesto's verbs ring
+   the turning asterisk. */
+.intro-bottom {
+  justify-content: space-between;
+  gap: 40px;
+}
+.intro-section .intro-badge {
+  flex-shrink: 0;
+  margin: 0;
+  color: var(--accent-on-dark);
+  font-family: var(--mono);
+  letter-spacing: 0;
+}
+.intro-badge .circular-text__line {
+  inset: 1.75em;
+}
+.intro-section .intro-badge .code-flower {
+  font-size: 70px;
+  align-self: auto;
+}
+@media (max-width:700px) {
+  .intro-bottom {
+    gap: 18px;
+  }
+  .intro-section .intro-badge .code-flower {
+    font-size: 44px;
+  }
+}
+
+/* About: "HI, I'M ARJUN." floats in letter by letter (ScrollFloat) in the heading's own type and size. */
+.about-name .scroll-float {
+  display: inline-block;
+  margin: 0;
+  vertical-align: top;
+}
+.about-name .scroll-float-text {
+  font: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  text-align: inherit;
+}
+.about-name .scroll-float-char {
+  transform-origin: 50% 0%;
+}
+
+/* Hero name: TechText draws the letters on a canvas over each word; the real text stays in place, invisible, for the
+   layout (and the dog tag's anchor). The canvas reaches past the word on every side so the letters render at full
+   size (TechText fits text within 90% of its width and 66% of its height) and the selection frame, specks and labels
+   have room. */
+.hero .hero-name-ghost {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.hero .hero-tech {
+  position: absolute;
+  inset: -32% -17%;
+  z-index: 1;
+  display: block;
+  color: var(--text-strong);
+}
+.hero .hero-tech .tech-text {
+  font: inherit;
+}
+/* Dragging a letter must not start a text selection of the (invisible) heading underneath. */
+.hero .hero-name-word {
+  -webkit-user-select: none;
+  user-select: none;
+}
+/* The heading ignores the pointer (an older global rule), but the letters are interactive: their canvas takes it
+   back. The buttons below sit above it, since the canvas reaches a little past the words. */
+.hero .hero-tech {
+  pointer-events: auto;
+}
+.hero .hero-bottom {
+  position: relative;
+  z-index: 5;
+}
+
+/* Contact: the ribbons sit behind the section's content and reach up over the bottom of the section above. */
+.contact .contact-ribbons {
+  position: absolute;
+  inset: -280px 0 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.contact > .section-wrap {
+  position: relative;
+  z-index: 2;
+}
+@media (max-width:700px) {
+  .contact .contact-ribbons {
+    inset: -160px 0 0;
+  }
+}
+
+/* Experience: the roles in a carousel (React Bits Carousel). Each role card fills its slide (the carousel is sized to
+   the tallest card), keeps its own colours, and sits flat inside the carousel's soft frame. */
+body .experience-section .role-carousel .carousel-container {
+  width: 100%;
+}
+body .experience-section .role-carousel .carousel-card.is-custom {
+  background: none;
+  box-shadow: none;
+}
+body .experience-section .role-carousel .carousel-card-rim {
+  display: none;
+}
+:root[data-theme] body .experience-section .role-carousel .carousel-card > .role-entry {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  box-shadow: none;
+}
+body .experience-section .role-carousel .carousel-controls {
+  padding-bottom: 2px;
+}
+
+/* Experience carousel colours, the same on every screen size: the current role in the lime accent, the earlier one
+   in the soft green (the manifesto's two greens); deeper greens in dark mode. The arrows are ink pills like the cards'
+   "View role" buttons, and the active dot is ink. */
+:root[data-theme] body .experience-section .role-carousel .role-entry.role-tone-0 { background-color: #d4e62d; }
+:root[data-theme] body .experience-section .role-carousel .role-entry.role-tone-1 { background-color: #a8ed7d; }
+:root[data-theme] body .experience-section .role-carousel .role-entry.role-tone-2 { background-color: #ffdc3d; }
+:root[data-theme=dark] body .experience-section .role-carousel .role-entry.role-tone-0 { background-color: #9fe05a; }
+:root[data-theme=dark] body .experience-section .role-carousel .role-entry.role-tone-1 { background-color: #7fc63f; }
+:root[data-theme=dark] body .experience-section .role-carousel .role-entry.role-tone-2 { background-color: #e0c43a; }
+:root[data-theme] body .experience-section .role-carousel .role-entry {
+  border-color: #13170d1f;
+}
+body .experience-section .role-carousel .carousel-arrow {
+  width: 36px;
+  height: 36px;
+  background: #13170d;
+  color: #f6f0e8;
+  box-shadow: 0 6px 14px -8px #13170d99;
+}
+[data-theme=dark] body .experience-section .role-carousel .carousel-arrow {
+  background: #f2f4ea;
+  color: #13170d;
+  box-shadow: 0 6px 14px -8px #000c;
+}
+body .experience-section .role-carousel .carousel-arrow:disabled {
+  opacity: .22;
+}
+body .experience-section .role-carousel .carousel-dot.is-active .carousel-dot-mark {
+  width: 18px;
+  border-radius: 99px;
+  transform: none;
+  transition: width .25s ease, background-color .2s ease;
+}
+/* Large screens: a narrower card, centred in its column. */
+@media (min-width:701px) {
+  body .experience-section .role-carousel .carousel-container {
+    max-width: 760px;
+    margin-inline: auto;
+  }
+}
+body .experience-section .role-carousel .role-card-summary {
+  text-wrap: pretty;
+}
+/* The fanned service cards on phones may poke a few pixels past the screen edge; keep them from widening the page. */
+@media (max-width:700px) {
+  .services-section {
+    overflow-x: clip;
+  }
+}
+/* The contact button's light can reach past a narrow screen's edge; keep the page from widening. */
+@media (max-width:700px) {
+  .contact {
+    overflow-x: clip;
+  }
+}
+/* Nothing decorative (rotated cards, button lights, swinging art) may widen the page sideways on narrow phones,
+   which would shift every centred element. "clip" (not "hidden") keeps sticky elements working. Only on <body>: on
+   <html> it would stop the menu's and dialogs' scroll lock (overflow: hidden on <body>) from reaching the window, and
+   the sticky header would jump to the top of the page while they are open. */
+body {
+  overflow-x: clip;
+}
+/* Phones: the project stack cards as before (no tech pills; the short summary; the screenshot fills the width). */
+@media (max-width:700px) {
+  body .work .project-stack .project-card-tags {
+    display: none;
+  }
+}
+@media (max-width:700px) {
+  :root[data-theme] body .work .project-stack .work-entry {
+    grid-template-rows: auto auto auto auto auto;
+    height: auto;
+  }
+  :root[data-theme] body .work .project-stack .project-card-summary {
+    margin-bottom: 4px;
+  }
+}
+/* Phones: a little breathing room between the "Selected work" heading and the first project card. */
+@media (max-width:700px) {
+  body .work .project-browser {
+    margin-top: 30px;
+  }
+}
+/* While a gallery card is open, the group switch fades away so the card's caption reads clearly. */
+.stack-filters .jelly-radio {
+  transition: opacity .3s ease, translate .3s ease;
+}
+.stack-filters.is-hidden .jelly-radio {
+  opacity: 0;
+  translate: 0 8px;
+  pointer-events: none;
+}
+/* Phones: the title ("How I" / "work.", like the other headings) on the left and "Good work starts with a clear
+   plan." on the right, side by side in one row; the steps below, full width. */
+@media (max-width:700px) {
+  body .process-section .section-wrap {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 14px;
+    align-items: end;
+  }
+  body .process-section .section-heading {
+    grid-column: 1;
+    margin-bottom: 0;
+  }
+  body .process-section .process-grid {
+    display: contents;
+  }
+  /* (The intro keeps its own box, so its reveal still plays; on phones it holds only the statement.) */
+  body .process-section .process-intro {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+    min-width: 0;
+  }
+  body .process-section .process-intro h3 {
+    margin: 0 0 .1em;
+  }
+  body .process-section .process-flow {
+    grid-column: 1 / -1;
+    margin-top: 24px;
+  }
+}
+
+/* ---- Spacing audit ----
+   "What I work with" ends in the group switch, which already has room under it: a shorter bottom padding keeps the
+   gap to "Experience" in line with the other section breaks. On phones every section uses the same vertical padding. */
+body #skills {
+  padding-bottom: 32px;
+}
+@media (max-width:700px) {
+  body #skills {
+    padding-bottom: 40px;
+  }
+  body #home ~ .intro-section,
+  body #work,
+  body #process {
+    padding-block: 68px;
+  }
+}
+
+/* Short phones: a tighter menu so the contact and social links still fit; the panel scrolls if anything remains. */
+.mobile-menu-overlay .staggered-menu-panel {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+@media (max-height:720px) {
+  .mobile-menu-overlay .sm-socials {
+    padding-top: 16px;
+  }
+  .mobile-menu-overlay .sm-socials-list {
+    margin-top: 8px;
+    gap: 8px;
+  }
+}
+@media (max-height:720px) {
+  .mobile-menu-overlay .sm-panel-item {
+    font-size: clamp(40px, 11.5vw, 58px);
+  }
+}
+
+/* Phones: no section numbers ("(01)", "(02)" …) above the headings; larger screens keep them. */
+@media (max-width:700px) {
+  body .section-wrap .section-heading > .eyebrow,
+  body .work .work-section-heading .eyebrow {
+    display: none;
+  }
+}
+
+/* ---- Opening screen (SiteIntro) ----
+   The plain dark band over the whole screen with one large word in the display face. The words slide up letter by
+   letter in a clipped line (like the manifesto's rotating words, but with no box or border): "Loading", "Crafting",
+   "Welcome.". At five seconds the word zooms out towards the viewer as the screen fades, and the hero settles in. */
+.site-intro {
+  --intro-ink: #f6f0e8;
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: #13170d;
+  color: var(--intro-ink);
+  transition: opacity .8s cubic-bezier(.65,0,.35,1), visibility 0s linear .8s;
+}
+[data-theme=dark] .site-intro {
+  --intro-ink: #f2f4ea;
+  background: #0a0c09;
+}
+.site-intro-inner {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2.4vw, 36px);
+  transition: transform .8s cubic-bezier(.55,0,.25,1), opacity .65s ease .1s;
+  will-change: transform;
+}
+.site-intro .site-intro-word {
+  padding: 0;
+  border-radius: 0;
+  font: 400 clamp(64px, 12vw, 168px)/1.05 var(--display);
+  letter-spacing: -.01em;
+  text-transform: uppercase;
+  color: var(--intro-ink);
+}
+/* The nine dots on the left, a lime dot running round the ring (the React Bits lattice loader's orbit), sized to the
+   word's capitals. */
+.site-intro {
+  --intro-accent: #d4e62d;
+}
+[data-theme=dark] .site-intro {
+  --intro-accent: #9fe05a;
+}
+.site-intro-dots {
+  --dot: clamp(10px, 1.35vw, 20px);
+  display: grid;
+  grid-template-columns: repeat(3, var(--dot));
+  gap: calc(var(--dot) * .45);
+  flex: none;
+  animation: site-intro-dots-in .5s cubic-bezier(.22,1,.36,1) both;
+}
+.site-intro-dots span {
+  width: var(--dot);
+  height: var(--dot);
+  border-radius: 50%;
+  background: var(--intro-accent);
+  opacity: .18;
+  animation: site-intro-dot .864s cubic-bezier(.77,0,.175,1) infinite;
+}
+.site-intro-dots span[data-hole] {
+  opacity: .08;
+  animation: none;
+}
+@keyframes site-intro-dot {
+  0%, 100% { opacity: .18; }
+  18%, 42% { opacity: 1; }
+  62% { opacity: .18; }
+}
+@keyframes site-intro-dots-in {
+  from { opacity: 0; transform: scale(.6); }
+}
+.site-intro .site-intro-word .text-rotate {
+  flex-wrap: nowrap;
+}
+@media (max-width:700px) {
+  .site-intro .site-intro-word {
+    font-size: clamp(48px, 14vw, 80px);
+  }
+  .site-intro-dots {
+    --dot: clamp(9px, 2.6vw, 12px);
+  }
+}
+/* Leaving: the word zooms out towards the viewer and fades with the screen (transform and opacity only, so it stays
+   smooth on the GPU while the page behind it starts up). */
+.site-intro[data-phase=leaving] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.site-intro[data-phase=leaving] .site-intro-inner {
+  transform: scale(3.2);
+  opacity: 0;
+}
+/* The page holds still behind the screen, then the hero settles in from a touch larger. */
+html.intro-running,
+html.intro-running body {
+  overflow: hidden;
+}
+html.intro-revealing .hero {
+  animation: hero-settle .9s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes hero-settle {
+  from {
+    transform: scale(1.06);
+    opacity: .4;
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  html.intro-revealing .hero {
+    animation: none;
+  }
+  .site-intro[data-phase=leaving] .site-intro-inner {
+    transform: none;
+  }
+  .site-intro-dots span {
+    animation-delay: 0ms !important;
+    animation-duration: 1.4s;
+  }
+}
+/* The narrowest phones: the four links (GitHub, LinkedIn, Email, Call) as a neat two-by-two grid. */
+@media (max-width:379px) {
+  .mobile-menu-overlay .sm-socials-list {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    column-gap: 28px;
+  }
+}
+/* Phones: "From interface to release." sits beside "With." and above the gallery's canvas (which starts just under
+   the heading), so the moving cards never draw over it. Its wrapper only fades in (no slide), so it can't jump. */
+@media (max-width:700px) {
+  .skills-section .stack-heading-note {
+    z-index: 2;
+  }
+}
+
+/* Phones, How I Work: less dark space above the heading (40px instead of the other sections' 68px), and the steps'
+   top line a short step under the heading (24px). */
+@media (max-width:700px) {
+  body #process {
+    padding-top: 40px;
+  }
+  body #process .section-wrap>.section-heading {
+    margin-top: 0;
+  }
+  body #process .process-flow {
+    margin-top: 24px;
+  }
+}
+
+/* ---- Header entrance ----
+   While the opening screen runs, the bar's contents wait out of sight. When it clears, the lime strip slides down,
+   the name and the Let's talk button (and the phone menu button) simply fade in, and the navigation arrives like a
+   water drop: a small drop falls, splashes flat, spreads out into the pill with a
+   wobble, then each section name drips in from left to right. Only translate, scale and opacity move (the hover
+   effects use transform, so they are untouched), and nothing is held after the entrance ends. */
+.header-waiting .topline,
+.header-waiting .header-inner>.wordmark,
+.header-waiting .header-inner>.gooey-desktop-nav,
+.header-waiting .header-inner>.header-cta,
+.header-waiting .header-inner>.mobile-menu {
+  opacity: 0;
+}
+/* The strip stays in front of the bar while it slides down. */
+.header-enter .topline {
+  position: relative;
+  z-index: 3;
+  animation: header-strip-in .55s cubic-bezier(.22,1,.36,1) backwards;
+}
+.header-enter .header-inner>.wordmark,
+.header-enter .header-inner>.header-cta,
+.header-enter .header-inner>.mobile-menu {
+  animation: header-fade-in .6s .15s ease backwards;
+}
+.header-enter .header-inner>.gooey-desktop-nav {
+  transform-origin: 50% 50%;
+  animation: header-drop-spread 1.15s .2s backwards;
+}
+.header-enter .gooey-desktop-nav .gooey-nav__item {
+  animation: header-droplet .6s cubic-bezier(.34,1.56,.64,1) backwards;
+}
+.header-enter .gooey-desktop-nav .gooey-nav__item:nth-child(1) { animation-delay: .95s; }
+.header-enter .gooey-desktop-nav .gooey-nav__item:nth-child(2) { animation-delay: 1.02s; }
+.header-enter .gooey-desktop-nav .gooey-nav__item:nth-child(3) { animation-delay: 1.09s; }
+.header-enter .gooey-desktop-nav .gooey-nav__item:nth-child(4) { animation-delay: 1.16s; }
+.header-enter .gooey-desktop-nav .gooey-nav__item:nth-child(5) { animation-delay: 1.23s; }
+.header-enter .gooey-desktop-nav .gooey-nav__item:nth-child(6) { animation-delay: 1.3s; }
+.header-enter .gooey-desktop-nav .gooey-nav__item:nth-child(n+7) { animation-delay: 1.37s; }
+@keyframes header-strip-in {
+  from { translate: 0 -100%; }
+}
+/* A drop: small and stretched as it falls, flattened on impact, then spreading into the full pill with a wobble. */
+@keyframes header-drop-spread {
+  0% { opacity: 0; translate: 0 -80px; scale: .07 .3; animation-timing-function: cubic-bezier(.5,0,.9,.6); }
+  12% { opacity: 1; }
+  32% { translate: 0 0; scale: .06 .4; animation-timing-function: cubic-bezier(.2,.7,.3,1); }
+  42% { scale: .16 .62; animation-timing-function: cubic-bezier(.3,.6,.3,1); }
+  66% { scale: 1.04 .92; animation-timing-function: ease-in-out; }
+  80% { scale: .985 1.03; animation-timing-function: ease-in-out; }
+  91% { scale: 1.006 .995; }
+  100% { translate: 0 0; scale: 1 1; }
+}
+/* Each section name drips in: a stretched drop above, a little squash as it lands, then its own shape. */
+@keyframes header-droplet {
+  0% { opacity: 0; translate: 0 -14px; scale: .7 1.3; }
+  55% { opacity: 1; translate: 0 2px; scale: 1.08 .9; }
+  100% { opacity: 1; translate: 0 0; scale: 1 1; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .header-enter .topline,
+  .header-enter .header-inner>*,
+  .header-enter .gooey-desktop-nav .gooey-nav__item {
+    animation: header-fade-in .4s ease backwards !important;
+  }
+}
+@keyframes header-fade-in {
+  from { opacity: 0; }
+}
+
+/* ---- Screen preview zoom (ZoomImage) ----
+   Each screen fills its slide. On touch screens: double-tap to zoom in (and again to zoom out), pinch to zoom, and
+   drag to look around while zoomed; meanwhile the strip stops swiping to the next screen. The hint shows on phones. */
+.zoom-image {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  touch-action: pan-x pan-y;
+}
+.zoom-image.is-zoomed {
+  touch-action: none;
+}
+.zoom-image>img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform-origin: 0 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+}
+.preview-viewer-image.is-zoomed .preview-viewer-track {
+  overflow-x: hidden;
+}
+.preview-zoom-hint {
+  display: none;
+}
+@media (max-width:700px) {
+  .preview-zoom-hint {
+    display: inline;
+  }
+}
+
+/* An open tool card comes to the front: the gallery rises above "From interface to release." (which normally sits
+   over the gallery's edge on phones), and the note fades out until the card is put back. */
+.stack-gallery.is-open {
+  z-index: 3;
+}
+.skills-section .stack-heading-note {
+  transition: opacity .25s ease;
+}
+.skills-section:has(.stack-gallery.is-open) .stack-heading-note {
+  opacity: 0 !important;
+}
+
+/* ---- Project results (popup) ----
+   Overview: the headline numbers as a 2 × 2 grid of tiles, each with a short bar in the project's colour, and a line
+   saying where the numbers come from. Engineering: "Performance & scale" as one panel (problem, root cause, the fixes
+   as chips, and a before → after table with the "after" column emphasised). */
+.project-results {
+  margin: 18px 0 6px;
+}
+.project-results>ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.project-results li {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  padding: 14px 14px 13px 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg-card);
+  overflow: hidden;
+}
+.project-results li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 14px;
+  bottom: 14px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--project-accent, var(--accent));
+}
+.project-results strong {
+  font: 400 28px/1 var(--display);
+  letter-spacing: .01em;
+  color: var(--text-strong);
+}
+.project-results li>span {
+  font: 500 12px/1.5 var(--sans);
+  color: var(--text-muted, #5c6150);
+}
+.project-results li>span strong {
+  font: 700 12px/1.5 var(--sans);
+  letter-spacing: 0;
+}
+.project-results>p {
+  margin: 10px 0 0;
+  font: 500 10.5px/1.6 var(--mono);
+  color: var(--text-muted, #5c6150);
+}
+.project-scale {
+  display: grid;
+  gap: 14px;
+  margin: 4px 0 22px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-card);
+}
+.project-scale>.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.project-scale>.eyebrow::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--project-accent, var(--accent));
+}
+.project-scale dl {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+.project-scale dl>div {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 12px;
+}
+.project-scale dt {
+  font: 700 10.5px/1.9 var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-muted, #5c6150);
+}
+.project-scale dd {
+  margin: 0;
+  font: 500 13.5px/1.6 var(--sans);
+  color: var(--text-strong);
+}
+.project-scale-fixes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.project-scale-fixes li {
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font: 600 11px/1.4 var(--sans);
+  color: var(--text-strong);
+}
+.project-scale-results {
+  width: 100%;
+  border-collapse: collapse;
+  font: 500 12.5px/1.4 var(--sans);
+  font-variant-numeric: tabular-nums;
+}
+.project-scale-results caption {
+  caption-side: bottom;
+  padding-top: 8px;
+  text-align: left;
+  font: 500 10.5px/1.6 var(--mono);
+  color: var(--text-muted, #5c6150);
+}
+.project-scale-results th,
+.project-scale-results td {
+  padding: 8px 6px;
+  border-bottom: 1px dashed var(--line);
+  text-align: right;
+  color: var(--text-strong);
+}
+.project-scale-results th[scope=row],
+.project-scale-results thead th:first-child {
+  text-align: left;
+  font-weight: 500;
+}
+.project-scale-results thead th {
+  padding-top: 0;
+  font: 700 10px/1.6 var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-muted, #5c6150);
+}
+.project-scale-results td:first-of-type {
+  color: var(--text-muted, #5c6150);
+}
+.project-scale-results td:last-child {
+  font-weight: 800;
+}
+@media (max-width:700px) {
+  .project-results li {
+    padding: 12px 12px 11px 14px;
+  }
+  .project-results strong {
+    font-size: 24px;
+  }
+  .project-results li>span {
+    font-size: 11px;
+  }
+  .project-scale {
+    padding: 14px;
+  }
+  .project-scale dl>div {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+  .project-scale dd {
+    font-size: 12.5px;
+  }
+  .project-scale-results {
+    font-size: 11.5px;
+  }
+}
+
+/* About: a fine dashed line above the copy (as on phones); the technologies in a slightly stronger ink; the
+   availability line set off by a lime bar; and the Download CV button under the copy, whose
+   arrow dips on hover. */
+.about-copy {
+  padding-top: 20px;
+  border-top: 1px dashed var(--c-line-70802c50);
+}
+.about-copy b {
+  font-weight: 600;
+  color: var(--text-strong);
+}
+.about-copy>.about-available {
+  position: relative;
+  padding-left: 14px;
+  border-left: 2px solid var(--c-line-bdce69);
+  color: var(--text-strong);
+}
+.about-cv .glyph {
+  transition: translate .25s cubic-bezier(.22,1,.36,1);
+}
+.about-cv:hover .glyph,
+.about-cv:focus-visible .glyph {
+  translate: 0 2px;
+}
+@media (max-width:700px) {
+  .about-copy>.about-available {
+    padding-left: 12px;
+  }
+}
+.about-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-top: 26px;
+}
+.about-cv .glyph {
+  width: 16px;
+  height: 16px;
+}
+@media (max-width:700px) {
+  .about-actions {
+    margin-top: 20px;
+  }
+}
+
+/* Hero buttons (View projects ↘, Download my CV): slightly larger text, with the label and icon centred together in
+   each button. On phones the two share the row equally. */
+body .hero .hero-actions>.button {
+  justify-content: center;
+  gap: 14px;
+  font-size: 13px;
+}
+body .hero .hero-actions>.button .glyph {
+  flex: none;
+}
+@media (max-width:700px) {
+  body .hero .hero-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+  body .hero .hero-actions>.button {
+    flex: 1 1 0;
+    min-width: 0;
+    gap: 10px;
+    padding-inline: 12px;
+    font-size: 12px;
+  }
+}
+@media (max-width:359px) {
+  body .hero .hero-actions>.button {
+    gap: 7px;
+    padding-inline: 9px;
+    font-size: 11px;
+  }
+}
+
+/* Large screens: the hero ID card's strap runs all the way up to the lime strip. The hero still clips its sides and
+   bottom (so the swinging card never spills into the page beside or below), but not its top, so the strap shows above
+   it; and at the very top of the page the header has no background, so the strap is seen behind the navigation. As
+   soon as the page scrolls, the header's background fades back in. */
+@media (min-width:701px) {
+  body .hero {
+    overflow-x: clip;
+    overflow-y: visible;
+    clip-path: inset(-600px 0 0 0);
+  }
+  .header {
+    transition: background-color .3s ease;
+  }
+  .header.is-at-top {
+    background-color: transparent;
   }
 }

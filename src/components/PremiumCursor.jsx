@@ -63,6 +63,10 @@ export function PremiumCursor() {
       inspectTarget(target); lastTarget = target; settle();
     };
     const scheduleRefresh = () => { if (!refreshFrame) refreshFrame = requestAnimationFrame(refresh); };
+    // While the page scrolls, asking the browser what is under the pointer on every frame forces a fresh layout each
+    // time and makes scrolling stutter, so the cursor re-reads it once the scrolling pauses.
+    let scrollTimer = 0;
+    const scrolled = () => { clearTimeout(scrollTimer); scrollTimer = setTimeout(scheduleRefresh, 120); };
     const leave = event => { if (!event.relatedTarget) hide(); };
     const down = () => { cursor.dataset.pressed = 'true'; settle(); };
     const up = () => { cursor.dataset.pressed = 'false'; settle(); };
@@ -84,7 +88,7 @@ export function PremiumCursor() {
     document.addEventListener('pointerout', leave, {passive:true});
     document.addEventListener('pointerdown', down, {passive:true});
     document.addEventListener('pointerup', up, {passive:true});
-    document.addEventListener('scroll', scheduleRefresh, {passive:true, capture:true});
+    document.addEventListener('scroll', scrolled, {passive:true, capture:true});
     document.addEventListener('keydown', key);
     document.addEventListener('visibilitychange', visibility);
     window.addEventListener('blur', hide);
@@ -93,13 +97,14 @@ export function PremiumCursor() {
       hide();
       cancelAnimationFrame(frame);
       cancelAnimationFrame(refreshFrame);
+      clearTimeout(scrollTimer);
       clearTimeout(settleTimer);
       observer.disconnect();
       document.removeEventListener('pointermove', move);
       document.removeEventListener('pointerout', leave);
       document.removeEventListener('pointerdown', down);
       document.removeEventListener('pointerup', up);
-      document.removeEventListener('scroll', scheduleRefresh, {capture:true});
+      document.removeEventListener('scroll', scrolled, {capture:true});
       document.removeEventListener('keydown', key);
       document.removeEventListener('visibilitychange', visibility);
       window.removeEventListener('blur', hide);

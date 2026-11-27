@@ -5,6 +5,7 @@ import {revealVariants} from '../lib/motion.jsx';
 import {profile} from '../content/site.js';
 import {Arrow} from './icons.jsx';
 import {useModalDialog} from '../hooks/useModalDialog.js';
+import {SpecularLight} from './SpecularButton.jsx';
 
 // How to reach me, as icon buttons. Each one names its destination for screen readers and in its tooltip.
 const contactLinks = [
@@ -43,7 +44,7 @@ export function EnquiryDialog({request, onClose}) {
         <div className="enquiry-field-row"><label>Your name<input name="name" autoComplete="name" required maxLength={100} placeholder="Alex Morgan" /></label><label>Email address<input name="email" type="email" autoComplete="email" required maxLength={254} placeholder="alex@example.com" /></label></div>
         <label>What’s on your mind?<select name="topic" value={topic} onChange={event=>setTopic(event.target.value)}><option>General enquiry</option><option>Project enquiry</option><option>Job opportunity</option><option>Freelance collaboration</option></select></label>
         <label>Your message<textarea name="message" required minLength={10} maxLength={4000} rows={4} placeholder="What are you working on, and how can I help?" /></label>
-        {submitted ? <div className="enquiry-confirmation" role="status" tabIndex={-1} ref={confirmation}><strong>Demo enquiry complete.</strong><p>No message was sent. Edit the form to try again, or close this window.</p></div> : <button className="button primary-button enquiry-submit" type="submit">Send demo enquiry <Arrow direction="↗" /></button>}
+        {submitted ? <div className="enquiry-confirmation" role="status" tabIndex={-1} ref={confirmation}><strong>Demo enquiry complete.</strong><p>No message was sent. Edit the form to try again, or close this window.</p></div> : <button className="button primary-button enquiry-submit" type="submit"><SpecularLight/>Send demo enquiry <Arrow direction="↗" /></button>}
       </form>
     </div>
   </dialog>;

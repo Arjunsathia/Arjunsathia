@@ -22,6 +22,11 @@ jobs:
             dist/github-snake.svg
             dist/github-snake-dark.svg?palette=github-dark
 
+      # The "output" branch holds only the snake images, not the site, so Vercel must not try to build it (it would
+      # fail with "vite: command not found", exit 127). This vercel.json in that branch turns its deployments off.
+      - name: Keep Vercel from deploying the output branch
+        run: echo '{"git":{"deploymentEnabled":false}}' > dist/vercel.json
+
       - uses: crazy-max/ghaction-github-pages@v4
         with:
           target_branch: output

@@ -53,12 +53,6 @@ export function createSmoothScroller({getScroll, setScroll, getMax, frame, cance
   };
 }
 
-let active = null;
-
-// The page scroller for code that moves the page (such as the list hand-off): smooth when the engine runs.
-export function pageScroller() {
-  return active ? {scrollBy: ({top}) => active.scrollBy(top)} : window;
-}
 
 // The wheel stays native over anything that should scroll by itself: lists and popups marked with
 // data-lenis-prevent, and any other element that can still scroll in that direction.
@@ -111,9 +105,8 @@ function start() {
   window.addEventListener('scroll', onScroll, {passive: true});
   document.addEventListener('click', onClick);
   root.classList.add('smooth-scroll');
-  active = engine;
   return () => {
-    engine.stop(); active = null;
+    engine.stop();
     window.removeEventListener('wheel', onWheel);
     window.removeEventListener('scroll', onScroll);
     document.removeEventListener('click', onClick);

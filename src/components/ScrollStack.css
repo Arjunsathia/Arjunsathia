@@ -1,0 +1,55 @@
+/* ScrollStack: the stacking mechanics, plus a default card in the site's own colours.
+   A page that puts its own card inside a ScrollStackItem can override the --scroll-stack-* variables. */
+.scroll-stack {
+  position: relative;
+  width: 100%;
+}
+
+.scroll-stack--contained {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.scroll-stack__inner {
+  position: relative;
+  padding-inline: var(--scroll-stack-inline, clamp(1rem, 6%, 5rem));
+}
+
+.scroll-stack__slot {
+  position: sticky;
+}
+
+.scroll-stack-card {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--scroll-stack-height, 20rem);
+  padding: var(--scroll-stack-padding, 2.5rem);
+  border-radius: var(--scroll-stack-radius, 28px);
+  background: var(--scroll-stack-bg, var(--bg-card, #fffcf6));
+  color: var(--text-strong, #13170d);
+  box-shadow: var(
+    --scroll-stack-shadow,
+    0 0 0 1px var(--line, #252a1940),
+    0 -12px 40px -16px #13170d40,
+    0 24px 48px -24px #13170d59
+  );
+  transform-origin: 50% 0;
+  will-change: transform;
+}
+
+/* Darkens a card as more cards stack over it. Light pages use ink rather than pure black, so it doesn't go grey. */
+.scroll-stack-card__shade {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  border-radius: inherit;
+  background: var(--scroll-stack-shade, #13170d);
+  opacity: var(--scroll-stack-dim, 0);
+  pointer-events: none;
+}
+
+[data-theme=dark] .scroll-stack-card__shade {
+  background: var(--scroll-stack-shade, #000);
+}

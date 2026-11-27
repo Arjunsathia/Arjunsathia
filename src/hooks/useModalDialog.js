@@ -8,9 +8,13 @@ export function useModalDialog(onClose) {
   const reduce=useReducedMotion();
   useEffect(()=>{
     const previous=document.body.style.overflow;
-    if(!ref.current.open)ref.current.showModal();
+    const dialog=ref.current;
+    if(!dialog.open)dialog.showModal();
     document.body.style.overflow='hidden';
-    return()=>{document.body.style.overflow=previous;clearTimeout(timer.current);};
+    // The opening animation starts once the dialog's first frame is drawn (data-shown), so a slow first paint (the
+    // backdrop layer is built then) can't eat into it: the card always rises in fully and smoothly.
+    let frame=requestAnimationFrame(()=>{frame=requestAnimationFrame(()=>{dialog.dataset.shown='';});});
+    return()=>{document.body.style.overflow=previous;clearTimeout(timer.current);cancelAnimationFrame(frame);};
   },[]);
   // Close the native dialog first: it fires the close event (and onClose) only once the page is no longer inert, so focus can return to the trigger.
   const close=()=>{if(closing)return;setClosing(true);timer.current=setTimeout(()=>ref.current?.open?ref.current.close():onClose(),reduce?0:180);};

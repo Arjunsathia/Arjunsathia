@@ -1,8 +1,17 @@
 import {siJavascript, siTypescript, siReact, siNextdotjs, siTailwindcss, siNodedotjs, siExpress, siSocketdotio, siMongodb, siPostgresql, siSupabase, siRedux, siReactquery, siReacthookform, siZod, siVite, siSequelize, siJsonwebtokens, siSwagger, siPostman, siJest, siVitest, siDocker, siGit, siGithubactions, siNginx, siPm2, siVercel, siRender, siWhatsapp, siGooglegemini, siCloudinary, siXyflow} from 'simple-icons';
 
-const previewImages = import.meta.glob('../assets/project-previews/*.svg', {eager:true, query:'?url', import:'default'});
-export const projectPreviewList = project => [['overview','Workspace overview'],['detail','A closer look'],['mobile','Mobile layout']].map(([view,title])=>({title,src:previewImages[`../assets/project-previews/${project.slug}-${view}.svg`]}));
-export const profile = { name: 'Arjun Sathia', email: 'arjunsathia.in@gmail.com', phone: '+919072183999', github: 'https://github.com/Arjunsathia', linkedin: 'https://www.linkedin.com/in/arjunsathia/' };
+const previewImages = import.meta.glob('../assets/project-previews/*.{svg,jpg,png,webp}', {eager:true, query:'?url', import:'default'});
+const findPreview = name => Object.entries(previewImages).find(([path])=>path.slice(path.lastIndexOf('/')+1).replace(/\.\w+$/,'')===name);
+// A raster file (jpg/png/webp) is a real screenshot; an svg is an illustrative mockup.
+// A project's own `previews` list (file name and title, in order) is used when it has one; otherwise its three
+// default screens. `previewNote` describes the screens (for example a demo build with sample data).
+const defaultViews = [['overview','Workspace overview'],['detail','A closer look'],['mobile','Mobile layout']];
+export const projectPreviewList = project => (project.previews ?? defaultViews.map(([view,title],i)=>({file:`${project.slug}-${view}`, title:project.previewTitles?.[i]??title}))).map(({file,title})=>{
+  const [path,src]=findPreview(file)??[];
+  return {title, src, screenshot:!!path&&!path.endsWith('.svg'), note:project.previewNote};
+});
+// `cv`: the CV (public/Arjun_Sathian_CV.pdf), downloaded as `cvFile` from the hero and About.
+export const profile = { name: 'Arjun Sathia', email: 'arjunsathia.in@gmail.com', phone: '+919072183999', github: 'https://github.com/Arjunsathia', linkedin: 'https://www.linkedin.com/in/arjunsathia/', cv: `${import.meta.env.BASE_URL}Arjun_Sathian_CV.pdf`, cvFile: 'Arjun_Sathian_CV.pdf' };
 // The back of the hero photo card.
 export const aboutCard = {
   role: ['AI-Integrated', 'Full stack', 'developer'],
@@ -10,8 +19,11 @@ export const aboutCard = {
   details: [['Build', 'Digital products & business systems'], ['Specialize', 'SaaS, CRM & workflow automation'], ['Connect', 'APIs, platforms & business workflows']],
 };
 // Each project: the card shows `description` and the short `tags` (phones show the one-line `summary` instead); the dialog shows `overview`, `features`, `engineering` and the full `stack`.
-// Preview screens live in assets/project-previews as `<slug>-overview.svg`, `<slug>-detail.svg` and `<slug>-mobile.svg`.
+// Preview screens live in assets/project-previews as `<slug>-overview`, `<slug>-detail` and `<slug>-mobile` (.svg mockups, or .jpg/.png/.webp screenshots); `previewTitles` optionally renames the three.
+// Or a project lists its own screens, in order, as `previews: [{file, title}]` (any number), with `previewNote` saying what they show.
 // `link` is the live site, shown in the project popup; leave it out when there is no public URL.
+// Optional `results` (headline numbers, shown as tiles in the popup's overview, with `resultsNote` saying where they
+// come from) and `scale` (a problem → cause → fixes → results story, shown first under Engineering).
 export const projects = [
   {
     name: 'WhatsApp CRM', slug: 'whatsapp-crm', accent: '#a8ed7d',
@@ -21,6 +33,26 @@ export const projects = [
     description: 'An education platform on the WhatsApp Cloud API: batches, class reminders, attendance and large broadcasts, all kept safely within Meta’s sending limits.',
     overview: 'I extended an open-source Next.js and Supabase WhatsApp CRM into a platform that runs a training institute’s **student communication end to end**. Students attend live classes in **Malayalam, English and Kannada** across several batches, and each of them needs the right reminder, meeting link and follow-up, all sent through **one WhatsApp number** without breaching Meta’s limits.',
     note: 'Built on an open-source (MIT) WhatsApp CRM template. The **education layer and the sending-safety system** are my work.',
+    results: [
+      {value: '~2X', label: 'faster class reminders: ~5 → **9–10 messages a second**'},
+      {value: '30%', label: 'fewer database requests per message: **20.4 → 14.4**'},
+      {value: '0 / 0', label: '**duplicate and missed messages** in every load-test run'},
+      {value: '37 KB', label: 'automation planner payload, down from **~320 KB** (259 ms)'},
+    ],
+    resultsNote: 'Load-tested with production’s France → Singapore database latency simulated (~160 ms per request), at up to 10,000 students.',
+    scale: {
+      problem: 'A **9,822-student class slot** sent at about **1.9 messages a second**, so **6,422 reminders (65%)** expired before they were sent.',
+      cause: 'About **20 sequential database requests per message**, each crossing ~160 ms of France → Singapore latency.',
+      fixes: ['One steady sender per account', 'Merged writes', 'Student data read once per 200, not per student', 'Higher send concurrency', 'Sending continues while planning runs', 'Crash-safe “sending” marks'],
+      results: [
+        ['Database requests per message', '20.4', '14.4'],
+        ['Messages per second', '~5', '~9–10'],
+        ['2,000-student reminder', '6–7 min', '3.8 min'],
+        ['10,000-student reminder', '~30 min', '~21 min'],
+        ['Duplicates / missed messages', '—', '0 / 0'],
+      ],
+      note: 'Load-test results, with production latency simulated.',
+    },
     features: [
       '**Batch and program management**: cohorts move through a Live → Upcoming cycle with **automatic student assignment**, language tracks, and meeting links stored in the database.',
       'A **cron-driven scheduler** that plans and sends personalised class reminders and after-class notes. The builder’s “Upcoming runs” preview uses the same planning logic, so it shows **exactly what will be sent**.',
@@ -34,14 +66,25 @@ export const projects = [
       '**Server-side broadcast queue** with a renewable per-broadcast lock. Each recipient is claimed before sending so **nobody is messaged twice**, and sends go out in waves.',
       '**Account-health gate** that polls Meta’s quality rating and daily limit, reserves capacity for the next 24 hours of class messages, and can run in **shadow mode** before enforcement.',
       '**Crash safety, cron leases and webhook spooling**: interrupted sends are marked “Unclear” instead of re-sent, overlapping cron runs are blocked, and webhooks are written to disk and **replayed idempotently** during database outages.',
+      '**Wave-based broadcasts with quality checks**: after a 9,905-recipient broadcast saw **47% refused by Meta**, sending now checks quality between waves and **holds a broadcast at a 25% refusal rate**.',
+      'A **load-test harness** that runs the real cron against a local Postgres and a mock Meta API at up to **10,000 students**. It caught a bug that hid **7 failed reminders per 1,000** as “done”; after the fix, **1,000 of 1,000** were delivered.',
+      'Fixed a **10,000-row bulk update that timed out** (one recount per row) by batching the recounts, and moved contact filtering into **one database call**, fixing wrong totals and a 1,000-row cap.',
       'Cut the planner payload from **~320 KB to ~37 KB** (259 ms on a 1,009-membership account) with compact, anonymised Postgres RPCs.',
-      'Wrote **60+ SQL migrations** and **~200 Vitest test files**, including PGlite SQL tests and a load-test harness that runs the real cron against a fake Meta API at up to **10,000 students**.',
+      'Wrote **60+ SQL migrations** and **1,900+ automated tests** across ~200 Vitest files, including PGlite SQL tests.',
     ],
     tags: ['Next.js', 'TypeScript', 'Supabase', 'WhatsApp Cloud API'],
     stack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Supabase', 'PostgreSQL', 'WhatsApp Cloud API', 'React Flow', 'Vitest', 'PGlite', 'Docker', 'PM2'],
   },
   {
-    name: 'MT5 Broker CRM', slug: 'highcrm', accent: '#ffdc3d', link: 'https://account.smatams.com/',
+    name: 'MT5 Broker CRM', slug: 'highcrm', accent: '#ffdc3d',
+    previews: [
+      {file: 'highcrm-1-sign-in', title: 'Sign in'},
+      {file: 'highcrm-2-dashboard', title: 'Admin dashboard'},
+      {file: 'highcrm-3-reports', title: 'Reports overview'},
+      {file: 'highcrm-4-users', title: 'User management'},
+      {file: 'highcrm-5-client-portal', title: 'Client portal'},
+    ],
+    previewNote: 'Demo environment · sample data, not live',
     category: 'Client project / Fintech', context: 'Wisbato · Running in production',
     title: 'Forex brokerage CRM & client portal',
     summary: 'The client lifecycle of a forex brokerage, connected to MetaTrader 5.',
@@ -68,6 +111,16 @@ export const projects = [
   },
   {
     name: 'NexChain', slug: 'nexchain', accent: '#9edbc9', link: 'https://nexchain-black.vercel.app/',
+    previews: [
+      {file: 'nexchain-1-sign-in', title: 'Sign in'},
+      {file: 'nexchain-2-dashboard', title: 'Trading dashboard'},
+      {file: 'nexchain-3-markets', title: 'Market insights'},
+      {file: 'nexchain-4-trade', title: 'Placing an order'},
+      {file: 'nexchain-5-assistant', title: 'AI assistant'},
+      {file: 'nexchain-6-light-theme', title: 'Light theme'},
+    ],
+    previewNote: 'Screenshot of the live app · virtual funds',
+    previewIntro: 'Screenshots from the live app, from signing in to placing an order, in dark and light themes',
     category: 'Personal project / Fintech', context: 'Personal project · Live demo',
     title: 'Crypto paper-trading platform',
     summary: 'Learn crypto trading on live prices, without risking real money.',
@@ -123,6 +176,31 @@ export const stackGroups = [
   { name: 'Testing & quality', description: 'Automated tests for the flows that matter: balances, sessions, permissions, and every API route.', tools: [['Jest',siJest],['Vitest',siVitest],['Postman',siPostman],['Swagger',siSwagger]] },
   { name: 'Deployment', description: 'Containers, reverse proxies, and automated releases that take an application from a pull request to production.', tools: [['Docker',siDocker],['GitHub Actions',siGithubactions],['Nginx',siNginx],['Vercel',siVercel],['Git',siGit]] },
 ];
+// A short note for each tool, shown under its card when it's opened in the Stack gallery.
+export const toolNotes = {
+  'JavaScript': 'The language under everything I build, in the browser and on the server.',
+  'TypeScript': 'Typed code for the CRMs, so data shapes and API contracts are checked before they ship.',
+  'React': 'Component-based interfaces, from dashboards to client portals, built from reusable pieces.',
+  'Next.js': 'Full-stack React with server rendering and API routes, behind the WhatsApp CRM.',
+  'Redux': 'Shared state for larger interfaces, kept predictable with Redux Toolkit.',
+  'Tailwind': 'Utility-first styling for fast, consistent and responsive layouts.',
+  'Node.js': 'Server-side JavaScript for APIs, scheduled jobs and background queues.',
+  'Express': 'Lean REST APIs with routing, middleware, JWT auth and role-based access.',
+  'Socket.IO': 'Real-time updates: live chats, notifications and dashboards without a refresh.',
+  'MongoDB': 'Flexible document storage for apps whose data changes shape quickly.',
+  'PostgreSQL': 'Relational data with schemas, migrations and transactions for money workflows.',
+  'Supabase': 'Postgres with auth, storage and realtime built in, powering the WhatsApp CRM.',
+  'Jest': 'Unit and integration tests that keep the business logic honest.',
+  'Vitest': 'Fast tests for Vite and Next.js projects, around 200 test files in the CRM.',
+  'Postman': 'Exploring, testing and sharing API requests while building endpoints.',
+  'Swagger': 'API documentation that stays in step with the routes, for everyone using them.',
+  'Docker': 'Containers, so an app runs the same on my machine, in CI and in production.',
+  'GitHub Actions': 'Automated checks and deploys on every push and pull request.',
+  'Nginx': 'Reverse proxy and HTTPS in front of Node apps on production servers.',
+  'Vercel': 'Zero-config deploys and preview links for frontends and Next.js apps.',
+  'Git': 'Version control with clean branches, reviews and a readable history.',
+  'CI/CD': 'Every change tested and released automatically, from pull request to production.',
+};
 export const serviceItems = [
   {title:'Websites that work',description:'A clear, considered website for your business, portfolio, or next launch. Built around your content and the people you want to reach.',outcome:'From first idea to launch.'},
   {title:'Ideas into products',description:'Turn an idea into a working application, or add the next feature to an existing product. A focused scope, regular updates, and a useful result.',outcome:'A product ready for real users.'},
@@ -133,7 +211,7 @@ export const experienceItems = [
   {role:'Full Stack Developer Intern',company:'Luminar Technolab',location:'Kozhikode, Kerala',period:'Jan 2025 — Aug 2025',duration:'8 months',brief:'REST APIs with JWT and role-based access, plus 30+ reusable React components.',summary:'Built **RESTful APIs** in Node.js and Express.js with **JWT authentication** and role-based access, plus **reusable React components** with Redux and responsive Tailwind CSS layouts.'},
 ];
 export const experienceDetails = [
-  {responsibilities:['Extend an open-source WhatsApp CRM into an **education platform** with batches, timetables, class automations and attendance.','Build the MT5 broker CRM’s **client portal and back office**, integrating the **MetaTrader 5 gateway API** for trading accounts and balances.','Design database schemas, migrations, permissions and **transactional money workflows** in PostgreSQL.','Write **automated tests** and ship releases with **Docker, PM2, Nginx and GitHub Actions**.'],delivered:['A **cron-driven class scheduler**, WhatsApp attendance check-ins, and a broadcast queue with a **send governor** that backs off on Meta rate limits.','**MT5 account creation, deposit and withdrawal workflows** kept in sync with MT5 balances, KYC checks, and a **12 × 7 roles-and-permissions matrix**.','A planner payload cut from **~320 KB to ~37 KB**, **60+ SQL migrations**, and **~200 Vitest test files**.'],skills:['Next.js','Node.js','PostgreSQL','TypeScript','Supabase','Express','Socket.IO','WhatsApp Cloud API','MetaTrader 5 API','Vitest','Docker','GitHub Actions']},
+  {responsibilities:['Extend an open-source WhatsApp CRM into an **education platform** with batches, timetables, class automations and attendance.','Build the MT5 broker CRM’s **client portal and back office**, integrating the **MetaTrader 5 gateway API** for trading accounts and balances.','Design database schemas, migrations, permissions and **transactional money workflows** in PostgreSQL.','Keep messaging fast and reliable at scale: **~9,800 students per class slot** within WhatsApp’s **10K-a-day sending limit**.','Write **automated tests** and ship releases with **Docker, PM2, Nginx and GitHub Actions**.'],delivered:['A **cron-driven class scheduler**, WhatsApp attendance check-ins, and a broadcast queue with a **send governor** that backs off on Meta rate limits.','Class reminders made **~2× faster** in load tests (**~5 → 9–10 messages a second**, database requests per message **20.4 → 14.4**), with **zero duplicate or missed messages**.','**Wave-based broadcasts** that stop at a **25% refusal rate**, after a 9,905-recipient send saw **47% refused by Meta**.','**MT5 account creation, deposit and withdrawal workflows** kept in sync with MT5 balances, KYC checks, and a **12 × 7 roles-and-permissions matrix**.','A planner payload cut from **~320 KB to ~37 KB**, **60+ SQL migrations**, and **1,900+ automated tests**, with a load-test harness for **10,000 students**.'],results:projects[0].results,resultsNote:projects[0].resultsNote,skills:['Next.js','Node.js','PostgreSQL','TypeScript','Supabase','Express','Socket.IO','WhatsApp Cloud API','MetaTrader 5 API','Vitest','Docker','GitHub Actions']},
   {responsibilities:['Built **RESTful APIs** in Node.js and Express.js.','Secured API routes with **JWT authentication and role-based access control**.','Built **reusable React components** with Redux for shared application state.','Created **responsive layouts** with Tailwind CSS.'],delivered:['**REST APIs** with JWT authentication and role-based access.','**30+ reusable React components** with Redux and responsive Tailwind CSS layouts.'],skills:['React','Node.js','Express','Redux','JWT','Tailwind CSS','REST APIs','Git']},
 ];
 export const processSteps = [
@@ -141,10 +219,4 @@ export const processSteps = [
   {title:'Plan',description:'I break the work into a practical scope, map the key screens and data, and agree on the next steps.',outcome:'A focused plan with manageable milestones.'},
   {title:'Build',description:'I develop the interface and backend in small, reviewable pieces, with regular updates along the way.',outcome:'Working features you can see and try.'},
   {title:'Test & hand over',description:'I check the important flows, refine the details, and prepare the application and documentation for handover.',outcome:'A considered release and a clear next step.'},
-];
-export const sampleTestimonials = [
-  {quote:'Clear communication, thoughtful implementation, and a smooth handover. The whole process felt easy to follow.',name:'Alex Morgan',role:'Sample client',initials:'AM'},
-  {quote:'Arjun worked through the details carefully and kept the project moving. The result was straightforward to use and maintain.',name:'Priya Shah',role:'Sample teammate',initials:'PS'},
-  {quote:'It was easy to share ideas and work through changes together. The small details received as much care as the bigger picture.',name:'Sam Taylor',role:'Sample collaborator',initials:'ST'},
-  {quote:'Arjun took time to understand what we needed and explained the options clearly. Feedback was easy to share and put into practice.',name:'Jordan Lee',role:'Sample project partner',initials:'JL'},
 ];

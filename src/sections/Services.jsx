@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useLayoutEffect, useRef, useState} from 'react';
 import {Reveal, Item, useCompactMotion} from '../lib/motion.jsx';
 import {serviceItems} from '../content/site.js';
 import {Arrow, Asterisk, ServiceDoodle} from '../components/icons.jsx';
 import {SectionHeading} from '../components/SectionHeading.jsx';
+import BounceCards from '../components/BounceCards.jsx';
+import Stack from '../components/Stack.jsx';
 
 function ServiceLaptop() {
   return <svg className="service-laptop-real" viewBox="0 0 340 260" fill="none" aria-hidden="true">
@@ -43,14 +45,59 @@ function ServiceIllustration({index}) {
     {index===1&&<ServiceDoodle className="service-phone-doodle"/>}
   </Reveal>;
 }
+function ServiceCard({service,i}) {
+  return <article className={`service-card service-card-${i}`}>
+    <div className="service-card-top"><strong>0{i+1}</strong><span className="service-number-line"/><span className="eyebrow">Service</span></div>
+    {i===2&&<div className="service-top-note" aria-hidden="true"><ServiceDoodle/>Faster<br/>smoother<br/>better.</div>}
+    <div className="service-card-body"><div className="service-copy"><h3>{service.title}</h3><p>{service.description}</p><div className="service-copy-note"><svg className="service-doodle" viewBox="0 0 100 65" fill="none" aria-hidden="true"><path d={['M12 8C5 39 43 55 83 28M65 28 85 25 81 44','M12 12C12 42 49 49 85 26M69 25 85 26 81 42','M10 14C22 45 58 47 85 24M69 24 85 24 82 40'][i]}/></svg><p className="service-outcome">{service.outcome}</p></div></div><ServiceIllustration index={i}/></div>
+  </article>;
+}
+
+// Phones: the services as a fanned stack of cards. Swipe the top card away (or tap it) to send it to the back and
+// bring up the next; the vertical page scroll still works over the cards. The stack is as tall as the tallest card.
+function ServiceStack() {
+  const box=useRef(null);
+  const [height,setHeight]=useState(0);
+  useLayoutEffect(()=>{
+    const node=box.current;
+    if(!node)return undefined;
+    let width=-1;
+    // Measure the cards at their natural height (the stack briefly at zero height, within one frame, so no flicker).
+    const measure=force=>{
+      if(!force&&node.clientWidth===width)return;
+      width=node.clientWidth;
+      const stack=node.querySelector('.stack');
+      if(!stack)return;
+      stack.style.height='0px';
+      const tallest=Math.max(0,...[...node.querySelectorAll('.service-card')].map(card=>card.offsetHeight));
+      stack.style.height='';
+      setHeight(tallest);
+    };
+    const observer=new ResizeObserver(()=>measure(false));
+    observer.observe(node);
+    measure(true);
+    let live=true;
+    document.fonts?.ready.then(()=>{if(live)measure(true);});
+    return()=>{live=false;observer.disconnect();};
+  },[]);
+  return <Reveal className="service-stack" ref={box} fadeOnly>
+    <div className="service-stack-deck" style={height?{height}:undefined}>
+      <Stack layout="fan" visible={3} spread={0.42} depth={0.4} radius={14} shadow tilt={18} threshold={80} sendToBackOnClick
+        ariaLabel={`Services, ${serviceItems.length} cards. Swipe, tap or press Enter for the next.`}
+        cards={serviceItems.map((service,i)=><ServiceCard key={service.title} service={service} i={i}/>)}/>
+    </div>
+  </Reveal>;
+}
+
 export function Services() {
   const compact=useCompactMotion();
   return <section className="services-section" id="services" aria-labelledby="services-title"><div className="section-wrap">
     <SectionHeading number="02" id="services-title" title={<><span className="service-title-lead">How I can </span><Item as="span" variant="wipe" className="service-title-help">help.</Item></>} /><Reveal className="services-section-intro"><p>A focused feature, a fresh website, or a complete application. Here’s where I can contribute.</p><span className="services-heading-note" aria-hidden="true"><ServiceDoodle type="burst"/>Ideas into<br/>working software.<ServiceDoodle/></span></Reveal>
-    <div className="service-grid">{serviceItems.map((service,i)=><Reveal as="article" className={`service-card service-card-${i}`} key={service.title} distance={compact?12:20} delay={i*.08}>
-      <div className="service-card-top"><strong>0{i+1}</strong><span className="service-number-line"/><span className="eyebrow">Service</span></div>
-      {i===2&&<div className="service-top-note" aria-hidden="true"><ServiceDoodle/>Faster<br/>smoother<br/>better.</div>}
-      <div className="service-card-body"><div className="service-copy"><h3>{service.title}</h3><p>{service.description}</p><div className="service-copy-note"><svg className="service-doodle" viewBox="0 0 100 65" fill="none" aria-hidden="true"><path d={['M12 8C5 39 43 55 83 28M65 28 85 25 81 44','M12 12C12 42 49 49 85 26M69 25 85 26 81 42','M10 14C22 45 58 47 85 24M69 24 85 24 82 40'][i]}/></svg><p className="service-outcome">{service.outcome}</p></div></div><ServiceIllustration index={i}/></div>
-    </Reveal>)}</div>
+    {/* Phones: a swipeable stack. Larger screens: the cards keep their grid place and size; BounceCards adds a slight
+        tilt, a bouncy pop-in as they come into view, and (with a mouse) a hover that straightens and lifts a card
+        while its neighbours make room. In one column (tablets) there's no sideways push. */}
+    {compact?<ServiceStack/>:<BounceCards layout="flow" appearOnView className="service-grid" cardClassName="service-bounce"
+      transformStyles={[-2.4,1.6,-1.8].map(deg=>`rotate(${deg}deg)`)} pushDistance={26} hoverScale={1.03} hoverLift={10} bounciness={0.45}
+      animationDelay={0.08} animationStagger={0.1} radius={18}>{serviceItems.map((service,i)=><ServiceCard key={service.title} service={service} i={i}/>)}</BounceCards>}
   </div></section>;
 }

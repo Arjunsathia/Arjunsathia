@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {motion, useReducedMotion} from 'motion/react';
-import {handoffAtScrollBoundary, createTouchHandoff} from './scroll-boundary.js';
-import {pageScroller} from './smooth-scroll.js';
 
 export const motionEase=[.16,1,.3,1];
 export function useCompactMotion(){
@@ -39,88 +37,4 @@ export function Item({as='div',variant='rise',children,...props}){
 export function Entrance({as='div',delay=0,children,...props}){
   const reduce=useReducedMotion();const Element=motion[as];
   return <Element initial={reduce?false:{opacity:0,y:12}} animate={{opacity:1,y:0}} transition={{duration:reduce?0:.45,delay:reduce?0:delay,ease:motionEase}} {...props}>{children}</Element>;
-}
-
-// Native scrolling within each list, with explicit wheel handoff at either edge.
-export function useCenteredScroll(ref,selector,count){
-  const reduce=useReducedMotion();
-  const [active,setActive]=useState(0);
-  const activeRef=React.useRef(0);
-  useEffect(()=>{
-    const panel=ref.current;
-    const entries=Array.from(panel.querySelectorAll(selector));
-    let frame=0,settle=0,highlighted=-1;
-    // The highlighted card. In dark mode the highlight is a bright green fill, so it only moves once scrolling
-    // settles; otherwise every card flashes green as it passes the middle. Scale and fade still follow live.
-    const highlight=index=>{
-      clearTimeout(settle);
-      if(index===highlighted)return;
-      highlighted=index;
-      entries.forEach((entry,i)=>{entry.dataset.active=String(i===index);});
-    };
-    // Card positions only change when something resizes, so they are measured then, not on every scroll frame
-    // (re-reading layout each frame while also writing styles is what makes scrolling stutter).
-    let positions=null,measuredHeight=0;
-    const measure=()=>{
-      measuredHeight=panel.clientHeight;
-      positions=entries.map(entry=>({entry,center:entry.offsetTop+entry.offsetHeight/2,height:entry.offsetHeight,scale:'',opacity:''}));
-    };
-    const update=()=>{
-      frame=0;
-      if(!positions)measure();
-      const center=panel.scrollTop+measuredHeight/2;
-      let nearest=0,distance=Infinity;
-      positions.forEach((item,index)=>{const next=Math.abs(item.center-center);if(next<distance){nearest=index;distance=next;}});
-      if(highlighted<0||reduce||document.documentElement.dataset.theme!=='dark')highlight(nearest);
-      else if(nearest!==highlighted){clearTimeout(settle);settle=setTimeout(()=>highlight(nearest),140);}
-      else clearTimeout(settle);
-      positions.forEach(item=>{
-        const offset=Math.min(1,Math.abs(item.center-center)/item.height);
-        const scale=reduce?'1':(1-offset*.04).toFixed(4),opacity=(1-offset*.45).toFixed(3);
-        // Only write what changed: cards far from the centre stay at their resting values.
-        if(scale!==item.scale){item.scale=scale;item.entry.style.setProperty('--center-scale',scale);}
-        if(opacity!==item.opacity){item.opacity=opacity;item.entry.style.setProperty('--center-opacity',opacity);}
-      });
-      if(nearest!==activeRef.current){activeRef.current=nearest;setActive(nearest);}
-    };
-    const schedule=()=>{if(!frame)frame=requestAnimationFrame(update);};
-    const resize=new ResizeObserver(()=>{positions=null;schedule();});resize.observe(panel);entries.forEach(entry=>resize.observe(entry));
-    // Touch: once a swipe or fling reaches the end of the list, the page carries on scrolling.
-    // That fling check reads layout, so it only runs while the list is being moved by touch.
-    let touchInput=false;
-    const onWheel=event=>{touchInput=false;handoffAtScrollBoundary(event,panel,pageScroller());};
-    const touch=createTouchHandoff(panel,window,undefined,undefined,()=>reduce);
-    const onTouchStart=event=>{touchInput=true;touch.start(event.touches[0].clientY);};
-    const onTouchMove=event=>touch.move(event.touches[0].clientY,event);
-    const onTouchEnd=()=>touch.end();
-    const onScroll=()=>{schedule();if(touchInput)touch.scrolled();};
-    panel.addEventListener('scroll',onScroll,{passive:true});
-    panel.addEventListener('wheel',onWheel,{passive:false});
-    panel.addEventListener('touchstart',onTouchStart,{passive:true});
-    // Not passive: at an edge, the first movement may be cancelled so iOS scrolls the page instead of bouncing the list.
-    panel.addEventListener('touchmove',onTouchMove,{passive:false});
-    panel.addEventListener('touchend',onTouchEnd,{passive:true});
-    panel.addEventListener('touchcancel',onTouchEnd,{passive:true});
-    update();
-    return()=>{
-      cancelAnimationFrame(frame);clearTimeout(settle);resize.disconnect();touch.cancel();
-      panel.removeEventListener('scroll',onScroll);panel.removeEventListener('wheel',onWheel);
-      panel.removeEventListener('touchstart',onTouchStart);panel.removeEventListener('touchmove',onTouchMove);
-      panel.removeEventListener('touchend',onTouchEnd);panel.removeEventListener('touchcancel',onTouchEnd);
-    };
-  },[ref,selector,reduce]);
-  const goTo=index=>{
-    const panel=ref.current;
-    const entry=panel.querySelectorAll(selector)[Math.max(0,Math.min(count-1,index))];
-    // Land where scroll snapping would settle: centred lists centre the item, start-aligned lists (the role timeline) put it at the top.
-    const style=getComputedStyle(entry);
-    const top=style.scrollSnapAlign.includes('start')?entry.offsetTop-(parseFloat(getComputedStyle(panel).scrollPaddingTop)||0):entry.offsetTop-(panel.clientHeight-entry.offsetHeight)/2;
-    panel.scrollTo({top,behavior:reduce?'instant':'smooth'});
-  };
-  const onKeyDown=event=>{
-    const destinations={ArrowUp:active-1,ArrowLeft:active-1,ArrowDown:active+1,ArrowRight:active+1,Home:0,End:count-1};
-    const destination=destinations[event.key];
-    if(destination!==undefined&&destination>=0&&destination<count){event.preventDefault();goTo(destination);}
-  };
-  return {active,goTo,onKeyDown};
 }
