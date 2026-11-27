@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#f6f0e8" />
     <!-- Sets the theme before anything paints: light by default, dark only if the visitor chose it, so a dark page never flashes light. src/lib/theme.js takes over from here. -->
-    <style>html{background:#f6f0e8}html[data-theme=dark]{background:#0a0c09;color-scheme:dark}</style>
-    <script>(function(){var s=null;try{s=localStorage.getItem('theme')}catch(e){}var t=s==='dark'?'dark':'light';document.documentElement.dataset.theme=t;if(t==='dark')document.querySelector('meta[name=theme-color]').content='#0a0c09'})()</script>
+    <!-- When the opening screen will run (no #section in the address), the page starts on its dark band, so the cream
+         page never flashes before it; SiteIntro hands back to the page colour as it zooms away. -->
+    <style>html{background:#f6f0e8}html[data-theme=dark]{background:#0a0c09;color-scheme:dark}html.intro-boot{background:#13170d}html.intro-boot[data-theme=dark]{background:#0a0c09}html.intro-boot body{background:transparent}</style>
+    <script>(function(){var s=null;try{s=localStorage.getItem('theme')}catch(e){}var t=s==='dark'?'dark':'light';document.documentElement.dataset.theme=t;if(!location.hash.slice(1))document.documentElement.classList.add('intro-boot');if(t==='dark')document.querySelector('meta[name=theme-color]').content='#0a0c09'})()</script>
     <meta name="description" content="Arjun Sathia — software engineer and full-stack developer. Available for full-time roles and freelance web development." />
     <title>Arjun Sathia — Software Engineer & Full-Stack Developer</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

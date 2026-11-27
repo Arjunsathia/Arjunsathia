@@ -1,4 +1,4 @@
-import React, {Suspense, lazy, useEffect, useRef, useState} from 'react';
+import React, {Suspense, lazy, useContext, useEffect, useRef, useState} from 'react';
 import {Reveal, Item, useCompactMotion} from '../lib/motion.jsx';
 import {stackGroups, toolNotes} from '../content/site.js';
 import {ServiceDoodle} from '../components/icons.jsx';
@@ -6,9 +6,11 @@ import {SectionHeading} from '../components/SectionHeading.jsx';
 import {useTheme} from '../components/ThemeSwitch.jsx';
 import {stackCardArt} from '../lib/stack-card-art.js';
 import JellyRadio from '../components/JellyRadio.jsx';
+import {IntroContext} from '../components/SiteIntro.jsx';
 
 // The gallery (WebGL) loads separately, so it never holds up the page.
-const CircularGallery = lazy(() => import('../components/CircularGallery.jsx'));
+const loadGallery = () => import('../components/CircularGallery.jsx');
+const CircularGallery = lazy(loadGallery);
 // The practice without a logo, shown with a check in the Deployment group.
 const EXTRA_TOOLS = {3: [['CI/CD', 'check']]};
 const GROUP_SIZES = stackGroups.map((group, i) => group.tools.length + (EXTRA_TOOLS[i]?.length ?? 0));
@@ -35,16 +37,24 @@ function StackGallery({compact}) {
   const [opened, setOpened] = useState(false);
   const api = useRef(null);
   const box = useRef(null);
-  // The cards are drawn only once the gallery is within about two screens, so the work never competes with the
-  // hero's intro on load.
+  // The gallery's code and card art are prepared in the background a moment after the page has appeared (once the
+  // hero has finished its own animations), so they are ready long before anyone scrolls here; if the section comes
+  // within about two screens first, they are prepared right away. Never during the opening screen.
+  const revealed = useContext(IntroContext);
   const [near, setNear] = useState(false);
   useEffect(() => {
+    if (near || !revealed) return undefined;
     const node = box.current;
-    if (!node || near) return undefined;
-    const observer = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) setNear(true); }, {rootMargin: '200% 0px'});
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, [near]);
+    const observer = node ? new IntersectionObserver(([entry]) => { if (entry.isIntersecting) setNear(true); }, {rootMargin: '200% 0px'}) : null;
+    if (node) observer.observe(node);
+    let idleHandle = 0;
+    const timer = setTimeout(() => {
+      const go = () => setNear(true);
+      idleHandle = window.requestIdleCallback ? window.requestIdleCallback(go, {timeout: 2000}) : setTimeout(go, 0);
+    }, 3500);
+    return () => { observer?.disconnect(); clearTimeout(timer); window.cancelIdleCallback?.(idleHandle); };
+  }, [near, revealed]);
+  useEffect(() => { if (near) loadGallery(); }, [near]);
   useEffect(() => {
     if (!near) return undefined;
     let live = true;

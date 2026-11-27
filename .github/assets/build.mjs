@@ -209,3 +209,37 @@ for (const [layout, perLine, cell, nameSize, labelSize, suffix] of [['desktop', 
   });
   write(`stack-also${suffix}.svg`, svg(maxW, Math.ceil(y + chipH + 2), `Also: ${alsoItems.join(', ')}`, `${groupLabel('Also', 0, labelSize)}${chips.join('')}`));
 }
+
+// ---------- Profile buttons: rounded pills under the header ----------
+// One SVG per button, so each can be its own link in the README. Portfolio is the filled, primary pill;
+// LinkedIn and Email are outlined, with their icon in colour. All three fit on one line of a phone (~350px).
+// The label uses the visitor's system font, so its width is estimated and the label is centred in its space:
+// a small error in the estimate then splits evenly on both sides.
+{
+  const H = 40, padL = 15, padR = 18, icon = 16, gap = 9, fontSize = 14;
+  const buttonStyle = `<style>
+  .b-fill{fill:#1f2328} .b-on{fill:#ffffff} .b-line{fill:#ffffff;stroke:#d0d7de} .b-text{fill:#1f2328}
+  .b-li{fill:#0a66c2} .b-mail{fill:none;stroke:#1a7f37} .b-globe{fill:none;stroke:#ffffff}
+  @media (prefers-color-scheme: dark){
+    .b-fill{fill:#e6edf3} .b-on{fill:#0d1117} .b-line{fill:#0d1117;stroke:#30363d} .b-text{fill:#e6edf3}
+    .b-li{fill:#4493f8} .b-mail{stroke:#3fb950} .b-globe{stroke:#0d1117}
+  }
+</style>`;
+  // Icons drawn on an 18-unit grid, scaled to the icon size.
+  const icons = {
+    globe: `<g class="b-globe" stroke-width="1.6" stroke-linecap="round"><circle cx="9" cy="9" r="7.5"/><path d="M1.5 9h15M9 1.5c2.2 2.1 3.2 4.6 3.2 7.5S11.2 14.4 9 16.5C6.8 14.4 5.8 11.9 5.8 9S6.8 3.6 9 1.5Z"/></g>`,
+    linkedin: `<rect x="0" y="0" width="18" height="18" rx="3" class="b-li"/><g class="b-on"><circle cx="5" cy="5" r="1.3"/><path d="M3.9 7.3h2.2V14H3.9zM7.7 7.3h2.1v.9c.9-1.6 4.8-1.7 4.8 1.7V14h-2.2v-3.6c0-1.5-2.5-1.5-2.5 0V14H7.7z"/></g>`,
+    mail: `<g class="b-mail" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><rect x="1" y="3" width="16" height="12" rx="2"/><path d="m1.8 4.2 7.2 5.3 7.2-5.3"/></g>`,
+  };
+  const button = (file, label, iconName, filled) => {
+    const textW = Math.round(label.length * fontSize * .52);
+    const W = padL + icon + gap + textW + padR, textX = padL + icon + gap + textW / 2;
+    write(file, svg(W, H, label, `${buttonStyle}
+  <rect x="1" y="1" width="${W - 2}" height="${H - 2}" rx="${(H - 2) / 2}" class="${filled ? 'b-fill' : 'b-line'}" stroke-width="1.5"/>
+  <g transform="translate(${padL} ${(H - icon) / 2}) scale(${icon / 18})">${icons[iconName]}</g>
+  <text x="${textX}" y="${H / 2 + fontSize * .36}" text-anchor="middle" class="sans ${filled ? 'b-on' : 'b-text'}" font-size="${fontSize}" font-weight="600">${esc(label)}</text>`));
+  };
+  button('button-portfolio.svg', 'Portfolio', 'globe', true);
+  button('button-linkedin.svg', 'LinkedIn', 'linkedin', false);
+  button('button-email.svg', 'Email', 'mail', false);
+}

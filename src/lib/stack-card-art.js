@@ -123,8 +123,11 @@ const drawCard = ({ name, icon, group, groupIndex, toolIndex, toolCount }, c, da
 
 const cache = new Map();
 
-// Waits for a quiet moment, so the cards are drawn one at a time between frames instead of all at once mid-scroll.
-const idle = () => new Promise(resolve => (window.requestIdleCallback ? window.requestIdleCallback(() => resolve(), { timeout: 250 }) : setTimeout(resolve, 0)));
+// Waits for a quiet moment and reports how long it lasts, so the cards are drawn a few at a time between frames
+// (as many as fit) instead of all at once mid-scroll, or one per idle moment (which made the gallery slow to appear).
+const idle = () => new Promise(resolve => (window.requestIdleCallback
+  ? window.requestIdleCallback(deadline => resolve(deadline), { timeout: 120 })
+  : setTimeout(() => resolve({ timeRemaining: () => 8 }), 0)));
 
 // `groups`: the site's stackGroups ({name, description, tools: [[name, icon]]}); `notes`: a short line per tool, shown
 // when its card is opened (falling back to the group's description). Returns gallery items.
@@ -136,12 +139,13 @@ export function stackCardArt(theme, groups, extras = {}, notes = {}) {
       theme,
       fontsReady().then(async () => {
         const items = [];
+        let quiet = await idle();
         for (const [groupIndex, group] of groups.entries()) {
           const tools = [...group.tools, ...(extras[groupIndex] ?? [])];
           for (const [toolIndex, [name, icon]] of tools.entries()) {
-            await idle();
+            if (quiet.timeRemaining() < 6) quiet = await idle();
             items.push({
-              image: await drawCard(
+              image: drawCard(
                 { name, icon: icon === 'check' || !icon ? CHECK : icon, group: group.name, groupIndex, toolIndex, toolCount: tools.length },
                 colours,
                 dark
@@ -151,7 +155,8 @@ export function stackCardArt(theme, groups, extras = {}, notes = {}) {
             });
           }
         }
-        return items;
+        // The JPEG encodes run in parallel in the background; wait for them all.
+        return Promise.all(items.map(async item => ({ ...item, image: await item.image })));
       })
     );
   }

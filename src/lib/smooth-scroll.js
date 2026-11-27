@@ -8,7 +8,7 @@
 const easeInOut = p => p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
 export const tripDuration = distance => Math.max(700, Math.min(1400, 500 + Math.abs(distance) * .12));
 
-export function createSmoothScroller({getScroll, setScroll, getMax, frame, cancelFrame = () => {}, now, smoothness = .085}) {
+export function createSmoothScroller({getScroll, setScroll, getMax, frame, cancelFrame = () => {}, now, smoothness = .1}) {
   let target = getScroll(), current = target, expected = target, running = false, handle = 0, last = 0, trip = null;
   const clamp = value => Math.max(0, Math.min(getMax(), value));
   const step = () => {

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="124" height="40" viewBox="0 0 124 40" role="img" aria-label="Portfolio"><title>Portfolio</title><style>
+  .sans{font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif} .mono{font-family:ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace}
+  .card{fill:#ffffff;stroke:#d0d7de} .inner{fill:#f6f8fa;stroke:#d0d7de}
+  .fg{fill:#1f2328} .muted{fill:#59636e} .faint{fill:#818b98}
+  .blue{fill:#0969da} .purple{fill:#8250df} .green{fill:#1a7f37}
+  .s-blue{stroke:#0969da} .s-muted{stroke:#d0d7de} .dot{fill:#d0d7de}
+  .glow-blue{fill:#54aeff} .glow-purple{fill:#c297ff} .glow-green{fill:#4ac26b}
+  .pill{fill:#dafbe1;stroke:#4ac26b} .bubble-in{fill:#ffffff;stroke:#d0d7de} .bubble-out{fill:#1a7f37} .on-accent{fill:#ffffff}
+  .stop-a{stop-color:#0969da} .stop-b{stop-color:#8250df}
+  @media (prefers-color-scheme: dark){
+    .card{fill:#0d1117;stroke:#30363d} .inner{fill:#161b22;stroke:#30363d}
+    .fg{fill:#e6edf3} .muted{fill:#9198a1} .faint{fill:#6e7681}
+    .blue{fill:#4493f8} .purple{fill:#ab7df8} .green{fill:#3fb950}
+    .s-blue{stroke:#4493f8} .s-muted{stroke:#30363d} .dot{fill:#30363d}
+    .glow-blue{fill:#1f6feb} .glow-purple{fill:#8957e5} .glow-green{fill:#238636}
+    .pill{fill:#0f2a1a;stroke:#238636} .bubble-in{fill:#21262d;stroke:#30363d} .bubble-out{fill:#238636}
+    .stop-a{stop-color:#4493f8} .stop-b{stop-color:#ab7df8}
+  }
+</style><style>
+  .b-fill{fill:#1f2328} .b-on{fill:#ffffff} .b-line{fill:#ffffff;stroke:#d0d7de} .b-text{fill:#1f2328}
+  .b-li{fill:#0a66c2} .b-mail{fill:none;stroke:#1a7f37} .b-globe{fill:none;stroke:#ffffff}
+  @media (prefers-color-scheme: dark){
+    .b-fill{fill:#e6edf3} .b-on{fill:#0d1117} .b-line{fill:#0d1117;stroke:#30363d} .b-text{fill:#e6edf3}
+    .b-li{fill:#4493f8} .b-mail{stroke:#3fb950} .b-globe{stroke:#0d1117}
+  }
+</style>
+  <rect x="1" y="1" width="122" height="38" rx="19" class="b-fill" stroke-width="1.5"/>
+  <g transform="translate(15 12) scale(0.8888888888888888)"><g class="b-globe" stroke-width="1.6" stroke-linecap="round"><circle cx="9" cy="9" r="7.5"/><path d="M1.5 9h15M9 1.5c2.2 2.1 3.2 4.6 3.2 7.5S11.2 14.4 9 16.5C6.8 14.4 5.8 11.9 5.8 9S6.8 3.6 9 1.5Z"/></g></g>
+  <text x="73" y="25.04" text-anchor="middle" class="sans b-on" font-size="14" font-weight="600">Portfolio</text></svg>

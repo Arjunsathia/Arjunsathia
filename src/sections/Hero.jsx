@@ -8,7 +8,7 @@ import {aboutCard, profile} from '../content/site.js';
 import {heroCardArt} from '../lib/hero-card-art.js';
 import {SpecularLight} from '../components/SpecularButton.jsx';
 import TechText from '../components/TechText.jsx';
-import {IntroContext} from '../components/SiteIntro.jsx';
+import {IntroContext, INTRO_QUIET_EVENT} from '../components/SiteIntro.jsx';
 
 // The 3D lanyard (three.js) loads after the page, so it never holds up the first paint; the photo shows meanwhile.
 const loadLanyard = () => import('../components/Lanyard.jsx');
@@ -41,15 +41,18 @@ function HeroLanyard() {
   // the photo never flashes up before the card; the photo is shown only where 3D can't be drawn.
   const revealed = useContext(IntroContext);
   const [threeD] = useState(canDraw3D);
-  // Fetch the 3D card while the opening screen is up, and build it (held, out of sight) 2.3s in, between the opening
-  // words, so its setup and shader compiling are done before the screen clears and it can drop straight in.
+  // Fetch the 3D card while the opening screen is up, and build it (held, out of sight) in the screen's quiet moment
+  // once the first word has settled, so its setup and shader compiling never stall the words and are done before the
+  // screen clears, letting it drop straight in.
   useEffect(()=>{loadLanyard();},[]);
   const [prepare,setPrepare] = useState(revealed);
   useEffect(()=>{
     if(prepare) return undefined;
     if(revealed){setPrepare(true);return undefined;}
-    const timer=setTimeout(()=>setPrepare(true),2300);
-    return()=>clearTimeout(timer);
+    const go=()=>setPrepare(true);
+    window.addEventListener(INTRO_QUIET_EVENT,go);
+    const timer=setTimeout(go,4000);
+    return()=>{window.removeEventListener(INTRO_QUIET_EVENT,go);clearTimeout(timer);};
   },[prepare,revealed]);
   useEffect(()=>{
     let live = true;

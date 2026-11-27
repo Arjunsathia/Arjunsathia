@@ -10853,6 +10853,7 @@ body #skills {
   animation: site-intro-dots-in .5s cubic-bezier(.22,1,.36,1) both;
 }
 .site-intro-dots span {
+  will-change: opacity;
   width: var(--dot);
   height: var(--dot);
   border-radius: 50%;
@@ -11331,4 +11332,58 @@ body .hero .hero-actions>.button .glyph {
   .header.is-at-top {
     background-color: transparent;
   }
+}
+
+/* The opening screen's dots and first word fade in together once the display face has loaded. */
+.site-intro-inner:not([data-ready]) {
+  opacity: 0;
+}
+.site-intro-inner[data-ready] {
+  /* backwards, not both: holding the end state would pin the opacity at 1 and stop the zoom-out from fading it. */
+  animation: site-intro-ready .45s ease backwards;
+}
+@keyframes site-intro-ready {
+  from { opacity: 0; }
+}
+
+/* Touch screens: a tapped button stays in its hover state until the next tap elsewhere, and the desktop hover swaps
+   the text colour (lime text on the ink hover background), which left lime text on the still-lime button, or pale text
+   on a pale one. Without a real hover, every button keeps its normal text colour. */
+@media (hover:none) {
+  body .button.primary-button:hover,
+  body .header-inner>.header-cta:hover,
+  body .contact-bottom>.primary-button:hover,
+  body .process-intro .button:hover,
+  body .enquiry-dialog .enquiry-submit:hover {
+    color: var(--on-accent);
+    -webkit-text-fill-color: currentColor;
+  }
+  body .button.secondary-button:hover,
+  body .project-card-footer .work-entry-link:hover {
+    color: var(--text-strong);
+    -webkit-text-fill-color: currentColor;
+  }
+  /* ...and its normal background, where the hover would change that too. */
+  body .contact-bottom>.primary-button:hover,
+  body .process-intro .button.primary-button:hover {
+    background-color: var(--accent);
+  }
+  body .about-actions>.about-cv:hover {
+    background-color: var(--bg-page);
+  }
+  body .project-card-footer .work-entry-link:hover {
+    background-color: var(--accent);
+  }
+  [data-theme=dark] body .project-card-footer .work-entry-link:hover {
+    background-color: var(--on-accent);
+  }
+}
+
+/* Scrolling performance: these frosted-glass blurs sit over solid colours (the header's near-opaque bar, the section
+   backgrounds), so they never showed, yet the browser re-blurred them on every scrolled frame. */
+.gooey-desktop-nav.gooey-nav--framed,
+.about-profile-card .profile-card__body,
+.carousel-container.has-frame .carousel-stage {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }

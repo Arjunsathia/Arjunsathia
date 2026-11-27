@@ -4,9 +4,9 @@
 
 <br/>
 
-<a href="https://arjunsathia.vercel.app"><img src="https://img.shields.io/badge/Portfolio-0d1117?style=for-the-badge&logo=vercel&logoColor=white" alt="Portfolio" /></a>
-<a href="https://www.linkedin.com/in/arjunsathia/"><img src="https://img.shields.io/badge/LinkedIn-0a66c2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
-<a href="mailto:arjunsathia.in@gmail.com"><img src="https://img.shields.io/badge/Email-1f6feb?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" /></a>
+<a href="https://arjunsathiaa.vercel.app/"><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/button-portfolio.svg" alt="Portfolio" /></a>
+<a href="https://www.linkedin.com/in/arjunsathia/"><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/button-linkedin.svg" alt="LinkedIn" /></a>
+<a href="mailto:arjunsathia.in@gmail.com"><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/button-email.svg" alt="Email" /></a>
 
 </div>
 

@@ -896,6 +896,22 @@ const Lanyard = ({
     let alive = true;
     // Set once every shader has compiled in the background; nothing is drawn before then.
     let ready = false;
+    // Textures waiting to go to the graphics card. While the card is held (prepared out of sight), they go up one at a
+    // time when the browser is idle, so the uploads never pile into one long pause; the first frame sends any left.
+    const pendingTextures = new Set();
+    let uploading = 0;
+    const uploadNext = () => {
+      uploading = 0;
+      const next = pendingTextures.values().next().value;
+      if (!next || !alive) return;
+      pendingTextures.delete(next);
+      renderer.initTexture(next);
+      if (pendingTextures.size) uploading = (window.requestIdleCallback || setTimeout)(uploadNext, { timeout: 600 });
+    };
+    const warmTextures = textures => {
+      textures.forEach(texture => pendingTextures.add(texture));
+      if (!uploading && ready) uploading = (window.requestIdleCallback || setTimeout)(uploadNext, { timeout: 600 });
+    };
     let placed = false;
     let hovering = false;
     let press = null;
@@ -919,7 +935,7 @@ const Lanyard = ({
       paintFace(backCanvas, images.back || images.front, color, s.imageFit);
       frontTexture.needsUpdate = true;
       backTexture.needsUpdate = true;
-      if (ready) [frontTexture, backTexture].forEach(texture => renderer.initTexture(texture));
+      warmTextures([frontTexture, backTexture]);
       start();
     };
 
@@ -929,7 +945,7 @@ const Lanyard = ({
       weave.repeat.set(2, 2 * tileRatio);
       strapTexture.dispose();
       strapTexture.needsUpdate = true;
-      if (ready) renderer.initTexture(strapTexture);
+      warmTextures([strapTexture]);
       start();
     };
 
@@ -1126,6 +1142,7 @@ const Lanyard = ({
 
     const render = () => {
       if (!ready || settingsRef.current.hold) return;
+      pendingTextures.clear();
       cardGroup.position.copy(sim.body.position);
       cardGroup.quaternion.copy(sim.body.quaternion);
       updateBand();
@@ -1334,7 +1351,7 @@ const Lanyard = ({
     renderer.compileAsync(scene, camera).catch(() => {}).then(() => {
       if (!alive) return;
       ready = true;
-      [frontTexture, backTexture, strapTexture, grain, weave].forEach(texture => renderer.initTexture(texture));
+      warmTextures([frontTexture, backTexture, strapTexture, grain, weave]);
       render();
       start();
     });

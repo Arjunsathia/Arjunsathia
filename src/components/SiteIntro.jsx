@@ -1,4 +1,4 @@
-import React, {createContext, useEffect, useState} from 'react';
+import React, {createContext, useEffect, useRef, useState} from 'react';
 import RotatingText from './RotatingText.jsx';
 
 // The opening screen: the nine-dot loader (a lime dot orbiting the 3×3 grid) beside one word at a time on the plain dark band, each sliding up letter by letter like the
@@ -18,10 +18,15 @@ const Dots = () => <span className="site-intro-dots" aria-hidden="true">
 const WORDS = ['Loading', 'Crafting', 'Welcome.'];
 const TIMING = {full: {step: 1500, leave: 4500, gone: 5300}, reduced: {step: 0, leave: 1000, gone: 1300}};
 
+// Sent just after the first word appears: the hero then builds its 3D card while that word stands still, so the
+// setup never stalls the letters sliding in.
+export const INTRO_QUIET_EVENT = 'site-intro-quiet';
+
 export const introSkipped = () => typeof window === 'undefined' || Boolean(window.location.hash.slice(1));
 
 export function SiteIntro({onReveal}) {
   const [phase, setPhase] = useState('working');
+  const words = useRef(null);
   const [reduce] = useState(() => Boolean(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches));
   // The first word waits for the display face (at most 0.6s), so it slides in at its final width instead of jumping.
   const [fontReady, setFontReady] = useState(() => !document.fonts || document.fonts.check('400 1em Anton'));
@@ -41,12 +46,20 @@ export function SiteIntro({onReveal}) {
     const t = reduce ? TIMING.reduced : TIMING.full;
     const root = document.documentElement;
     root.classList.add('intro-running');
+    // Every change is timed from the first word on one clock, so if the page is busy for a moment, only the change due
+    // then waits: the later words keep their times and "Welcome." always gets its full turn.
     const timers = [
+      ...(reduce ? [] : WORDS.slice(1).map((_, i) => setTimeout(() => words.current?.jumpTo(i + 1), t.step * (i + 1)))),
+      // Sent early: the card takes a few hundred milliseconds to start building, so its heavy step lands once "Loading"
+      // has settled and ends before "Crafting" is due.
+      setTimeout(() => window.dispatchEvent(new Event(INTRO_QUIET_EVENT)), reduce ? 0 : 250),
       setTimeout(() => {
         setPhase('leaving');
-        root.classList.remove('intro-running');
+        root.classList.remove('intro-running', 'intro-boot');
         root.classList.add('intro-revealing');
-        onReveal();
+        // The zoom-out is painted first; the hero's own work (its animations, the ID card's first frame) starts a
+        // frame later, so it can't hold up the start of the zoom, which then runs on the graphics layer.
+        requestAnimationFrame(() => requestAnimationFrame(() => onReveal()));
       }, t.leave),
       setTimeout(() => {
         setPhase('gone');
@@ -55,15 +68,16 @@ export function SiteIntro({onReveal}) {
     ];
     return () => {
       timers.forEach(clearTimeout);
-      root.classList.remove('intro-running', 'intro-revealing');
+      root.classList.remove('intro-running', 'intro-revealing', 'intro-boot');
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fontReady]);
   if (phase === 'gone') return null;
   return <div className="site-intro" data-phase={phase} role="status" aria-label="Loading portfolio" aria-hidden={phase === 'leaving' ? true : undefined}>
-    <div className="site-intro-inner">
-      <Dots/>
-      {fontReady && <RotatingText texts={reduce ? WORDS.slice(0, 1) : WORDS} rotationInterval={TIMING.full.step} loop={false} auto={!reduce}
+    {/* The dots and the first word appear together once the display face is ready, so nothing shifts sideways. */}
+    <div className="site-intro-inner" data-ready={fontReady ? '' : undefined}>
+      {fontReady && <Dots/>}
+      {fontReady && <RotatingText ref={words} texts={reduce ? WORDS.slice(0, 1) : WORDS} loop={false} auto={false}
         highlight highlightColor="transparent" mainClassName="site-intro-word" effect="slide" direction="up"
         staggerFrom="last" staggerDuration={0.03} animatePresenceMode="popLayout" animatePresenceInitial/>}
     </div>

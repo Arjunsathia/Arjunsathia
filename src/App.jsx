@@ -33,7 +33,9 @@ export function App() {
   useEffect(()=>initSmoothScroll(),[]);
   // While the page is moving, <html> carries .is-scrolling, so hover highlights don't flash on rows
   // sliding under a still pointer (used by the dark-mode Stack rows).
+  // Only with a mouse or trackpad: touch screens have no hover to protect, and toggling the class restyles the page.
   useEffect(()=>{
+    if(!window.matchMedia('(hover: hover)').matches)return undefined;
     const root=document.documentElement;let timer=0;
     const onScroll=()=>{root.classList.add('is-scrolling');clearTimeout(timer);timer=setTimeout(()=>root.classList.remove('is-scrolling'),160);};
     window.addEventListener('scroll',onScroll,{passive:true});
