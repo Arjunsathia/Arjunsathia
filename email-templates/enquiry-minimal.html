@@ -1,52 +1,107 @@
 <!--
-  EmailJS template, MINIMAL style, for the portfolio's "Let's talk" form.
-  Paste from <!doctype html> down into EmailJS → Edit Content → Code Editor. Same template settings as enquiry.html:
-    Subject: New {{topic}} from {{from_name}} · To Email: arjunsathia.dev@gmail.com
-    From Name: Portfolio · {{from_name}} · Reply To: {{reply_to}}
+  EmailJS template, MINIMAL style, for the portfolio's "Let's talk" form. One file for every screen: a centred
+  600px card on desktop, edge-to-edge with stacked details and a full-width reply button on phones (under 600px).
+  Paste from the doctype line (the first line after this note) down into EmailJS → Email Templates → (template) → Content → Edit content →
+  code view (<>), then Save. Template settings (the Settings tab beside Content):
+    Subject:    New {{topic}} from {{from_name}}
+    To Email:   arjunsathia.dev@gmail.com
+    From Name:  Arjun Sathia Portfolio
+    Reply To:   {{reply_to}}
+  Type: Apple's system font (San Francisco) on iPhone and Mac; Inter, its closest free match, where an email app loads
+  web fonts; and Segoe UI / Roboto / Helvetica elsewhere, so it reads the same clean way on every device.
+  {{{message_html}}} has three braces on purpose: the site escapes the message and turns its line breaks into <br>.
 -->
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="x-apple-disable-message-reformatting">
 <meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light only">
+<!-- Inter: the closest free match to Apple's San Francisco, for email apps that load web fonts (Apple Mail, iOS). -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <title>New enquiry from {{from_name}}</title>
+<style>
+  body { margin:0; padding:0; background:#f4f5f0; -webkit-text-size-adjust:100%; }
+  a { color:inherit; }
+  /* Phones: the card fills the width, the sender details stack, and the reply button goes full width. */
+  @media only screen and (max-width:600px) {
+    .outer { padding:12px 8px 20px !important; }
+    .card { border-radius:14px !important; }
+    .pad { padding-left:20px !important; padding-right:20px !important; }
+    .top { padding-top:22px !important; padding-bottom:20px !important; }
+    .title { font-size:22px !important; }
+    .col { display:block !important; width:100% !important; padding:0 !important; }
+    .col + .col { padding-top:14px !important; }
+    .msg { font-size:15px !important; line-height:1.7 !important; }
+    .btns, .btns tbody, .btns tr { display:block !important; width:100% !important; }
+    .btn, .btn a { display:block !important; width:auto !important; text-align:center !important; }
+    .foot td { display:block !important; text-align:left !important; }
+    .foot td + td { padding-top:4px !important; }
+  }
+</style>
 </head>
-<body style="margin:0;padding:0;background:#f6f0e8;-webkit-text-size-adjust:100%;">
-<div style="display:none;max-height:0;overflow:hidden;opacity:0;">{{from_name}} sent a {{topic}} from your portfolio.</div>
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f6f0e8;">
-<tr><td align="center" style="padding:40px 16px;">
+<body style="margin:0;padding:0;background:#f4f5f0;">
+<!-- Inbox preview line -->
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;">{{topic}} from {{from_name}} ({{from_email}})</div>
 
-  <table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:560px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4f5f0;">
+<tr><td class="outer" align="center" style="padding:36px 16px;">
 
-    <!-- Brand -->
-    <tr><td style="padding:0 4px 18px;">
+  <table class="card" role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;background:#ffffff;border:1px solid #e6e8e0;border-radius:16px;overflow:hidden;">
+
+    <!-- Brand and topic -->
+    <tr><td class="pad top" style="padding:26px 32px 26px;background:#171a13;">
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
-        <td style="font:400 18px/1 Anton,Impact,'Arial Narrow Bold',sans-serif;letter-spacing:.5px;color:#13170d;text-transform:uppercase;">Arjun Sathia<span style="color:#9bab1c;">.</span></td>
-        <td align="right" style="font:700 10px/1 Consolas,'Courier New',monospace;letter-spacing:1.5px;color:#707e25;text-transform:uppercase;">{{topic}}</td>
+        <td style="font:600 16px/1.3 -apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Inter','Helvetica Neue',Helvetica,'Segoe UI',Roboto,Arial,sans-serif;letter-spacing:-.2px;color:#ffffff;">Arjun Sathia<span style="color:#c9df45;">.</span></td>
+        <td align="right"><span style="display:inline-block;padding:6px 10px;background:#262b1c;border:1px solid #41482d;border-radius:20px;font:700 10px/1 -apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Inter','Helvetica Neue',Helvetica,'Segoe UI',Roboto,Arial,sans-serif;letter-spacing:.8px;color:#d3e65b;text-transform:uppercase;white-space:nowrap;">{{topic}}</span></td>
+      </tr></table>
+      <div class="title" style="margin-top:22px;font:600 25px/1.25 -apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Inter','Helvetica Neue',Helvetica,'Segoe UI',Roboto,Arial,sans-serif;letter-spacing:-.5px;color:#ffffff;">New message from {{from_name}}</div>
+    </td></tr>
+
+    <!-- Accent line -->
+    <tr><td style="height:3px;background:#c9df45;font-size:0;line-height:0;">&nbsp;</td></tr>
+
+    <!-- Sender -->
+    <tr><td class="pad" style="padding:22px 32px 6px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+        <td class="col" width="50%" valign="top" style="padding-right:12px;">
+          <div style="font:700 10px/1.4 -apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Inter','Helvetica Neue',Helvetica,'Segoe UI',Roboto,Arial,sans-serif;letter-spacing:1.2px;color:#8a8f80;text-transform:uppercase;">Name</div>
+          <div style="margin-top:5px;font:600 16px/1.5 -apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Inter','Helvetica Neue',Helvetica,'Segoe UI',Roboto,Arial,sans-serif;letter-spacing:-.1px;color:#171a13;">{{from_name}}</div>
+        </td>
+        <td class="col" width="50%" valign="top" style="padding-left:12px;">
+          <div style="font:700 10px/1.4 -apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Inter','Helvetica Neue',Helvetica,'Segoe UI',Roboto,Arial,sans-serif;letter-spacing:1.2px;color:#8a8f80;text-transform:uppercase;">Email</div>
+          <div style="margin-top:5px;font:400 15px/1.5 -apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Inter','Helvetica Neue',Helvetica,'Segoe UI',Roboto,Arial,sans-serif;word-break:break-all;"><a href="mailto:{{from_email}}" style="color:#171a13;text-decoration:underline;text-decoration-color:#c9df45;">{{from_email}}</a></div>
+        </td>
       </tr></table>
     </td></tr>
 
-    <!-- Card -->
-    <tr><td style="background:#ffffff;border:1px solid #e4ddd0;border-top:3px solid #d4e62d;border-radius:4px;padding:32px 32px 30px;">
-      <p style="margin:0 0 6px;font:400 13px/1.5 Arial,Helvetica,sans-serif;color:#77766b;">New message from</p>
-      <p style="margin:0;font:700 20px/1.3 Arial,Helvetica,sans-serif;color:#13170d;">{{from_name}}</p>
-      <p style="margin:4px 0 0;font:400 14px/1.5 Arial,Helvetica,sans-serif;"><a href="mailto:{{from_email}}" style="color:#707e25;text-decoration:none;">{{from_email}}</a></p>
+    <!-- Message -->
+    <tr><td class="pad" style="padding:18px 32px 24px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f7f8f3;border-left:3px solid #c9df45;border-radius:0 10px 10px 0;">
+        <tr><td style="padding:18px 20px 20px;">
+          <div style="font:700 10px/1.4 -apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Inter','Helvetica Neue',Helvetica,'Segoe UI',Roboto,Arial,sans-serif;letter-spacing:1.2px;color:#8a8f80;text-transform:uppercase;">Message</div>
+          <div class="msg" style="margin-top:10px;font:400 16px/1.7 -apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Inter','Helvetica Neue',Helvetica,'Segoe UI',Roboto,Arial,sans-serif;color:#25291f;word-break:break-word;overflow-wrap:anywhere;">{{{message_html}}}</div>
+        </td></tr>
+      </table>
+    </td></tr>
 
-      <div style="height:1px;background:#ece6da;margin:24px 0;line-height:1px;font-size:1px;">&nbsp;</div>
-
-      <div style="font:400 15px/1.75 Arial,Helvetica,sans-serif;color:#13170d;">{{{message_html}}}</div>
-
-      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:28px;"><tr>
-        <td style="background:#13170d;border-radius:6px;">
-          <a href="mailto:{{from_email}}?subject=Re:%20{{topic}}" style="display:inline-block;padding:12px 20px;font:700 13px/1 Arial,Helvetica,sans-serif;color:#d4e62d;text-decoration:none;">Reply to {{from_name}} →</a>
+    <!-- Actions -->
+    <tr><td class="pad" style="padding:0 32px 28px;">
+      <table class="btns" role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+        <td class="btn" style="background:#171a13;border-radius:8px;">
+          <a href="mailto:{{from_email}}?subject=Re%3A%20{{topic}}" style="display:inline-block;padding:13px 22px;font:700 13px/1 -apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Inter','Helvetica Neue',Helvetica,'Segoe UI',Roboto,Arial,sans-serif;color:#ffffff;text-decoration:none;">Reply to {{from_name}} &nbsp;→</a>
         </td>
       </tr></table>
     </td></tr>
 
     <!-- Footer -->
-    <tr><td style="padding:16px 4px 0;font:400 11px/1.7 Arial,Helvetica,sans-serif;color:#9a968a;">
-      Sent {{sent_at}} from <a href="{{page_url}}" style="color:#9a968a;">{{page_url}}</a>. Hit reply to answer {{from_name}} directly.
+    <tr><td class="pad" style="padding:16px 32px;background:#fafbf8;border-top:1px solid #eef0ea;">
+      <table class="foot" role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+        <td style="font:400 11px/1.6 -apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Inter','Helvetica Neue',Helvetica,'Segoe UI',Roboto,Arial,sans-serif;color:#8a8f80;">Received {{sent_at}}</td>
+        <td align="right" style="font:400 11px/1.6 -apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Inter','Helvetica Neue',Helvetica,'Segoe UI',Roboto,Arial,sans-serif;color:#8a8f80;">Reply directly to this email to respond.</td>
+      </tr></table>
     </td></tr>
 
   </table>
