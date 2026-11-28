@@ -4,6 +4,7 @@
 import React, { useEffect, useRef } from 'react';
 
 import './Ribbons.css';
+import {POPUP_CLOSED_EVENT, pageBehindPopup} from '../lib/popup-pause.js';
 
 const POINTS = 50;
 const DETAIL = 4;
@@ -426,6 +427,8 @@ export default function Ribbons({
     const frame = now => {
       state.raf = 0;
       if (!state.alive) return;
+      // Paused behind a popup (lib/popup-pause.js); POPUP_CLOSED_EVENT wakes it.
+      if (pageBehindPopup()) { state.last = 0; return; }
       if (!ready) {
         if (!parallel) return;
         if (!gl.getProgramParameter(program, parallel.COMPLETION_STATUS_KHR)) {
@@ -490,6 +493,7 @@ export default function Ribbons({
     canvas.addEventListener('webglcontextlost', onLost);
     window.addEventListener('pointermove', onMove, { passive: true });
     window.addEventListener('pointerdown', onMove, { passive: true });
+    window.addEventListener(POPUP_CLOSED_EVENT, wake);
 
     engineRef.current = {
       redraw: () => {
@@ -510,6 +514,7 @@ export default function Ribbons({
       canvas.removeEventListener('webglcontextlost', onLost);
       window.removeEventListener('pointermove', onMove);
       window.removeEventListener('pointerdown', onMove);
+      window.removeEventListener(POPUP_CLOSED_EVENT, wake);
       engineRef.current = null;
       gl.deleteBuffer(buffer);
       gl.deleteVertexArray(vao);

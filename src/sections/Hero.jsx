@@ -59,6 +59,14 @@ function HeroLanyard() {
     heroCardArt(theme, portrait, aboutCard).then(next=>{if(live)setArt(next);});
     return()=>{live=false;};
   },[theme]);
+  // After the opening screen, the card waits until the zoom-out is mostly done (0.45s), so its first physics and 3D
+  // frames don't compete with the zoom; it drops in as the screen clears. Links straight to a section skip the wait.
+  const [released,setReleased] = useState(revealed);
+  useEffect(()=>{
+    if(!revealed||released) return undefined;
+    const timer=setTimeout(()=>setReleased(true),450);
+    return()=>clearTimeout(timer);
+  },[revealed,released]);
   const still = <img className="hero-lanyard-still" src={portrait} alt="" fetchPriority="high" width="941" height="1672" />;
   return <div className="hero-lanyard">
     {!threeD ? still : art && prepare ? <Suspense fallback={null}>
@@ -66,7 +74,7 @@ function HeroLanyard() {
         cardColor={theme==='dark'?'#171b14':'#fffdf8'} strapColor={theme==='dark'?'#9fe05a':'#d4e62d'}
         orientation="portrait" finish="glossy" cornerRadius={0.35} size={compact?0.78:0.64} maxWidth={compact?0.72:0.2405} anchor={compact?'center':0.7515} passThrough={!compact}
         strapLength={compact?0.28:0.62} strapWidth={0.7} metal="graphite"
-        gravity={1} damping={0.74} elasticity={0.4} breeze={0.18} interactive dragOnTouch={false} intro hold={!revealed}/>
+        gravity={1} damping={0.74} elasticity={0.4} breeze={0.18} interactive dragOnTouch={false} intro hold={!released}/>
     </Suspense> : null}
   </div>;
 }

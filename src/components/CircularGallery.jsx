@@ -4,6 +4,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import './CircularGallery.css';
+import {POPUP_CLOSED_EVENT, pageBehindPopup} from '../lib/popup-pause.js';
 
 const DEFAULT_FONT = 'bold 30px Figtree';
 const DEFAULT_FONT_URL = 'https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&display=swap';
@@ -689,6 +690,8 @@ const CircularGallery = ({
 
     const frame = now => {
       raf = 0;
+      // Paused behind a popup (lib/popup-pause.js); POPUP_CLOSED_EVENT wakes it.
+      if (pageBehindPopup()) { last = 0; return; }
       if (resizePending) {
         resizePending = false;
         applyResize();
@@ -1013,6 +1016,7 @@ const CircularGallery = ({
     container.addEventListener('focusin', onFocusIn);
     container.addEventListener('focusout', onFocusOut);
     document.addEventListener('visibilitychange', onVisibility);
+    window.addEventListener(POPUP_CLOSED_EVENT, wake);
     document.addEventListener('keydown', onAnyKey, true);
     document.addEventListener('pointerdown', onAnyPointer, true);
     lastItems = settingsRef.current.items;
@@ -1062,6 +1066,7 @@ const CircularGallery = ({
       container.removeEventListener('focusin', onFocusIn);
       container.removeEventListener('focusout', onFocusOut);
       document.removeEventListener('visibilitychange', onVisibility);
+      window.removeEventListener(POPUP_CLOSED_EVENT, wake);
       document.removeEventListener('keydown', onAnyKey, true);
       document.removeEventListener('pointerdown', onAnyPointer, true);
       labelLayer.replaceChildren();

@@ -6,6 +6,7 @@ import {profile} from '../content/site.js';
 import {Arrow} from './icons.jsx';
 import {useModalDialog} from '../hooks/useModalDialog.js';
 import {SpecularLight} from './SpecularButton.jsx';
+import {enquiryMailReady, enquiryMailto, sendEnquiry} from '../lib/sendEnquiry.js';
 
 // How to reach me, as icon buttons. Each one names its destination for screen readers and in its tooltip.
 const contactLinks = [
@@ -24,7 +25,10 @@ export function EnquiryButton({topic='General enquiry', variant, children, ...pr
 }
 export function EnquiryDialog({request, onClose}) {
   const {ref,closing,close,dialogProps} = useModalDialog(onClose);
-  const [submitted,setSubmitted] = useState(false);
+  // idle → sending → sent | error. `sent` keeps the sender's details for the thank-you note and the mailto fallback.
+  const [status,setStatus] = useState('idle');
+  const [sent,setSent] = useState(null);
+  const submitted = status==='sent' || status==='error';
   const [topic,setTopic] = useState(request.topic);
   const confirmation = useRef(null);
   useEffect(()=>{ref.current.scrollTop=0;ref.current.querySelector('.enquiry-close')?.focus({preventScroll:true});},[]);
@@ -40,11 +44,27 @@ export function EnquiryDialog({request, onClose}) {
     </aside>
     <div className="enquiry-main">
       <div className="enquiry-heading"><span className="eyebrow">YOUR ENQUIRY</span><h3 id="enquiry-form-title">Let’s talk<span className="enquiry-title-period">.</span></h3><p id="enquiry-form-description">A few details to get the conversation started.</p></div>
-      <form onSubmit={event=>{event.preventDefault();setSubmitted(true);}} onChange={()=>setSubmitted(false)}>
+      <form onSubmit={async event=>{
+        event.preventDefault();
+        if(status==='sending') return;
+        const form = event.currentTarget;
+        const data = new FormData(form);
+        const fields = {name:String(data.get('name')).trim(), email:String(data.get('email')).trim(), topic:String(data.get('topic')), message:String(data.get('message')).trim()};
+        setSent(fields);
+        // A filled-in hidden field means a bot: show the thank-you, but send nothing.
+        if(data.get('company')){setStatus('sent');return;}
+        if(!enquiryMailReady()){console.error('Enquiry form: EmailJS keys are not set (see enquiryMail in src/content/site.js).');setStatus('error');return;}
+        setStatus('sending');
+        try{await sendEnquiry(fields);setStatus('sent');form.reset();setTopic(fields.topic);}
+        catch(error){console.error(error);setStatus('error');}
+      }} onChange={()=>{if(status!=='sending')setStatus('idle');}}>
+        <label className="enquiry-trap" aria-hidden="true">Company<input name="company" tabIndex={-1} autoComplete="off" /></label>
         <div className="enquiry-field-row"><label>Your name<input name="name" autoComplete="name" required maxLength={100} placeholder="Alex Morgan" /></label><label>Email address<input name="email" type="email" autoComplete="email" required maxLength={254} placeholder="alex@example.com" /></label></div>
         <label>What’s on your mind?<select name="topic" value={topic} onChange={event=>setTopic(event.target.value)}><option>General enquiry</option><option>Project enquiry</option><option>Job opportunity</option><option>Freelance collaboration</option></select></label>
         <label>Your message<textarea name="message" required minLength={10} maxLength={4000} rows={4} placeholder="What are you working on, and how can I help?" /></label>
-        {submitted ? <div className="enquiry-confirmation" role="status" tabIndex={-1} ref={confirmation}><strong>Demo enquiry complete.</strong><p>No message was sent. Edit the form to try again, or close this window.</p></div> : <button className="button primary-button enquiry-submit" type="submit"><SpecularLight/>Send demo enquiry <Arrow direction="↗" /></button>}
+        {status==='sent' ? <div className="enquiry-confirmation" role="status" tabIndex={-1} ref={confirmation}><strong>Thanks, {sent?.name.split(' ')[0] || 'there'}. Your message is on its way.</strong><p>I read every enquiry and will reply to {sent?.email} within a day or two.</p></div>
+          : status==='error' ? <div className="enquiry-confirmation is-error" role="alert" tabIndex={-1} ref={confirmation}><strong>Your message didn’t send.</strong><p>Please try again in a moment, or <a href={enquiryMailto(sent)}>email me directly</a> at {profile.email}.</p></div>
+          : <button className="button primary-button enquiry-submit" type="submit" disabled={status==='sending'} aria-busy={status==='sending'}><SpecularLight/>{status==='sending' ? 'Sending…' : 'Send enquiry'} <Arrow direction="↗" /></button>}
       </form>
     </div>
   </dialog>;

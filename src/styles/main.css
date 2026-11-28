@@ -2287,11 +2287,8 @@ html {
    Hover is read from the row, which never moves, so the lifted card cannot slip out from under the cursor.
    Only transform and opacity animate, each on its own layer, so nothing around the card repaints. */
 
-/* About: solid paper and lime frame a fully dark violet name highlight. */
+/* About: solid paper and lime frame. */
 .about {
-  --about-violet: #7b45bb;
-  --about-violet-mid: #65369c;
-  --about-violet-deep: #4d2878;
   padding: var(--space) 0;
   background: var(--c-bg-eeeae0);
   border-block: 1px solid var(--line);
@@ -2324,10 +2321,6 @@ html {
   letter-spacing: -.025em;
   text-transform: uppercase;
   margin: 0 0 30px;
-}
-.about-name>mark {
-  --stamp-fill: linear-gradient(115deg,var(--about-violet) 0%,var(--about-violet-mid) 48%,var(--about-violet-deep) 100%);
-  color: #fff;
 }
 .about-lead {
   font: 400 clamp(19px,1.6vw,23px)/1.55 var(--sans);
@@ -2535,6 +2528,34 @@ html {
 .enquiry-confirmation p {
   margin: 4px 0 0;
 }
+.enquiry-confirmation a {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.enquiry-confirmation.is-error {
+  border-color: #b4532a66;
+  background: #f6e3d6;
+  color: #5a2a12;
+}
+html[data-theme="dark"] .enquiry-confirmation.is-error {
+  border-color: #e0875f66;
+  background: #3a2118;
+  color: #f3d3c2;
+}
+/* The spam trap: off-screen for people, still filled in by form bots. */
+.enquiry-trap {
+  position: absolute !important;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.enquiry-submit:disabled {
+  cursor: progress;
+  opacity: .75;
+}
 @media (max-width:700px) {
   .enquiry-dialog {
     max-height: calc(100dvh - 24px);
@@ -2599,7 +2620,6 @@ html {
   color: var(--on-accent);
 }
 .contact-headline>mark,
-.about-name>mark,
 .process-intro h3 mark {
   position: relative;
   isolation: isolate;
@@ -2611,7 +2631,6 @@ html {
   rotate: -1.5deg;
 }
 .contact-headline>mark::before,
-.about-name>mark::before,
 .process-intro h3 mark::before {
   content: '';
   position: absolute;
@@ -6208,14 +6227,6 @@ html {
   .about-name br {
     display: none;
   }
-  .about-name>mark {
-    --stamp-fill: #8550bc;
-    display: inline-block;
-    font-size: 46px;
-    padding: .025em .14em .05em;
-    margin: 0 0 0 .13em;
-    rotate: -1deg;
-  }
   .about-lead {
     font-size: 16px;
     line-height: 1.65;
@@ -6246,8 +6257,7 @@ html {
   .about-grid {
     gap: 25px;
   }
-  .about-name,
-  .about-name>mark {
+  .about-name {
     font-size: 39px;
   }
   .about-lead {
@@ -6440,25 +6450,26 @@ html {
   }
 }
 
-/* Dialogs: the card rises from below into the centre while the backdrop fades in, and sinks away on close. */
-@keyframes modal-in {
-  from {
-    opacity: 0;
-    transform: translateY(90px) scale(.98);
-  }
-  55% {
-    opacity: 1;
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+/* ---- Popup scenes ----
+   The page behind a popup moves with it. useModalDialog sets <html data-modal-look="reveal|blow"> and
+   data-modal-scene="in" while a popup opens ("out" while it closes), and centres #root's zoom on what is on screen.
+   Only transform and opacity animate, so it stays smooth.
+   - "reveal" (larger screens): the page sinks back into the dark
+     as the popup rises up from below, then comes forward again as the popup drops away.
+   - "blow" (the enquiry form and screenshot viewer on phones): the popup grows out of the centre as the backdrop
+     darkens over the page; on close it shrinks away.
+   - "tilt" (the project and experience popups on phones): see below.
+   A popup stays invisible for its first two frames (until data-shown), while the browser does the heavy work of
+   opening it; the animations start after that, so they never jump ahead or stutter at the start. */
+:is(.project-modal,.experience-dialog,.enquiry-dialog,.project-preview-dialog):not([data-shown]),
+:is(.project-modal,.experience-dialog,.enquiry-dialog,.project-preview-dialog):not([data-shown])::backdrop {
+  opacity: 0;
 }
-@keyframes modal-out {
-  to {
-    opacity: 0;
-    transform: translateY(48px) scale(.985);
-  }
+:is(.project-modal,.experience-dialog,.enquiry-dialog,.project-preview-dialog)[data-shown]::backdrop {
+  animation: modal-backdrop-in .5s cubic-bezier(.165,.84,.44,1) both;
+}
+:is(.project-modal,.experience-dialog,.enquiry-dialog,.project-preview-dialog).is-closing::backdrop {
+  animation: modal-backdrop-out .42s cubic-bezier(.165,.84,.44,1) both;
 }
 @keyframes modal-backdrop-in {
   from {
@@ -6470,22 +6481,121 @@ html {
     opacity: 0;
   }
 }
-:is(.project-modal,.experience-dialog,.enquiry-dialog,.project-preview-dialog) {
-  animation: modal-in .5s cubic-bezier(.22,1,.36,1) both;
+
+/* Revealing: the page becomes a card that sinks back, with the dark around it. */
+html[data-modal-look=reveal] body {
+  background: #13170d;
 }
-:is(.project-modal,.experience-dialog,.enquiry-dialog,.project-preview-dialog)::backdrop {
-  animation: modal-backdrop-in .35s ease both;
+html[data-theme=dark][data-modal-look=reveal] body {
+  background: #000;
 }
-:is(.project-modal,.experience-dialog,.enquiry-dialog,.project-preview-dialog).is-closing {
-  animation: modal-out .18s cubic-bezier(.4,0,1,1) both;
+html[data-modal-look=reveal] #root {
+  background: var(--bg-page);
 }
-:is(.project-modal,.experience-dialog,.enquiry-dialog,.project-preview-dialog).is-closing::backdrop {
-  animation: modal-backdrop-out .18s ease both;
+html[data-modal-look=reveal][data-modal-scene=in] #root {
+  animation: scene-sink .5s cubic-bezier(.165,.84,.44,1) both;
 }
+html[data-modal-look=reveal][data-modal-scene=out] #root {
+  animation: scene-return .42s cubic-bezier(.165,.84,.44,1) both;
+}
+html[data-modal-look=reveal] :is(.project-modal,.experience-dialog,.enquiry-dialog,.project-preview-dialog)[data-shown] {
+  animation: modal-reveal-in .55s cubic-bezier(.165,.84,.44,1) both;
+}
+html[data-modal-look=reveal] :is(.project-modal,.experience-dialog,.enquiry-dialog,.project-preview-dialog).is-closing {
+  animation: modal-reveal-out .42s cubic-bezier(.165,.84,.44,1) both;
+}
+@keyframes scene-sink {
+  to {
+    transform: scale(.85);
+  }
+}
+@keyframes scene-return {
+  from {
+    transform: scale(.85);
+  }
+}
+@keyframes modal-reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(min(1000px,100vh)) scale(.8);
+  }
+}
+@keyframes modal-reveal-out {
+  to {
+    opacity: 0;
+    transform: translateY(min(1000px,100vh)) scale(.8);
+  }
+}
+
+/* Blow up (phones): the popup grows out of the centre while the backdrop darkens over the page. The page itself no
+   longer zooms past: scaling the whole page to 2x made the phone redraw it at double size in one go, which froze the
+   screen for a moment mid-opening (the popup showed small, then jumped to full size). */
+html[data-modal-look=blow] :is(.project-modal,.experience-dialog,.enquiry-dialog,.project-preview-dialog)::backdrop {
+  background: rgba(10, 12, 8, .82);
+}
+html[data-modal-look=blow] :is(.project-modal,.experience-dialog,.enquiry-dialog,.project-preview-dialog)[data-shown] {
+  animation: modal-blow-in .5s cubic-bezier(.165,.84,.44,1) both;
+}
+html[data-modal-look=blow] :is(.project-modal,.experience-dialog,.enquiry-dialog,.project-preview-dialog).is-closing {
+  animation: modal-blow-out .42s cubic-bezier(.165,.84,.44,1) both;
+}
+@keyframes modal-blow-in {
+  from {
+    transform: scale(0);
+  }
+}
+@keyframes modal-blow-out {
+  to {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+/* Tilt (the project and experience popups on phones; Aceternity's animated modal): the page stays put and dims,
+   and the popup springs up out of a backward tilt (rotateX 40deg), from half size and 40px low, overshooting a
+   little before it settles. The spring is the original's (stiffness 260, damping 15), sampled into linear();
+   browsers without linear() get a close cubic-bezier. On close it tips back and fades. */
+html[data-modal-look=tilt] :is(.project-modal,.experience-dialog,.enquiry-dialog,.project-preview-dialog)[data-shown] {
+  animation: modal-tilt-in .75s cubic-bezier(.34,1.45,.64,1) both;
+  animation-timing-function: linear(0, 0.041, 0.148, 0.297, 0.464, 0.633, 0.789, 0.924, 1.032, 1.111, 1.161, 1.187, 1.191, 1.18, 1.157, 1.127, 1.094, 1.062, 1.033, 1.009, 0.989, 0.976, 0.967, 0.964, 0.964, 0.967, 0.971, 0.977, 0.984, 0.99, 0.995, 0.999, 1.003, 1.005, 1.007, 1.007, 1.007, 1.006, 1.005, 1.004, 1);
+}
+html[data-modal-look=tilt] :is(.project-modal,.experience-dialog,.enquiry-dialog,.project-preview-dialog).is-closing {
+  animation: modal-tilt-out .3s cubic-bezier(.4,0,.2,1) both;
+}
+@keyframes modal-tilt-in {
+  from {
+    opacity: 0;
+    transform: perspective(800px) translateY(40px) rotateX(40deg) scale(.5);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(800px) translateY(0) rotateX(0deg) scale(1);
+  }
+}
+@keyframes modal-tilt-out {
+  from {
+    opacity: 1;
+    transform: perspective(800px) translateY(0) rotateX(0deg) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: perspective(800px) translateY(0) rotateX(10deg) scale(.8);
+  }
+}
+
+/* Phones: no frosted blur behind popups. The page moves away under them anyway, and re-blurring the screen on every
+   frame of the animation made popups stutter as they opened on phones. */
+@media (max-width:700px) {
+  :is(.project-modal,.experience-dialog,.enquiry-dialog,.project-preview-dialog)::backdrop {
+    backdrop-filter: none;
+  }
+}
+
 @media (prefers-reduced-motion:reduce) {
   :is(.project-modal,.experience-dialog,.enquiry-dialog,.project-preview-dialog),
-  :is(.project-modal,.experience-dialog,.enquiry-dialog,.project-preview-dialog)::backdrop {
-    animation: none;
+  :is(.project-modal,.experience-dialog,.enquiry-dialog,.project-preview-dialog)::backdrop,
+  html[data-modal-scene] #root {
+    animation: none !important;
   }
 }
 
@@ -10543,22 +10653,6 @@ body .hero .hero-portrait {
   }
 }
 
-/* About: "HI, I'M ARJUN." floats in letter by letter (ScrollFloat) in the heading's own type and size. */
-.about-name .scroll-float {
-  display: inline-block;
-  margin: 0;
-  vertical-align: top;
-}
-.about-name .scroll-float-text {
-  font: inherit;
-  line-height: inherit;
-  letter-spacing: inherit;
-  text-align: inherit;
-}
-.about-name .scroll-float-char {
-  transform-origin: 50% 0%;
-}
-
 /* Hero name: TechText draws the letters on a canvas over each word; the real text stays in place, invisible, for the
    layout (and the dog tag's anchor). The canvas reaches past the word on every side so the letters render at full
    size (TechText fits text within 90% of its width and 66% of its height) and the selection frame, specks and labels
@@ -10815,7 +10909,7 @@ body #skills {
   padding: 24px;
   background: #13170d;
   color: var(--intro-ink);
-  transition: opacity .8s cubic-bezier(.65,0,.35,1), visibility 0s linear .8s;
+  transition: opacity .9s cubic-bezier(.65,0,.35,1), visibility 0s linear .9s;
 }
 [data-theme=dark] .site-intro {
   --intro-ink: #f2f4ea;
@@ -10825,7 +10919,8 @@ body #skills {
   display: flex;
   align-items: center;
   gap: clamp(16px, 2.4vw, 36px);
-  transition: transform .8s cubic-bezier(.55,0,.25,1), opacity .65s ease .1s;
+  /* The zoom-out: one even ease-in-out over a second (it used to barely move, then jump), fading in its second half. */
+  transition: transform 1s cubic-bezier(.65,0,.35,1), opacity .7s cubic-bezier(.4,0,.2,1) .2s;
   will-change: transform;
 }
 .site-intro .site-intro-word {
@@ -11353,8 +11448,7 @@ body .hero .hero-actions>.button .glyph {
   body .button.primary-button:hover,
   body .header-inner>.header-cta:hover,
   body .contact-bottom>.primary-button:hover,
-  body .process-intro .button:hover,
-  body .enquiry-dialog .enquiry-submit:hover {
+  body .process-intro .button:hover {
     color: var(--on-accent);
     -webkit-text-fill-color: currentColor;
   }
@@ -11386,4 +11480,124 @@ body .hero .hero-actions>.button .glyph {
 .carousel-container.has-frame .carousel-stage {
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
+}
+
+/* Touch screens: the stack group chips are 28px tall, so their tap area reaches 8px further above and below (about
+   44px), without changing how they look. */
+@media (pointer: coarse) {
+  .stack-filters .jelly-radio__chip::after {
+    content: "";
+    position: absolute;
+    inset: -8px -2px;
+  }
+}
+
+/* Phones: the About photo is shown plain, with no lime block behind it and no foil, sheen, glare or rims over it
+   (the photo, name and Contact row stay). */
+@media (max-width:700px) {
+  body .about .about-portrait::before {
+    display: none;
+  }
+  .about .about-profile-card :is(.profile-card__sheen,.profile-card__holo,.profile-card__holo-glow,.profile-card__holo-shift,.profile-card__glare,.profile-card__shade,.profile-card__rim,.profile-card__tile-rim) {
+    display: none;
+  }
+}
+
+/* About: "HI, I'M" and the 3D name (DepthText). Both rise in as blocks; the name keeps the heading's Anton face and
+   size, with Anton's own spacing instead of DepthText's very tight default. */
+.about-name-hi,
+.about-name-depth {
+  display: inline-block;
+}
+.about-name-depth {
+  margin-top: .04em;
+}
+.about-name .depth-text__layer,
+.about-name .depth-text__face {
+  font-family: var(--display);
+  line-height: 1;
+  letter-spacing: -.01em;
+}
+@media (max-width:700px) {
+  .about-name-depth {
+    margin: 0 0 0 .1em;
+  }
+}
+
+/* Opening screen: the words in the About name's 3D style (DepthText). The depth is a stack of fine shadows, light
+   near the face and deepening into the site's green behind (the dots' accent: lime, or green in dark mode; the same
+   colour recipe as DepthText's layers), so it travels with each
+   letter as it slides in at no extra cost; the word also tilts slowly in 3D, like DepthText's orbit. Both run on the
+   graphics layer, so the intro stays smooth while the page loads behind it. */
+.site-intro-depth {
+  display: inline-block;
+  perspective: 900px;
+}
+.site-intro-depth>.site-intro-tilt {
+  display: inline-block;
+  transform: rotateX(-2.4deg) rotateY(3.2deg);
+  animation: site-intro-tilt 2.9s ease-in-out infinite;
+  will-change: transform;
+}
+.site-intro .site-intro-word {
+  text-shadow:
+    -0.0017em 0.0052em 0 color-mix(in srgb, color-mix(in srgb, var(--intro-ink) 76%, var(--intro-accent)) 92%, black),
+    -0.0034em 0.0104em 0 color-mix(in srgb, color-mix(in srgb, var(--intro-ink) 75%, var(--intro-accent)) 92%, black),
+    -0.0051em 0.0156em 0 color-mix(in srgb, color-mix(in srgb, var(--intro-ink) 73%, var(--intro-accent)) 92%, black),
+    -0.0068em 0.0208em 0 color-mix(in srgb, color-mix(in srgb, var(--intro-ink) 70%, var(--intro-accent)) 92%, black),
+    -0.0085em 0.0260em 0 color-mix(in srgb, color-mix(in srgb, var(--intro-ink) 67%, var(--intro-accent)) 92%, black),
+    -0.0102em 0.0312em 0 color-mix(in srgb, color-mix(in srgb, var(--intro-ink) 63%, var(--intro-accent)) 92%, black),
+    -0.0119em 0.0364em 0 color-mix(in srgb, color-mix(in srgb, var(--intro-ink) 58%, var(--intro-accent)) 92%, black),
+    -0.0136em 0.0416em 0 color-mix(in srgb, color-mix(in srgb, var(--intro-ink) 52%, var(--intro-accent)) 92%, black),
+    -0.0153em 0.0468em 0 color-mix(in srgb, color-mix(in srgb, var(--intro-ink) 46%, var(--intro-accent)) 92%, black),
+    -0.0170em 0.0520em 0 color-mix(in srgb, color-mix(in srgb, var(--intro-ink) 39%, var(--intro-accent)) 92%, black),
+    -0.0187em 0.0572em 0 color-mix(in srgb, color-mix(in srgb, var(--intro-ink) 32%, var(--intro-accent)) 92%, black),
+    -0.0204em 0.0624em 0 color-mix(in srgb, color-mix(in srgb, var(--intro-ink) 23%, var(--intro-accent)) 92%, black),
+    -0.0221em 0.0676em 0 color-mix(in srgb, color-mix(in srgb, var(--intro-ink) 14%, var(--intro-accent)) 92%, black),
+    -0.0238em 0.0728em 0 color-mix(in srgb, color-mix(in srgb, var(--intro-ink) 4%, var(--intro-accent)) 92%, black),
+    -0.02em 0.16em 0.3em color-mix(in srgb, var(--intro-accent) 24%, rgba(0, 0, 0, 0.42));
+}
+@keyframes site-intro-tilt {
+  0%, 100% { transform: rotateX(-2.4deg) rotateY(7.3deg); }
+  25% { transform: rotateX(1.7deg) rotateY(3.2deg); }
+  50% { transform: rotateX(-2.4deg) rotateY(-0.9deg); }
+  75% { transform: rotateX(-6.5deg) rotateY(3.2deg); }
+}
+@media (prefers-reduced-motion:reduce) {
+  .site-intro-depth>.site-intro-tilt {
+    animation: none;
+  }
+}
+
+/* Experience popup: its details in four tabs on every screen size (Overview, Responsibilities, Work delivered,
+   Stack), styled like the project popup's. */
+.role-details-tabs.project-modal-tabs {
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  margin-top: 4px;
+}
+.role-details-panel {
+  padding-top: 20px;
+}
+.role-details-panel>.role-details-section:first-child {
+  border: 0;
+  padding-top: 0;
+}
+@media (max-width:700px) {
+  .role-details-panel {
+    padding-top: 16px;
+  }
+}
+
+/* Phones and tablets: the Send enquiry button reverses when tapped: lime with ink text normally, ink with lime text
+   (and arrow) while pressed and until the next tap elsewhere, instead of turning ink on ink. */
+@media (hover:none) {
+  body .enquiry-dialog .enquiry-submit:hover,
+  body .enquiry-dialog .enquiry-submit:active,
+  [data-theme=dark] body .enquiry-dialog .enquiry-submit.primary-button:hover,
+  [data-theme=dark] body .enquiry-dialog .enquiry-submit.primary-button:active {
+    background: var(--bg-chip);
+    border-color: var(--line-strong);
+    color: var(--accent-on-dark);
+    -webkit-text-fill-color: currentColor;
+  }
 }

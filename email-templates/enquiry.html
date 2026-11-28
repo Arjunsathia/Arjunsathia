@@ -1,0 +1,97 @@
+<!--
+  EmailJS template for the portfolio's "Let's talk" form.
+  Paste everything below this comment into EmailJS → Email Templates → (your template) → Content → "Edit content" →
+  switch the editor to code view (<>), and save. Template settings to use:
+    Subject:    New {{topic}} from {{from_name}}
+    To Email:   arjunsathia.dev@gmail.com
+    From Name:  Portfolio · {{from_name}}
+    Reply To:   {{reply_to}}
+  {{{message_html}}} uses three braces on purpose: the site escapes the message and turns its line breaks into <br>.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light only">
+<title>New enquiry from {{from_name}}</title>
+</head>
+<body style="margin:0;padding:0;background:#ece5da;-webkit-text-size-adjust:100%;">
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;">{{topic}} · {{from_name}} ({{from_email}}) sent a message from your portfolio.</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#ece5da;">
+<tr><td align="center" style="padding:32px 14px;">
+
+  <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;background:#f6f0e8;border:1px solid #d9d1c3;border-radius:18px;overflow:hidden;">
+
+    <!-- Lime ticker strip -->
+    <tr><td style="background:#d4e62d;padding:9px 28px;font:700 10px/1.4 Consolas,'Courier New',monospace;letter-spacing:2px;color:#13170d;text-transform:uppercase;">
+      ✳ New enquiry &nbsp;·&nbsp; arjunsathia portfolio
+    </td></tr>
+
+    <!-- Header -->
+    <tr><td style="padding:30px 28px 6px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+        <td style="font:400 22px/1 Anton,Impact,'Arial Narrow Bold',sans-serif;letter-spacing:.5px;color:#13170d;text-transform:uppercase;">Arjun Sathia<span style="color:#9bab1c;">.</span></td>
+        <td align="right"><span style="display:inline-block;padding:7px 12px;border:1px solid #13170d;border-radius:999px;background:#ffffff;font:700 10px/1 Consolas,'Courier New',monospace;letter-spacing:1.5px;color:#13170d;text-transform:uppercase;">{{topic}}</span></td>
+      </tr></table>
+    </td></tr>
+
+    <!-- Headline -->
+    <tr><td style="padding:22px 28px 0;">
+      <div style="font:700 10px/1.4 Consolas,'Courier New',monospace;letter-spacing:2px;color:#707e25;text-transform:uppercase;">// Someone said hello</div>
+      <h1 style="margin:10px 0 0;font:400 40px/1.02 Anton,Impact,'Arial Narrow Bold',sans-serif;letter-spacing:.3px;color:#13170d;text-transform:uppercase;">{{from_name}}<br><span style="color:#707e25;">wants to talk.</span></h1>
+    </td></tr>
+
+    <!-- Sender card -->
+    <tr><td style="padding:24px 28px 0;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#ffffff;border:1px solid #e1dacd;border-radius:12px;">
+        <tr>
+          <td style="padding:16px 18px;border-bottom:1px dashed #e1dacd;font:700 10px/1.4 Consolas,'Courier New',monospace;letter-spacing:1.5px;color:#77766b;text-transform:uppercase;width:90px;" valign="top">Name</td>
+          <td style="padding:16px 18px;border-bottom:1px dashed #e1dacd;font:600 15px/1.5 Arial,Helvetica,sans-serif;color:#13170d;">{{from_name}}</td>
+        </tr>
+        <tr>
+          <td style="padding:16px 18px;border-bottom:1px dashed #e1dacd;font:700 10px/1.4 Consolas,'Courier New',monospace;letter-spacing:1.5px;color:#77766b;text-transform:uppercase;" valign="top">Email</td>
+          <td style="padding:16px 18px;border-bottom:1px dashed #e1dacd;font:600 15px/1.5 Arial,Helvetica,sans-serif;"><a href="mailto:{{from_email}}" style="color:#13170d;text-decoration:underline;text-decoration-color:#d4e62d;">{{from_email}}</a></td>
+        </tr>
+        <tr>
+          <td style="padding:16px 18px;font:700 10px/1.4 Consolas,'Courier New',monospace;letter-spacing:1.5px;color:#77766b;text-transform:uppercase;" valign="top">Topic</td>
+          <td style="padding:16px 18px;font:600 15px/1.5 Arial,Helvetica,sans-serif;color:#13170d;">{{topic}}</td>
+        </tr>
+      </table>
+    </td></tr>
+
+    <!-- Message -->
+    <tr><td style="padding:24px 28px 0;">
+      <div style="font:700 10px/1.4 Consolas,'Courier New',monospace;letter-spacing:2px;color:#707e25;text-transform:uppercase;padding-bottom:10px;">// Their message</div>
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+        <td style="width:4px;background:#d4e62d;border-radius:4px;"></td>
+        <td style="padding:4px 0 4px 18px;font:400 16px/1.7 Georgia,'Times New Roman',serif;color:#13170d;">{{{message_html}}}</td>
+      </tr></table>
+    </td></tr>
+
+    <!-- Reply button -->
+    <tr><td style="padding:30px 28px 6px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+        <td style="background:#d4e62d;border:1.5px solid #13170d;border-radius:999px;">
+          <a href="mailto:{{from_email}}?subject=Re:%20{{topic}}" style="display:inline-block;padding:14px 26px;font:700 12px/1 Consolas,'Courier New',monospace;letter-spacing:2px;color:#13170d;text-decoration:none;text-transform:uppercase;">Reply to {{from_name}} &nbsp;↗</a>
+        </td>
+      </tr></table>
+      <p style="margin:12px 0 0;font:400 12px/1.6 Arial,Helvetica,sans-serif;color:#77766b;">Or just hit reply. It goes straight to {{from_email}}.</p>
+    </td></tr>
+
+    <!-- Footer -->
+    <tr><td style="padding:26px 28px 28px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px dashed #cfc7b8;"><tr>
+        <td style="padding-top:16px;font:400 11px/1.7 Consolas,'Courier New',monospace;color:#77766b;">
+          Sent {{sent_at}}<br>
+          From <a href="{{page_url}}" style="color:#707e25;text-decoration:none;">{{page_url}}</a>
+        </td>
+      </tr></table>
+    </td></tr>
+
+  </table>
+
+</td></tr>
+</table>
+</body>
+</html>

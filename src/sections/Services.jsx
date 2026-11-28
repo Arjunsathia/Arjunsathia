@@ -3,6 +3,7 @@ import {Reveal, Item, useCompactMotion} from '../lib/motion.jsx';
 import {serviceItems} from '../content/site.js';
 import {Arrow, Asterisk, ServiceDoodle} from '../components/icons.jsx';
 import {SectionHeading} from '../components/SectionHeading.jsx';
+import {SectionFade} from '../components/FadeContent.jsx';
 import BounceCards from '../components/BounceCards.jsx';
 import Stack from '../components/Stack.jsx';
 
@@ -92,7 +93,7 @@ function ServiceStack() {
 export function Services() {
   const compact=useCompactMotion();
   return <section className="services-section" id="services" aria-labelledby="services-title"><div className="section-wrap">
-    <SectionHeading number="02" id="services-title" title={<><span className="service-title-lead">How I can </span><Item as="span" variant="wipe" className="service-title-help">help.</Item></>} /><Reveal className="services-section-intro"><p>A focused feature, a fresh website, or a complete application. Here’s where I can contribute.</p><span className="services-heading-note" aria-hidden="true"><ServiceDoodle type="burst"/>Ideas into<br/>working software.<ServiceDoodle/></span></Reveal>
+    <SectionHeading number="02" id="services-title" title={<><span className="service-title-lead">How I can </span><Item as="span" variant="wipe" className="service-title-help">help.</Item></>} /><SectionFade className="services-section-intro"><p>A focused feature, a fresh website, or a complete application. Here’s where I can contribute.</p><span className="services-heading-note" aria-hidden="true"><ServiceDoodle type="burst"/>Ideas into<br/>working software.<ServiceDoodle/></span></SectionFade>
     {/* Phones: a swipeable stack. Larger screens: the cards keep their grid place and size; BounceCards adds a slight
         tilt, a bouncy pop-in as they come into view, and (with a mouse) a hover that straightens and lifts a card
         while its neighbours make room. In one column (tablets) there's no sideways push. */}

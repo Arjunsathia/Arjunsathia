@@ -10,8 +10,6 @@ import './SpecularButton.css';
 // (the faint hairline), so each button style (and its hover) can set its own. Props override them.
 // A WebGL canvas only exists while the button is on screen, so a page with many buttons never runs into the
 // browser's limit on WebGL contexts. On screens up to `hideBelow` px wide (700, phones) there is no light at all.
-//
-// <SpecularButton> is the original stand-alone glass button, built on the same light.
 
 const PAD = 24;
 const TAU = Math.PI * 2;
@@ -578,67 +576,3 @@ export function SpecularLight({
 
   return <span ref={layerRef} className="specular-light" aria-hidden="true" />;
 }
-
-const SpecularButton = ({
-  children = 'Get Started',
-  size = 'lg',
-  radius = 18,
-  tint = '#ffffff',
-  tintOpacity = 0.04,
-  blur = 0,
-  textColor = '#f5f5f5',
-  lineColor = '#ffffff',
-  baseColor = '#525252',
-  intensity = 1,
-  idleIntensity = 0.35,
-  shineSize = 10,
-  shineFade = 34,
-  thickness = 1.2,
-  glow = 1,
-  speed = 0.35,
-  followMouse = true,
-  proximity = 250,
-  autoAnimate = false,
-  disabled = false,
-  onClick,
-  className = '',
-  type = 'button',
-  style,
-  ...rest
-}) => (
-  <button
-    type={type}
-    disabled={disabled}
-    onClick={onClick}
-    className={`specular-button specular-button--${size}${className ? ` ${className}` : ''}`}
-    style={{
-      '--sb-radius': `${radius}px`,
-      '--sb-tint': tint,
-      '--sb-tint-opacity': tintOpacity,
-      '--sb-blur': `${blur}px`,
-      '--sb-text-color': textColor,
-      ...style
-    }}
-    {...rest}
-  >
-    <SpecularLight
-      radius={radius}
-      lineColor={lineColor}
-      baseColor={baseColor}
-      intensity={intensity}
-      idleIntensity={idleIntensity}
-      shineSize={shineSize}
-      shineFade={shineFade}
-      thickness={thickness}
-      glow={glow}
-      speed={speed}
-      followMouse={followMouse}
-      proximity={proximity}
-      autoAnimate={autoAnimate}
-      disabled={disabled}
-    />
-    <span className="specular-button__label">{children}</span>
-  </button>
-);
-
-export default SpecularButton;

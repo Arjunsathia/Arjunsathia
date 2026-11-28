@@ -3,8 +3,9 @@ import {Reveal, Item, useCompactMotion} from '../lib/motion.jsx';
 import {stackGroups, toolNotes} from '../content/site.js';
 import {ServiceDoodle} from '../components/icons.jsx';
 import {SectionHeading} from '../components/SectionHeading.jsx';
+import {SectionFade} from '../components/FadeContent.jsx';
 import {useTheme} from '../components/ThemeSwitch.jsx';
-import {stackCardArt} from '../lib/stack-card-art.js';
+import {stackCardArt, hurryStackArt} from '../lib/stack-card-art.js';
 import JellyRadio from '../components/JellyRadio.jsx';
 import {IntroContext} from '../components/SiteIntro.jsx';
 
@@ -37,32 +38,37 @@ function StackGallery({compact}) {
   const [opened, setOpened] = useState(false);
   const api = useRef(null);
   const box = useRef(null);
-  // The gallery's code and card art are prepared in the background a moment after the page has appeared (once the
-  // hero has finished its own animations), so they are ready long before anyone scrolls here; if the section comes
-  // within about two screens first, they are prepared right away. Never during the opening screen.
+  // Two steps, so the heavy work never lands mid-scroll far from here:
+  // - `prepare`: the gallery's code and card art are made in the background a moment after the page has appeared
+  //   (once the hero has finished its own animations), in pauses between scrolling, so they are ready early.
+  // - `near`: the gallery itself (its 3D canvas and card textures) is created only once the section is within about
+  //   two screens; from then on the card art is made straight away if it isn't ready yet.
+  // Neither happens during the opening screen.
   const revealed = useContext(IntroContext);
+  const [prepare, setPrepare] = useState(false);
   const [near, setNear] = useState(false);
   useEffect(() => {
     if (near || !revealed) return undefined;
     const node = box.current;
-    const observer = node ? new IntersectionObserver(([entry]) => { if (entry.isIntersecting) setNear(true); }, {rootMargin: '200% 0px'}) : null;
+    const observer = node ? new IntersectionObserver(([entry]) => { if (entry.isIntersecting) { setNear(true); setPrepare(true); } }, {rootMargin: '200% 0px'}) : null;
     if (node) observer.observe(node);
     let idleHandle = 0;
     const timer = setTimeout(() => {
-      const go = () => setNear(true);
+      const go = () => setPrepare(true);
       idleHandle = window.requestIdleCallback ? window.requestIdleCallback(go, {timeout: 2000}) : setTimeout(go, 0);
     }, 3500);
     return () => { observer?.disconnect(); clearTimeout(timer); window.cancelIdleCallback?.(idleHandle); };
   }, [near, revealed]);
-  useEffect(() => { if (near) loadGallery(); }, [near]);
+  useEffect(() => { if (prepare) loadGallery(); }, [prepare]);
+  useEffect(() => { if (near) hurryStackArt(); }, [near]);
   useEffect(() => {
-    if (!near) return undefined;
+    if (!prepare) return undefined;
     let live = true;
     stackCardArt(theme, stackGroups, EXTRA_TOOLS, toolNotes).then(next => { if (live) setItems(next); });
     return () => { live = false; };
-  }, [theme, near]);
+  }, [theme, prepare]);
   return <><Reveal className={`stack-gallery${opened ? " is-open" : ""}`} fadeOnly delay={.1} ref={box}>
-    {items && <Suspense fallback={null}><CircularGallery items={items} apiRef={api} onOpenChange={setOpened} onActiveChange={index => setGroup(groupOf(index))} ariaLabel={`Tools and technologies, ${TOOL_COUNT} cards`}
+    {items && near && <Suspense fallback={null}><CircularGallery items={items} apiRef={api} onOpenChange={setOpened} onActiveChange={index => setGroup(groupOf(index))} ariaLabel={`Tools and technologies, ${TOOL_COUNT} cards`}
       textColor={theme === 'dark' ? '#f2f4ea' : '#13170d'} font="400 30px Anton" showTitles={false}
       bend={compact ? 2 : 3} borderRadius={0.06} itemSize={compact ? 0.94 : 1} itemAspect={0.78} gap={compact ? 0.16 : 0.24}
       scrollEase={0.07} scrollSpeed={2.4} wave={1} fadeEdges={compact ? 0.05 : 0.1} shadow={theme === 'dark' ? 0.5 : 0.22}
@@ -84,7 +90,7 @@ export function Skills() {
     <SectionHeading number="03" id="skills-title" title={<><span className="stack-title-lead">What I work </span><Item as="span" variant="wipe" className="stack-title-mark">with.</Item></>} note="FROM INTERFACE TO RELEASE"/>
     {/* The wrapper doesn't move (the note is placed against the section, so a moving wrapper would make it jump);
         the line of copy and the side note each rise in on their own, like the other sections' side notes. */}
-    <div className="stack-mobile-intro"><Reveal as="p" fadeOnly delay={.1}>Tools, technologies, and practices I use to turn ideas into useful software.</Reveal><Reveal as="span" className="stack-heading-note" aria-hidden="true" delay={.3}>From interface<br/>to release.<ServiceDoodle type="burst"/><ServiceDoodle/></Reveal></div>
+    <div className="stack-mobile-intro"><SectionFade as="p">Tools, technologies, and practices I use to turn ideas into useful software.</SectionFade><Reveal as="span" className="stack-heading-note" aria-hidden="true" delay={.3}>From interface<br/>to release.<ServiceDoodle type="burst"/><ServiceDoodle/></Reveal></div>
     {gallery && <StackGallery compact={compact}/>}
     {/* What the gallery shows: read by screen readers, and shown as a plain list where WebGL2 isn't available. */}
     <ul className={gallery ? 'sr-only' : 'stack-fallback'}>{stackGroups.map((group,i)=><li key={group.name}><strong>{group.name}</strong> {group.description} <span>{toolsOf(i).join(' · ')}</span></li>)}</ul>

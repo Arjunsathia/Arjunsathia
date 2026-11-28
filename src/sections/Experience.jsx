@@ -14,16 +14,16 @@ import {plainText} from '../lib/rich-text.js';
 import {SpecularLight} from '../components/SpecularButton.jsx';
 
 function ExperienceDialog({ item, index, onClose }) {
-  const {ref,closing,close,reduce,dialogProps}=useModalDialog(onClose);
-  const compact=useCompactMotion();
+  const {ref,closing,close,reduce,dialogProps}=useModalDialog(onClose,{phoneLook:'tilt'});
   const [tab,setTab]=useState(0);
-  const tabs=['Overview','Responsibilities','Tools'];
+  // The details are split into tabs on every screen size, like the project popup.
+  const tabs=['Overview','Responsibilities','Work delivered','Stack'];
   const details=experienceDetails[index];
   const tabKey=event=>{
     const next={ArrowLeft:(tab+tabs.length-1)%tabs.length,ArrowRight:(tab+1)%tabs.length,Home:0,End:tabs.length-1}[event.key];
     if(next!==undefined){event.preventDefault();setTab(next);ref.current.querySelector(`#role-tab-${next}`).focus();}
   };
-  return <dialog {...dialogProps} className={`experience-dialog ${closing ? 'is-closing' : ''}`} aria-labelledby="experience-dialog-title" aria-describedby={!compact||tab===0?'experience-dialog-summary':undefined}>
+  return <dialog {...dialogProps} className={`experience-dialog ${closing ? 'is-closing' : ''}`} aria-labelledby="experience-dialog-title" aria-describedby={tab===0?'experience-dialog-summary':undefined}>
     <div className="role-details-closebar"><button className="enquiry-close" type="button" onClick={close} aria-label="Close experience details" autoFocus>×</button></div>
     <aside className="enquiry-aside role-details-aside">
       <span className="eyebrow">EXPERIENCE / 0{index+1}</span>
@@ -34,14 +34,14 @@ function ExperienceDialog({ item, index, onClose }) {
     <div className="role-details-main">
       <span className="eyebrow">THE ROLE</span>
       <h3 className="role-details-title">Work &amp; contribution.</h3>
-      {compact&&<div className="role-details-tabs" role="tablist" aria-label="Experience details" onKeyDown={tabKey}>{tabs.map((label,i)=><button key={label} type="button" role="tab" id={`role-tab-${i}`} aria-selected={tab===i} aria-controls="role-details-panel" tabIndex={tab===i?0:-1} onClick={()=>setTab(i)}>{label}</button>)}</div>}
-      {/* On phones each tab change fades in, matching the project popup */}
-      <motion.div key={compact?tab:'all'} className="role-details-panel" {...(compact?{role:'tabpanel',id:'role-details-panel','aria-labelledby':`role-tab-${tab}`,tabIndex:0}:{})} initial={compact&&!reduce?{opacity:0,y:6}:false} animate={{opacity:1,y:0}} transition={{duration:reduce?0:.18,ease:motionEase}}>
-        {(!compact||tab===0)&&<p className="role-details-summary" id="experience-dialog-summary"><Rich text={item.summary}/></p>}
-        {(!compact||tab===0)&&details.results&&<ResultTiles results={details.results} note={details.resultsNote} label="Key results from the WhatsApp CRM"/>}
-        {(!compact||tab===1)&&<section className="role-details-section" aria-labelledby="role-responsibilities"><h3 id="role-responsibilities">Responsibilities</h3><ul>{details.responsibilities.map(text=><li key={text}><Rich text={text}/></li>)}</ul></section>}
-        {(!compact||tab===0)&&<section className="role-details-section" aria-labelledby="role-deliverables"><h3 id="role-deliverables">Work delivered</h3><ul>{details.delivered.map(text=><li key={text}><Rich text={text}/></li>)}</ul></section>}
-        {(!compact||tab===2)&&<section className="role-details-section" aria-labelledby="role-skills"><h3 id="role-skills">Skills &amp; tools</h3><ul className="role-details-tools">{details.skills.map(skill=><li key={skill} style={techStyle(skill)}><TechIcon tag={skill}/>{skill}</li>)}</ul></section>}
+      <div className="role-details-tabs project-modal-tabs" role="tablist" aria-label="Experience details" onKeyDown={tabKey}>{tabs.map((label,i)=><button key={label} type="button" role="tab" id={`role-tab-${i}`} aria-selected={tab===i} aria-controls="role-details-panel" tabIndex={tab===i?0:-1} onClick={()=>setTab(i)}>{label}</button>)}</div>
+      {/* Each tab change fades in, matching the project popup. */}
+      <motion.div key={tab} className="role-details-panel" role="tabpanel" id="role-details-panel" aria-labelledby={`role-tab-${tab}`} tabIndex={0} initial={reduce?false:{opacity:0,y:6}} animate={{opacity:1,y:0}} transition={{duration:reduce?0:.18,ease:motionEase}}>
+        {tab===0&&<p className="role-details-summary" id="experience-dialog-summary"><Rich text={item.summary}/></p>}
+        {tab===0&&details.results&&<ResultTiles results={details.results} note={details.resultsNote} label="Key results from the WhatsApp CRM"/>}
+        {tab===1&&<section className="role-details-section" aria-labelledby="role-responsibilities"><h3 id="role-responsibilities">Responsibilities</h3><ul>{details.responsibilities.map(text=><li key={text}><Rich text={text}/></li>)}</ul></section>}
+        {tab===2&&<section className="role-details-section" aria-labelledby="role-deliverables"><h3 id="role-deliverables">Work delivered</h3><ul>{details.delivered.map(text=><li key={text}><Rich text={text}/></li>)}</ul></section>}
+        {tab===3&&<section className="role-details-section" aria-labelledby="role-skills"><h3 id="role-skills">Stack</h3><ul className="role-details-tools">{details.skills.map(skill=><li key={skill} style={techStyle(skill)}><TechIcon tag={skill}/>{skill}</li>)}</ul></section>}
       </motion.div>
     </div>
   </dialog>;

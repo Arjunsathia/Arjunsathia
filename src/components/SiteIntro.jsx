@@ -16,7 +16,8 @@ const Dots = () => <span className="site-intro-dots" aria-hidden="true">
 </span>;
 
 const WORDS = ['Loading', 'Crafting', 'Welcome.'];
-const TIMING = {full: {step: 1500, leave: 4500, gone: 5300}, reduced: {step: 0, leave: 1000, gone: 1300}};
+// `gone` leaves time for the hero's settle (0.9s, starting just after the zoom) to finish before its class goes.
+const TIMING = {full: {step: 1500, leave: 4500, gone: 5500}, reduced: {step: 0, leave: 1000, gone: 1300}};
 
 // Sent just after the first word appears: the hero then builds its 3D card while that word stands still, so the
 // setup never stalls the letters sliding in.
@@ -54,12 +55,15 @@ export function SiteIntro({onReveal}) {
       // has settled and ends before "Crafting" is due.
       setTimeout(() => window.dispatchEvent(new Event(INTRO_QUIET_EVENT)), reduce ? 0 : 250),
       setTimeout(() => {
+        // The zoom-out starts on its own, clean frame. Unlocking the page (which re-lays it out) and the hero's settle
+        // follow two frames later, and the hero's own work (its animations, the ID card's first frame) a frame after
+        // that, so none of it can hold up or skip the start of the zoom, which then runs on the graphics layer.
         setPhase('leaving');
-        root.classList.remove('intro-running', 'intro-boot');
-        root.classList.add('intro-revealing');
-        // The zoom-out is painted first; the hero's own work (its animations, the ID card's first frame) starts a
-        // frame later, so it can't hold up the start of the zoom, which then runs on the graphics layer.
-        requestAnimationFrame(() => requestAnimationFrame(() => onReveal()));
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          root.classList.remove('intro-running', 'intro-boot');
+          root.classList.add('intro-revealing');
+          requestAnimationFrame(() => onReveal());
+        }));
       }, t.leave),
       setTimeout(() => {
         setPhase('gone');
@@ -77,9 +81,10 @@ export function SiteIntro({onReveal}) {
     {/* The dots and the first word appear together once the display face is ready, so nothing shifts sideways. */}
     <div className="site-intro-inner" data-ready={fontReady ? '' : undefined}>
       {fontReady && <Dots/>}
-      {fontReady && <RotatingText ref={words} texts={reduce ? WORDS.slice(0, 1) : WORDS} loop={false} auto={false}
+      {/* The word in 3D (main.css, "Opening screen ... 3D style"): violet depth behind each letter, and a slow tilt. */}
+      {fontReady && <span className="site-intro-depth"><span className="site-intro-tilt"><RotatingText ref={words} texts={reduce ? WORDS.slice(0, 1) : WORDS} loop={false} auto={false}
         highlight highlightColor="transparent" mainClassName="site-intro-word" effect="slide" direction="up"
-        staggerFrom="last" staggerDuration={0.03} animatePresenceMode="popLayout" animatePresenceInitial/>}
+        staggerFrom="last" staggerDuration={0.03} animatePresenceMode="popLayout" animatePresenceInitial/></span></span>}
     </div>
   </div>;
 }

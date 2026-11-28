@@ -1,0 +1,57 @@
+<!--
+  EmailJS template, MINIMAL style, for the portfolio's "Let's talk" form.
+  Paste from <!doctype html> down into EmailJS → Edit Content → Code Editor. Same template settings as enquiry.html:
+    Subject: New {{topic}} from {{from_name}} · To Email: arjunsathia.dev@gmail.com
+    From Name: Portfolio · {{from_name}} · Reply To: {{reply_to}}
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light only">
+<title>New enquiry from {{from_name}}</title>
+</head>
+<body style="margin:0;padding:0;background:#f6f0e8;-webkit-text-size-adjust:100%;">
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;">{{from_name}} sent a {{topic}} from your portfolio.</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f6f0e8;">
+<tr><td align="center" style="padding:40px 16px;">
+
+  <table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:560px;">
+
+    <!-- Brand -->
+    <tr><td style="padding:0 4px 18px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+        <td style="font:400 18px/1 Anton,Impact,'Arial Narrow Bold',sans-serif;letter-spacing:.5px;color:#13170d;text-transform:uppercase;">Arjun Sathia<span style="color:#9bab1c;">.</span></td>
+        <td align="right" style="font:700 10px/1 Consolas,'Courier New',monospace;letter-spacing:1.5px;color:#707e25;text-transform:uppercase;">{{topic}}</td>
+      </tr></table>
+    </td></tr>
+
+    <!-- Card -->
+    <tr><td style="background:#ffffff;border:1px solid #e4ddd0;border-top:3px solid #d4e62d;border-radius:4px;padding:32px 32px 30px;">
+      <p style="margin:0 0 6px;font:400 13px/1.5 Arial,Helvetica,sans-serif;color:#77766b;">New message from</p>
+      <p style="margin:0;font:700 20px/1.3 Arial,Helvetica,sans-serif;color:#13170d;">{{from_name}}</p>
+      <p style="margin:4px 0 0;font:400 14px/1.5 Arial,Helvetica,sans-serif;"><a href="mailto:{{from_email}}" style="color:#707e25;text-decoration:none;">{{from_email}}</a></p>
+
+      <div style="height:1px;background:#ece6da;margin:24px 0;line-height:1px;font-size:1px;">&nbsp;</div>
+
+      <div style="font:400 15px/1.75 Arial,Helvetica,sans-serif;color:#13170d;">{{{message_html}}}</div>
+
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:28px;"><tr>
+        <td style="background:#13170d;border-radius:6px;">
+          <a href="mailto:{{from_email}}?subject=Re:%20{{topic}}" style="display:inline-block;padding:12px 20px;font:700 13px/1 Arial,Helvetica,sans-serif;color:#d4e62d;text-decoration:none;">Reply to {{from_name}} →</a>
+        </td>
+      </tr></table>
+    </td></tr>
+
+    <!-- Footer -->
+    <tr><td style="padding:16px 4px 0;font:400 11px/1.7 Arial,Helvetica,sans-serif;color:#9a968a;">
+      Sent {{sent_at}} from <a href="{{page_url}}" style="color:#9a968a;">{{page_url}}</a>. Hit reply to answer {{from_name}} directly.
+    </td></tr>
+
+  </table>
+
+</td></tr>
+</table>
+</body>
+</html>

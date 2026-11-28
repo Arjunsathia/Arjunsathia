@@ -5,6 +5,7 @@ import ScrollStack, {ScrollStackItem, useStackTop} from '../components/ScrollSta
 import {projects, projectPreviewList} from '../content/site.js';
 import {Arrow, ServiceDoodle} from '../components/icons.jsx';
 import {SectionHeading} from '../components/SectionHeading.jsx';
+import {SectionFade} from '../components/FadeContent.jsx';
 import SplitText from '../components/SplitText.jsx';
 import {useModalDialog} from '../hooks/useModalDialog.js';
 import {TechIcon, techStyle} from '../components/TechIcon.jsx';
@@ -66,7 +67,7 @@ function ProjectScale({scale}) {
   </section>;
 }
 function ProjectDialog({project,index,onClose}) {
-  const {ref,closing,close,reduce,dialogProps}=useModalDialog(onClose);
+  const {ref,closing,close,reduce,dialogProps}=useModalDialog(onClose,{phoneLook:'tilt'});
   const [tab,setTab]=useState(0);
   const [lightbox,setLightbox]=useState(null);
   const previews=projectPreviewList(project);
@@ -130,7 +131,7 @@ export function Work() {
   const closeProject=()=>{setSelected(null);requestAnimationFrame(()=>trigger.current?.focus?.({preventScroll:true}));};
   return <section className="work section-wrap" id="work" aria-labelledby="work-title">
     {compact?<><Sequence className="work-section-heading" gap={.1}><div><Item as="span" variant="fade" className="eyebrow">(01)</Item><SplitText as="h2" id="work-title" startDelay={.1}>Selected<br/><Item as="mark" variant="wipe">work.<ServiceDoodle type="burst"/></Item></SplitText></div><Item className="work-section-description"><p>Production CRMs I build at Wisbato, and a full-stack trading platform of my own.</p></Item></Sequence>
-</>:<><SectionHeading number="01" id="work-title" title={<><span className="work-title-lead">Selected </span><Item as="span" variant="wipe" className="work-title-mark">work.</Item></>} note="CRM / FINTECH / AUTOMATION" /><Reveal className="project-stack-intro" delay={.1}><p>Client work and a personal build.</p><span className="eyebrow">0{projects.length} / SELECTED PROJECTS</span></Reveal></>}
+</>:<><SectionHeading number="01" id="work-title" title={<><span className="work-title-lead">Selected </span><Item as="span" variant="wipe" className="work-title-mark">work.</Item></>} note="CRM / FINTECH / AUTOMATION" /><SectionFade className="project-stack-intro"><p>Client work and a personal build.</p><span className="eyebrow">0{projects.length} / SELECTED PROJECTS</span></SectionFade></>}
     <ProjectBrowser entries={entries} onOpen={openProject} compact={compact}/>
     <p className="sample-note project-stack-note">Client projects at Wisbato and a personal project · Screens are illustrative or from demo builds · Full details inside each project.</p>
     {selected!==null && <ProjectDialog project={projects[selected]} index={selected} onClose={closeProject} />}

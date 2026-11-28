@@ -1,0 +1,113 @@
+<!--
+  EmailJS template, PREMIUM style, for the portfolio's "Let's talk" form. Adapts to phones (under 600px wide).
+  Paste from the doctype line below into EmailJS → Edit Content → Code Editor. Same template settings as enquiry.html:
+    Subject: New {{topic}} from {{from_name}} · To Email: arjunsathia.dev@gmail.com
+    From Name: Portfolio · {{from_name}} · Reply To: {{reply_to}}
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="x-apple-disable-message-reformatting">
+<meta name="color-scheme" content="light only">
+<title>New enquiry from {{from_name}}</title>
+<style>
+  body { margin:0; padding:0; }
+  a { color:inherit; }
+  /* Phones: tighter edges, a smaller headline, sender details stacked, and full-width buttons. */
+  @media only screen and (max-width:600px) {
+    .outer { padding:16px 8px !important; }
+    .card { border-radius:16px !important; }
+    .pad { padding-left:20px !important; padding-right:20px !important; }
+    .hero { padding-top:22px !important; padding-bottom:26px !important; }
+    .brand { font-size:17px !important; }
+    .pill { font-size:9px !important; padding:6px 10px !important; letter-spacing:1px !important; }
+    .kicker { margin-top:24px !important; }
+    .headline { font-size:34px !important; line-height:1.02 !important; }
+    .lede { font-size:13px !important; }
+    .stack { display:block !important; width:100% !important; padding-left:0 !important; padding-right:0 !important; }
+    .stack + .stack { padding-top:16px !important; }
+    .msgcell { padding-left:18px !important; padding-right:18px !important; }
+    .msg { font-size:16px !important; line-height:1.7 !important; }
+    .btnrow, .btnrow tbody, .btnrow tr { display:block !important; width:100% !important; }
+    .btn { display:block !important; width:auto !important; text-align:center !important; }
+    .btn a { display:block !important; }
+    .btngap { display:block !important; width:100% !important; height:10px !important; }
+    .foot td { display:block !important; text-align:left !important; }
+  }
+</style>
+</head>
+<body style="margin:0;padding:0;background:#e9e2d6;-webkit-text-size-adjust:100%;">
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;">{{topic}} from {{from_name}} · reply straight to {{from_email}}</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#e9e2d6;">
+<tr><td class="outer" align="center" style="padding:36px 14px;">
+
+  <table class="card" role="presentation" width="620" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:620px;border-radius:22px;overflow:hidden;background:#f6f0e8;border:1px solid #d6cdbd;">
+
+    <!-- Dark hero -->
+    <tr><td class="pad hero" style="background:#13170d;padding:28px 34px 34px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+        <td class="brand" style="font:400 20px/1 Anton,Impact,'Arial Narrow Bold',sans-serif;letter-spacing:.6px;color:#f6f0e8;text-transform:uppercase;">Arjun Sathia<span style="color:#d4e62d;">.</span></td>
+        <td align="right"><span class="pill" style="display:inline-block;padding:7px 13px;border-radius:999px;background:#d4e62d;font:700 10px/1 Consolas,'Courier New',monospace;letter-spacing:1.5px;color:#13170d;text-transform:uppercase;white-space:nowrap;">● {{topic}}</span></td>
+      </tr></table>
+
+      <div class="kicker" style="margin-top:34px;font:700 10px/1.4 Consolas,'Courier New',monospace;letter-spacing:2.5px;color:#a7b35a;text-transform:uppercase;">// Incoming · New enquiry</div>
+      <h1 class="headline" style="margin:12px 0 0;font:400 50px/.98 Anton,Impact,'Arial Narrow Bold',sans-serif;letter-spacing:.4px;color:#f6f0e8;text-transform:uppercase;word-break:break-word;">{{from_name}}<br><span style="color:#d4e62d;">wants to talk.</span></h1>
+      <p class="lede" style="margin:18px 0 0;font:400 14px/1.6 Arial,Helvetica,sans-serif;color:#b9b6a8;">A new message just arrived from your portfolio. The details are below. Replying goes straight to them.</p>
+    </td></tr>
+
+    <!-- Lime rule -->
+    <tr><td style="height:6px;background:#d4e62d;line-height:6px;font-size:6px;">&nbsp;</td></tr>
+
+    <!-- Sender -->
+    <tr><td class="pad" style="padding:30px 34px 0;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+        <td class="stack" width="50%" valign="top" style="padding-right:10px;">
+          <div style="font:700 10px/1.4 Consolas,'Courier New',monospace;letter-spacing:1.8px;color:#77766b;text-transform:uppercase;">From</div>
+          <div style="margin-top:6px;font:700 17px/1.4 Arial,Helvetica,sans-serif;color:#13170d;">{{from_name}}</div>
+        </td>
+        <td class="stack" width="50%" valign="top" style="padding-left:10px;">
+          <div style="font:700 10px/1.4 Consolas,'Courier New',monospace;letter-spacing:1.8px;color:#77766b;text-transform:uppercase;">Email</div>
+          <div style="margin-top:6px;font:700 15px/1.4 Arial,Helvetica,sans-serif;word-break:break-all;"><a href="mailto:{{from_email}}" style="color:#13170d;text-decoration:underline;text-decoration-color:#d4e62d;">{{from_email}}</a></div>
+        </td>
+      </tr></table>
+    </td></tr>
+
+    <!-- Message -->
+    <tr><td class="pad" style="padding:26px 34px 0;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#ffffff;border:1px solid #e3dccf;border-radius:16px;">
+        <tr><td class="msgcell" style="padding:24px 26px 6px;font:700 10px/1.4 Consolas,'Courier New',monospace;letter-spacing:2px;color:#707e25;text-transform:uppercase;">// Their message</td></tr>
+        <tr><td class="msgcell msg" style="padding:6px 26px 26px;font:400 17px/1.75 Georgia,'Times New Roman',serif;color:#13170d;word-break:break-word;">
+          <span style="font:400 44px/0 Georgia,serif;color:#d4e62d;vertical-align:-16px;">“</span>{{{message_html}}}
+        </td></tr>
+      </table>
+    </td></tr>
+
+    <!-- Actions -->
+    <tr><td class="pad" style="padding:28px 34px 8px;">
+      <table class="btnrow" role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+        <td class="btn" style="background:#d4e62d;border:1.5px solid #13170d;border-radius:999px;">
+          <a href="mailto:{{from_email}}?subject=Re:%20{{topic}}" style="display:inline-block;padding:15px 28px;font:700 12px/1 Consolas,'Courier New',monospace;letter-spacing:2px;color:#13170d;text-decoration:none;text-transform:uppercase;">Reply now &nbsp;↗</a>
+        </td>
+        <td class="btngap" style="width:12px;"></td>
+        <td class="btn" style="border:1.5px solid #13170d;border-radius:999px;background:#ffffff;">
+          <a href="{{page_url}}" style="display:inline-block;padding:15px 22px;font:700 12px/1 Consolas,'Courier New',monospace;letter-spacing:2px;color:#13170d;text-decoration:none;text-transform:uppercase;">Portfolio</a>
+        </td>
+      </tr></table>
+    </td></tr>
+
+    <!-- Footer -->
+    <tr><td class="pad" style="padding:26px 34px 30px;">
+      <table class="foot" role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px dashed #cfc7b8;"><tr>
+        <td style="padding-top:16px;font:400 11px/1.7 Consolas,'Courier New',monospace;color:#77766b;">Received {{sent_at}}</td>
+        <td align="right" style="padding-top:16px;font:400 13px/1 Anton,Impact,sans-serif;color:#13170d;letter-spacing:.5px;">A.S<span style="color:#9bab1c;">.</span></td>
+      </tr></table>
+    </td></tr>
+
+  </table>
+
+</td></tr>
+</table>
+</body>
+</html>

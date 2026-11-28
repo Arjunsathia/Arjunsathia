@@ -11,7 +11,17 @@ export const projectPreviewList = project => (project.previews ?? defaultViews.m
   return {title, src, screenshot:!!path&&!path.endsWith('.svg'), note:project.previewNote};
 });
 // `cv`: the CV (public/Arjun_Sathian_CV.pdf), downloaded as `cvFile` from the hero and About.
-export const profile = { name: 'Arjun Sathia', email: 'arjunsathia.in@gmail.com', phone: '+919072183999', github: 'https://github.com/Arjunsathia', linkedin: 'https://www.linkedin.com/in/arjunsathia/', cv: `${import.meta.env.BASE_URL}Arjun_Sathian_CV.pdf`, cvFile: 'Arjun_Sathian_CV.pdf' };
+export const profile = { name: 'Arjun Sathia', email: 'arjunsathia.dev@gmail.com', phone: '+919072183999', github: 'https://github.com/Arjunsathia', linkedin: 'https://www.linkedin.com/in/arjunsathia/', cv: `${import.meta.env.BASE_URL}Arjun_Sathian_CV.pdf`, cvFile: 'Arjun_Sathian_CV.pdf' };
+// Where the "Let's talk" form sends enquiries: EmailJS (emailjs.com) delivers them to profile.email using the
+// template in email-templates/enquiry.html. These three values come from the EmailJS dashboard and are meant to be
+// public (lock them to your domain under Account → Security). Set them here, or as VITE_EMAILJS_SERVICE_ID,
+// VITE_EMAILJS_TEMPLATE_ID and VITE_EMAILJS_PUBLIC_KEY at build time. While any is empty, the form can't send and
+// shows its "didn't send" note.
+export const enquiryMail = {
+  serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_m5obj3b',
+  templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_9ugcvq8',
+  publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '4hap1nA9xDGUZ1Cwu',
+};
 // The back of the hero photo card.
 export const aboutCard = {
   role: ['AI-Integrated', 'Full stack', 'developer'],

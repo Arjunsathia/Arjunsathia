@@ -6,7 +6,7 @@
 
 <a href="https://arjunsathiaa.vercel.app/"><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/button-portfolio.svg" alt="Portfolio" /></a>
 <a href="https://www.linkedin.com/in/arjunsathia/"><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/button-linkedin.svg" alt="LinkedIn" /></a>
-<a href="mailto:arjunsathia.in@gmail.com"><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/button-email.svg" alt="Email" /></a>
+<a href="mailto:arjunsathia.dev@gmail.com"><img src="https://raw.githubusercontent.com/Arjunsathia/Arjunsathia/main/.github/assets/button-email.svg" alt="Email" /></a>
 
 </div>
 

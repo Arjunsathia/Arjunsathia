@@ -6,6 +6,7 @@ import {EnquiryButton} from '../components/Enquiry.jsx';
 import {SpecularLight} from '../components/SpecularButton.jsx';
 import Ribbons from '../components/Ribbons.jsx';
 import SplitText from '../components/SplitText.jsx';
+import {SectionFade} from '../components/FadeContent.jsx';
 
 function SocialLinks() {
   const [notice,setNotice] = useState('');
@@ -25,14 +26,14 @@ export function Contact() {
         spread={18} stiffness={0.5} bounce={0.5} wave={0} softness={0} opacity={1} fade={false}/>
     </div>
     <div className="section-wrap">
-    <Reveal className="contact-top" fadeOnly><p className="eyebrow"><span className="status-dot" />AVAILABLE FOR ROLES & PROJECTS</p><span className="eyebrow">GOT SOMETHING IN MIND?</span></Reveal>
+    <SectionFade className="contact-top"><p className="eyebrow"><span className="status-dot" />AVAILABLE FOR ROLES & PROJECTS</p><span className="eyebrow">GOT SOMETHING IN MIND?</span></SectionFade>
     <SplitText as="h2" className="contact-headline" id="contact-title">LET’S MAKE<br /><Item as="mark" variant="wipe">IT HAPPEN.</Item></SplitText>
     <Reveal className="contact-socials" delay={.08}><SocialLinks /></Reveal>
-    <Sequence className="contact-bottom" gap={.12} delay={.1}><Item as="p">A role on your team. A new web application. <br />I’d love to hear what you’re working on.</Item><Item as="svg" variant="wipe" className="contact-long-arrow" viewBox="0 0 240 240" fill="currentColor" aria-hidden="true"><path transform="translate(0 240) scale(1 -1)" d="M24 216C92 196 145 142 185 72L165 61L224 24L221 94L202 83C154 160 96 207 24 216Z" /></Item><EnquiryButton className="button primary-button" variant="rise"><SpecularLight/>Let’s talk <Arrow direction="→" /></EnquiryButton></Sequence>
+    <Sequence className="contact-bottom" gap={.12} delay={.1}><SectionFade as="p">A role on your team. A new web application. <br />I’d love to hear what you’re working on.</SectionFade><Item as="svg" variant="wipe" className="contact-long-arrow" viewBox="0 0 240 240" fill="currentColor" aria-hidden="true"><path transform="translate(0 240) scale(1 -1)" d="M24 216C92 196 145 142 185 72L165 61L224 24L221 94L202 83C154 160 96 207 24 216Z" /></Item><EnquiryButton className="button primary-button" variant="rise"><SpecularLight/>Let’s talk <Arrow direction="→" /></EnquiryButton></Sequence>
     <Footer />
   </div></Sequence>;
 }
 
 function Footer() {
-  return <footer className="contact-footer"><span>© {new Date().getFullYear()} Arjun Sathia</span><p>SOFTWARE ENGINEER / FULL-STACK DEVELOPER</p></footer>;
+  return <SectionFade as="footer" className="contact-footer"><span>© {new Date().getFullYear()} Arjun Sathia</span><p>SOFTWARE ENGINEER / FULL-STACK DEVELOPER</p></SectionFade>;
 }

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {MotionConfig} from 'motion/react';
 import {EnquiryContext, EnquiryDialog} from './components/Enquiry.jsx';
 import {PremiumCursor} from './components/PremiumCursor.jsx';
@@ -21,7 +21,8 @@ export function App() {
   const [intro] = useState(()=>!introSkipped());
   const [revealed,setRevealed] = useState(()=>introSkipped());
   const enquiryTrigger = useRef(null);
-  const openEnquiry = (request, trigger) => {enquiryTrigger.current=trigger;setEnquiry(request);};
+  // Stable, so opening the enquiry popup re-renders only the popup: the page itself (below) never re-renders for it.
+  const openEnquiry = useCallback((request, trigger) => {enquiryTrigger.current=trigger;setEnquiry(request);},[]);
   const closeEnquiry = () => {setEnquiry(null);requestAnimationFrame(()=>enquiryTrigger.current?.focus({preventScroll:true}));};
   // Links such as /#contact arrive before React has rendered the section, so scroll to it once it exists.
   useEffect(()=>{
@@ -58,5 +59,10 @@ export function App() {
     });
   },[]);
 
-  return <MotionConfig reducedMotion="user"><IntroContext.Provider value={revealed}><EnquiryContext.Provider value={openEnquiry}>{intro && <SiteIntro onReveal={()=>setRevealed(true)}/>}<PremiumCursor /><a className="skip" href="#work">Skip to work</a><Header /><main><Hero /><Intro /><Work /><Services /><Skills /><Experience /><Process /><About /><Contact /></main>{enquiry && <EnquiryDialog request={enquiry} onClose={closeEnquiry} />}</EnquiryContext.Provider></IntroContext.Provider></MotionConfig>;
+  // Built once: when the enquiry popup opens or the opening screen clears, React leaves the sections alone (they
+  // still follow IntroContext and the theme on their own). Re-rendering the whole page as the popup opened made it
+  // stutter on phones.
+  const page = useMemo(()=><><PremiumCursor /><a className="skip" href="#work">Skip to work</a><Header /><main><Hero /><Intro /><Work /><Services /><Skills /><Experience /><Process /><About /><Contact /></main></>,[]);
+
+  return <MotionConfig reducedMotion="user"><IntroContext.Provider value={revealed}><EnquiryContext.Provider value={openEnquiry}>{intro && <SiteIntro onReveal={()=>setRevealed(true)}/>}{page}{enquiry && <EnquiryDialog request={enquiry} onClose={closeEnquiry} />}</EnquiryContext.Provider></IntroContext.Provider></MotionConfig>;
 }

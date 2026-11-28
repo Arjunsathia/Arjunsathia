@@ -2,6 +2,8 @@
 // tool's logo large on a panel tinted with its brand colour, its group ("01 — FRONTEND") and its name. Returned as
 // image URLs for CircularGallery, drawn once per theme after the fonts have loaded.
 
+import { pageBehindPopup } from './popup-pause.js';
+
 const CARD = { width: 624, height: 800 };
 
 const THEMES = {
@@ -123,11 +125,32 @@ const drawCard = ({ name, icon, group, groupIndex, toolIndex, toolCount }, c, da
 
 const cache = new Map();
 
+// The cards are drawn in the background before anyone reaches the gallery, but never while the page is being
+// scrolled: each batch waits until scrolling has paused for a quarter of a second. Once the gallery is close
+// (hurryStackArt), the cards are drawn straight away instead.
+let lastScroll = 0;
+let urgent = false;
+if (typeof window !== 'undefined') window.addEventListener('scroll', () => { lastScroll = performance.now(); }, { passive: true });
+export const hurryStackArt = () => { urgent = true; };
+const scrollPaused = () => new Promise(resolve => {
+  const check = () => {
+    const wait = 250 - (performance.now() - lastScroll);
+    // Never while a popup is opening or open either (lib/popup-pause.js): drawing cards then would stall its animation.
+    if (pageBehindPopup()) setTimeout(check, 200);
+    else if (urgent || wait <= 0) resolve();
+    else setTimeout(check, Math.max(40, wait));
+  };
+  check();
+});
+
 // Waits for a quiet moment and reports how long it lasts, so the cards are drawn a few at a time between frames
 // (as many as fit) instead of all at once mid-scroll, or one per idle moment (which made the gallery slow to appear).
-const idle = () => new Promise(resolve => (window.requestIdleCallback
-  ? window.requestIdleCallback(deadline => resolve(deadline), { timeout: 120 })
-  : setTimeout(() => resolve({ timeRemaining: () => 8 }), 0)));
+const idle = async () => {
+  await scrollPaused();
+  return new Promise(resolve => (window.requestIdleCallback
+    ? window.requestIdleCallback(deadline => resolve(deadline), { timeout: urgent ? 50 : 120 })
+    : setTimeout(() => resolve({ timeRemaining: () => 8 }), 0)));
+};
 
 // `groups`: the site's stackGroups ({name, description, tools: [[name, icon]]}); `notes`: a short line per tool, shown
 // when its card is opened (falling back to the group's description). Returns gallery items.

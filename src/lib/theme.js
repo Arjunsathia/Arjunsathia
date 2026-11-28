@@ -4,7 +4,7 @@
 export const THEME_KEY = 'theme';
 const BAR_COLOR = {light: '#f6f0e8', dark: '#0a0c09'};
 
-export const isTheme = value => value === 'light' || value === 'dark';
+const isTheme = value => value === 'light' || value === 'dark';
 export const resolveTheme = saved => isTheme(saved) ? saved : 'light';
 
 export const readSaved = storage => {

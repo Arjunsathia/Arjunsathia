@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 import './Lanyard.css';
+import {POPUP_CLOSED_EVENT, pageBehindPopup} from '../lib/popup-pause.js';
 
 // A 3D card hanging from a strap: drag it and it swings with real physics; a quick click flips it over.
 // Adapted from React Bits' Lanyard (JS + CSS). Change here: `dragOnTouch={false}` leaves touch screens scrolling
@@ -1179,6 +1180,8 @@ const Lanyard = ({
     const tick = now => {
       raf = 0;
       if (!alive) return;
+      // Paused behind a popup (lib/popup-pause.js); POPUP_CLOSED_EVENT wakes it.
+      if (pageBehindPopup()) return;
       const dt = Math.min(1 / 30, Math.max(1 / 240, (now - last) / 1000));
       last = now;
       time += dt;
@@ -1343,6 +1346,7 @@ const Lanyard = ({
       if (!document.hidden) start();
     };
     document.addEventListener('visibilitychange', onVisibility);
+    window.addEventListener(POPUP_CLOSED_EVENT, start);
 
     applyRef.current = apply;
     resize();
@@ -1363,6 +1367,7 @@ const Lanyard = ({
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
       document.removeEventListener('visibilitychange', onVisibility);
+      window.removeEventListener(POPUP_CLOSED_EVENT, start);
       window.removeEventListener('pointermove', onWindowPointer);
       canvas.style.pointerEvents = '';
       canvas.removeEventListener('pointerdown', onPointerDown);
