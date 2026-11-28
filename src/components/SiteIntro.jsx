@@ -17,7 +17,13 @@ const Dots = () => <span className="site-intro-dots" aria-hidden="true">
 
 const WORDS = ['Loading', 'Crafting', 'Welcome.'];
 // `gone` leaves time for the hero's settle (0.9s, starting just after the zoom) to finish before its class goes.
-const TIMING = {full: {step: 1500, leave: 4500, gone: 5500}, reduced: {step: 0, leave: 1000, gone: 1300}};
+// `repeat`: a visitor who has already seen the full screen in this browser session (a reload, or coming back from a
+// project's live site) gets just "Welcome." and the zoom-out, about a third as long. 1.6s still leaves the 3D card,
+// which starts building at 0.25s, time to finish before the screen clears.
+const TIMING = {full: {step: 1500, leave: 4500, gone: 5500}, reduced: {step: 0, leave: 1000, gone: 1300}, repeat: {step: 0, leave: 1600, gone: 2600}};
+const SEEN_KEY = 'site-intro-seen';
+const seenThisSession = () => { try { return sessionStorage.getItem(SEEN_KEY) === '1'; } catch { return false; } };
+const markSeen = () => { try { sessionStorage.setItem(SEEN_KEY, '1'); } catch { /* storage blocked: the full screen again next time */ } };
 
 // Sent just after the first word appears: the hero then builds its 3D card while that word stands still, so the
 // setup never stalls the letters sliding in.
@@ -29,6 +35,8 @@ export function SiteIntro({onReveal}) {
   const [phase, setPhase] = useState('working');
   const words = useRef(null);
   const [reduce] = useState(() => Boolean(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches));
+  const [repeat] = useState(seenThisSession);
+  const texts = reduce ? WORDS.slice(0, 1) : repeat ? WORDS.slice(-1) : WORDS;
   // The first word waits for the display face (at most 0.6s), so it slides in at its final width instead of jumping.
   const [fontReady, setFontReady] = useState(() => !document.fonts || document.fonts.check('400 1em Anton'));
   useEffect(() => {
@@ -44,13 +52,14 @@ export function SiteIntro({onReveal}) {
   }, []);
   useEffect(() => {
     if (!fontReady) return undefined;
-    const t = reduce ? TIMING.reduced : TIMING.full;
+    const t = reduce ? TIMING.reduced : repeat ? TIMING.repeat : TIMING.full;
     const root = document.documentElement;
     root.classList.add('intro-running');
+    markSeen();
     // Every change is timed from the first word on one clock, so if the page is busy for a moment, only the change due
     // then waits: the later words keep their times and "Welcome." always gets its full turn.
     const timers = [
-      ...(reduce ? [] : WORDS.slice(1).map((_, i) => setTimeout(() => words.current?.jumpTo(i + 1), t.step * (i + 1)))),
+      ...(reduce || repeat ? [] : WORDS.slice(1).map((_, i) => setTimeout(() => words.current?.jumpTo(i + 1), t.step * (i + 1)))),
       // Sent early: the card takes a few hundred milliseconds to start building, so its heavy step lands once "Loading"
       // has settled and ends before "Crafting" is due.
       setTimeout(() => window.dispatchEvent(new Event(INTRO_QUIET_EVENT)), reduce ? 0 : 250),
@@ -82,7 +91,7 @@ export function SiteIntro({onReveal}) {
     <div className="site-intro-inner" data-ready={fontReady ? '' : undefined}>
       {fontReady && <Dots/>}
       {/* The word in 3D (main.css, "Opening screen ... 3D style"): violet depth behind each letter, and a slow tilt. */}
-      {fontReady && <span className="site-intro-depth"><span className="site-intro-tilt"><RotatingText ref={words} texts={reduce ? WORDS.slice(0, 1) : WORDS} loop={false} auto={false}
+      {fontReady && <span className="site-intro-depth"><span className="site-intro-tilt"><RotatingText ref={words} texts={texts} loop={false} auto={false}
         highlight highlightColor="transparent" mainClassName="site-intro-word" effect="slide" direction="up"
         staggerFrom="last" staggerDuration={0.03} animatePresenceMode="popLayout" animatePresenceInitial/></span></span>}
     </div>

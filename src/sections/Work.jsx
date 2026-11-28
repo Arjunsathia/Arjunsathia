@@ -13,6 +13,7 @@ import {Rich} from '../components/Rich.jsx';
 import {SpecularLight} from '../components/SpecularButton.jsx';
 import ZoomImage from '../components/ZoomImage.jsx';
 import {ResultTiles} from '../components/ResultTiles.jsx';
+import PixelReveal from '../components/PixelReveal.jsx';
 
 
 // A row of slides that scrolls sideways and snaps to each one: swipe on touch screens, or step with go().
@@ -111,7 +112,7 @@ function ProjectEntry({project,index,onOpen,short=false}) {
       <ul className="project-card-tags" aria-label="Technologies">{project.tags.map(tag=><li key={tag} style={techStyle(tag)}><TechIcon tag={tag}/>{tag}</li>)}</ul>
       <div className="project-card-footer"><button className="work-entry-link" onClick={open} aria-haspopup="dialog" aria-label={`Read ${project.name} details`}><SpecularLight/>View project <Arrow/></button></div>
     </div>
-    <div className="project-card-art"><span className="project-preview-paper" aria-hidden="true"/><button className="project-card-screen" onClick={open} aria-haspopup="dialog" aria-label={`Explore ${project.name} project`}><img className={screenshot?'is-screenshot':undefined} src={cover} alt={`${project.name} project preview`} width="1200" height="800" loading="lazy" /></button><ServiceDoodle type="burst" className="project-preview-burst"/></div>
+    <div className="project-card-art"><span className="project-preview-paper" aria-hidden="true"/><button className="project-card-screen" onClick={open} aria-haspopup="dialog" aria-label={`Explore ${project.name} project`}><img className={screenshot?'is-screenshot':undefined} src={cover} alt={`${project.name} project preview`} width="1200" height="800" loading="lazy" /><PixelReveal/></button><ServiceDoodle type="burst" className="project-preview-burst"/></div>
   </article>;
 }
 

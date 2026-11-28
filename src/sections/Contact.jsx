@@ -29,7 +29,7 @@ export function Contact() {
     <SectionFade className="contact-top"><p className="eyebrow"><span className="status-dot" />AVAILABLE FOR ROLES & PROJECTS</p><span className="eyebrow">GOT SOMETHING IN MIND?</span></SectionFade>
     <SplitText as="h2" className="contact-headline" id="contact-title">LET’S MAKE<br /><Item as="mark" variant="wipe">IT HAPPEN.</Item></SplitText>
     <Reveal className="contact-socials" delay={.08}><SocialLinks /></Reveal>
-    <Sequence className="contact-bottom" gap={.12} delay={.1}><SectionFade as="p">A role on your team. A new web application. <br />I’d love to hear what you’re working on.</SectionFade><Item as="svg" variant="wipe" className="contact-long-arrow" viewBox="0 0 240 240" fill="currentColor" aria-hidden="true"><path transform="translate(0 240) scale(1 -1)" d="M24 216C92 196 145 142 185 72L165 61L224 24L221 94L202 83C154 160 96 207 24 216Z" /></Item><EnquiryButton className="button primary-button" variant="rise"><SpecularLight/>Let’s talk <Arrow direction="→" /></EnquiryButton></Sequence>
+    <Sequence className="contact-bottom" gap={.12} delay={.1}><SectionFade as="p">A role on your team. A new web application. <br />I’d love to hear what you’re working on.</SectionFade><Item as="svg" variant="wipe" className="contact-long-arrow" viewBox="0 0 240 240" fill="currentColor" aria-hidden="true"><path transform="translate(0 240) scale(1 -1)" d="M24 216C92 196 145 142 185 72L165 61L224 24L221 94L202 83C154 160 96 207 24 216Z" /></Item><EnquiryButton className="button primary-button" variant="rise" data-magnetic="0.35" data-magnetic-max="10"><SpecularLight/>Let’s talk <Arrow direction="→" /></EnquiryButton></Sequence>
     <Footer />
   </div></Sequence>;
 }

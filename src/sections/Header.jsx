@@ -99,12 +99,15 @@ export function Header() {
       <GooeyNav className="desktop-nav gooey-desktop-nav" aria-label="Main navigation" items={navLinks} activeIndex={navIndex} onChange={choose} ariaCurrent="location"
         theme={colours === NAV_COLOURS.dark ? 'dark' : 'light'} color={colours.pill} activeTextColor={colours.ink} colors={colours.drops} hoverColor={colours.hover} style={colours.frame}
         size="md" frame shadow={0} particleCount={12} spread={30} animationTime={560} timeVariance={260} gooeyness={.55} wobble={.45} hoverEffect/>
-      <EnquiryButton className="button primary-button header-cta"><SpecularLight/>Let’s talk <Arrow direction="↗" /></EnquiryButton>
+      <EnquiryButton className="button primary-button header-cta" data-magnetic="0.25" data-magnetic-max="6"><SpecularLight/>Let’s talk <Arrow direction="↗" /></EnquiryButton>
       {/* Phones and tablets: the round two-line menu button opens a full-screen panel. Lime and ink layers sweep in, then the
           panel in the page colour, then each section link rises into place (numbered, the current one marked). */}
       {small&&<StaggeredMenu className="mobile-menu" overlayClassName="mobile-menu-overlay" portal position="right"
         items={menuItems(navIndex)} socialItems={socialLinks} displaySocials displayItemNumbering socialsTitle="Get in touch"
         colors={['var(--accent)', 'var(--bg-band)']} accentColor="var(--accent-text)" menuButtonColor={null} changeMenuColorOnOpen={false} toggleStyle="lines"/>}
     </div>
+    {/* How far down the page you are: a thin line along the bar's bottom edge, drawn by the scroll itself (main.css,
+        "Scroll progress"); browsers without scroll-driven animations simply don't show it. */}
+    <span className="scroll-progress" aria-hidden="true"/>
   </header>;
 }

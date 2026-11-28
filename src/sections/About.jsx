@@ -9,6 +9,7 @@ import {EnquiryContext} from '../components/Enquiry.jsx';
 import {SpecularLight} from '../components/SpecularButton.jsx';
 import {useTheme} from '../components/ThemeSwitch.jsx';
 import DepthText from '../components/DepthText.jsx';
+import ScrollWords from '../components/ScrollWords.jsx';
 import aboutPortrait from '../assets/images/arjun-about.webp';
 import heroPortrait from '../assets/images/portrait-warm-lighting.webp';
 
@@ -74,7 +75,8 @@ export function About() {
           <Item as="span" className="about-name-hi">HI, I’M</Item><br />
           <Item as="span" className="about-name-depth"><DepthText text="ARJUN." layers={compact ? 18 : 30} depth={compact ? 1.5 : 2.4} faceColor={theme === 'dark' ? 'currentColor' : '#7c3aed'} depthColor={theme === 'dark' ? '#7c3aed' : '#3b0f80'} tilt={7.5} smoothing={0.14} perspective={900} autoOrbit orbitSpeed={0.35} fontSize="1em" fontWeight={400} shadow intro/></Item>
         </h3>
-        <p className="about-lead">I’m a software engineer who enjoys figuring out how things work — and making them work better.</p>
+        {/* The lead reads itself in, word by word, as it scrolls up the screen (ScrollWords). */}
+        <ScrollWords className="about-lead" text="I’m a software engineer who enjoys figuring out how things work — and making them work better."/>
         {/* The employer is named in Experience, not here. */}
         <SectionFade className="about-copy"><p>I’m a full-stack developer who builds CRM platforms for client businesses, integrated with the <b>WhatsApp Cloud API</b> and <b>MetaTrader 5</b>. I work across <b>React</b> and <b>Next.js</b> interfaces, <b>Node.js</b> APIs, and <b>PostgreSQL</b> and <b>MongoDB</b> databases, backed by automated tests.</p><p className="about-available">I’m looking for a team to grow with, and I’m available for freelance projects too.</p></SectionFade>
         {/* The CV, for anyone who wants the full picture on one page. */}

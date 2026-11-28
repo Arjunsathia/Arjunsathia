@@ -502,8 +502,20 @@ body .hero .hero-portrait {
         animation-timeline: view();
         animation-range: cover;
       }
+      /* ...and drift a little against the scroll as they turn, so they sit on a layer just above the page
+         (every second mark drifts the other way, so a pair never moves as one). */
       .service-doodle {
-        animation: flow-turn linear both;
+        animation: flow-turn linear both, flow-drift linear both;
+        animation-timeline: view(), view();
+        animation-range: cover, cover;
+      }
+      .service-doodle:nth-of-type(2n) {
+        animation-direction: normal, reverse;
+      }
+      /* Contact: the long arrow sits on a nearer layer than the headline (which, like all text, stays still), so
+         it travels a touch faster as the section scrolls up. Translate only: its hover nudge uses transform. */
+      .contact-long-arrow {
+        animation: flow-near linear both;
         animation-timeline: view();
         animation-range: cover;
       }
@@ -512,6 +524,8 @@ body .hero .hero-portrait {
 }
 @keyframes flow-float { from { translate: 0 14px; } to { translate: 0 -14px; } }
 @keyframes flow-turn { from { rotate: -7deg; } to { rotate: 7deg; } }
+@keyframes flow-drift { from { translate: 0 10px; } to { translate: 0 -10px; } }
+@keyframes flow-near { from { translate: 0 36px; } to { translate: 0 -36px; } }
 
 /* ---- Small motion details ---- */
 /* Lazy images fade in as they arrive (classes set in App.jsx; images already loaded are untouched) */

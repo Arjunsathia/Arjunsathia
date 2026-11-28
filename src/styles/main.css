@@ -10766,6 +10766,12 @@ body .experience-section .role-carousel .carousel-dot.is-active .carousel-dot-ma
     margin-inline: auto;
   }
 }
+/* Desktops: a little smaller again, so the card sits more comfortably beside the "02." overview. */
+@media (min-width:1101px) {
+  body .experience-section .role-carousel .carousel-container {
+    max-width: 660px;
+  }
+}
 body .experience-section .role-carousel .role-card-summary {
   text-wrap: pretty;
 }
@@ -11600,4 +11606,96 @@ body .hero .hero-actions>.button .glyph {
     color: var(--accent-on-dark);
     -webkit-text-fill-color: currentColor;
   }
+}
+
+/* ---- Scroll progress ----
+   A thin line along the header's bottom edge fills from left to right as the page scrolls, driven by the scroll
+   itself (no JavaScript). Hidden at the very top (where the large-screen bar has no background) and while the opening
+   screen runs; browsers without scroll-driven animations don't show it at all. It follows the reader's own scrolling,
+   so it stays with reduced motion too. */
+.scroll-progress {
+  display: none;
+}
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: var(--accent-deep);
+    transform-origin: 0 50%;
+    scale: 0 1;
+    pointer-events: none;
+    transition: opacity .3s ease;
+    animation: scroll-progress linear both;
+    animation-timeline: scroll(root block);
+  }
+  [data-theme=dark] .scroll-progress {
+    background: var(--accent);
+  }
+  .header.is-at-top .scroll-progress,
+  .header-waiting .scroll-progress {
+    opacity: 0;
+  }
+}
+@keyframes scroll-progress {
+  from { scale: 0 1; }
+  to { scale: 1 1; }
+}
+
+/* ---- Decoding labels (DecryptText) ----
+   The scrambled copy keeps the label's own monospace face, so its width never changes while it decodes. */
+.decrypt-text {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ---- Scroll-linked words (ScrollWords) ----
+   Each word of the sentence brightens from faint to full in turn as the sentence travels up the lower half of the
+   screen, finishing as it nears the middle; scrolling back fades it again. Only opacity changes, so nothing moves or
+   reflows. Without scroll-driven animations, or with reduced motion, the sentence is simply shown in full. */
+@media (prefers-reduced-motion:no-preference) {
+  @supports (animation-timeline: view()) {
+    .scroll-words {
+      view-timeline-name: --scroll-words;
+    }
+    .scroll-word {
+      animation: scroll-word-in linear both;
+      animation-timeline: --scroll-words;
+      animation-range: cover calc(8% + var(--word-start) * .34) cover calc(8% + var(--word-end) * .34);
+    }
+  }
+}
+@keyframes scroll-word-in {
+  from { opacity: .2; }
+  to { opacity: 1; }
+}
+
+/* ---- Pixel reveal (PixelReveal, the project covers on larger screens) ----
+   Screen-coloured cells, a few faintly tinted with the project's colour, cover the image until it is on screen and
+   loaded; then they clear in a scattered order, each in two hard steps like a display decoding. Opacity only. */
+.pixel-reveal {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(var(--pixel-cols), 1fr);
+  grid-template-rows: repeat(var(--pixel-rows), 1fr);
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: none;
+}
+.pixel-reveal>span {
+  background: color-mix(in srgb, #171f1b, var(--project-highlight, #d4e62d) var(--pixel-shade, 0%));
+  /* Cells overlap by a hair, so no seams show between them while they are all in place. */
+  box-shadow: 0 0 0 .5px color-mix(in srgb, #171f1b, var(--project-highlight, #d4e62d) var(--pixel-shade, 0%));
+}
+.pixel-reveal.is-running>span {
+  animation: pixel-clear .2s steps(2, end) forwards;
+  animation-delay: calc(var(--pixel-at) * .75s);
+}
+@keyframes pixel-clear {
+  to { opacity: 0; }
 }

@@ -4,6 +4,7 @@ import {EnquiryContext, EnquiryDialog} from './components/Enquiry.jsx';
 import {PremiumCursor} from './components/PremiumCursor.jsx';
 import {IntroContext, SiteIntro, introSkipped} from './components/SiteIntro.jsx';
 import {initSmoothScroll} from './lib/smooth-scroll.js';
+import {initMagnetic} from './lib/magnetic.js';
 import {Header} from './sections/Header.jsx';
 import {Hero} from './sections/Hero.jsx';
 import {Intro} from './sections/Intro.jsx';
@@ -32,6 +33,8 @@ export function App() {
   },[]);
   // Smooth wheel and trackpad scrolling (mouse and trackpad only; touch and reduced motion stay native).
   useEffect(()=>initSmoothScroll(),[]);
+  // The main calls to action (marked data-magnetic) lean towards a mouse pointer over them (see lib/magnetic.js).
+  useEffect(()=>initMagnetic(),[]);
   // While the page is moving, <html> carries .is-scrolling, so hover highlights don't flash on rows
   // sliding under a still pointer (used by the dark-mode Stack rows).
   // Only with a mouse or trackpad: touch screens have no hover to protect, and toggling the class restyles the page.

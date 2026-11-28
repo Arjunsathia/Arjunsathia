@@ -129,6 +129,6 @@ export function Hero() {
         <figcaption className="sr-only">Arjun Sathia, seated in warm studio light, on an ID card hanging from a lanyard. The back of the card reads: {aboutCard.role.join(' ')}. {aboutCard.lede} {aboutCard.details.map(([label,value])=>`${label}: ${value}.`).join(' ')}</figcaption>
       </figure>
     </div>
-    <div className="hero-bottom"><Entrance className="hero-actions" delay={.52}><a className="button primary-button" href="#work"><SpecularLight/>View projects <Arrow direction="↘" /></a><a className="button secondary-button" href={profile.cv} download={profile.cvFile} aria-label="Download my CV (PDF)"><SpecularLight/>Download my CV <DownloadIcon /></a></Entrance></div>
+    <div className="hero-bottom"><Entrance className="hero-actions" delay={.52}><a className="button primary-button" href="#work" data-magnetic="0.3" data-magnetic-max="8"><SpecularLight/>View projects <Arrow direction="↘" /></a><a className="button secondary-button" href={profile.cv} download={profile.cvFile} aria-label="Download my CV (PDF)"><SpecularLight/>Download my CV <DownloadIcon /></a></Entrance></div>
   </section>;
 }
